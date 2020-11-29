@@ -1,5 +1,7 @@
 import snoowrap from 'snoowrap';
 import FS from 'fs';
+import { v4 as uuidv4 } from 'uuid';
+import appData from './app-data';
 
 /** The config for the reddit API. */
 type RedditConfig = {
@@ -9,6 +11,21 @@ type RedditConfig = {
   userName: string;
 };
 
+// Load the reddit config
 const redditConfig: RedditConfig = JSON.parse(
   FS.readFileSync('config/reddit.config.json', 'utf-8'),
 );
+
+/** The user agent, so that reddit knows who we are. */
+const userAgent = `${appData.name}/v${appData.version} by /u/${redditConfig.userName}`;
+
+// TODO: Save this per device
+/** An ID identifying the current device. */
+const deviceId = uuidv4().substr(0, 30); // Reddit allows only 30 chars
+
+const requester = snoowrap.fromApplicationOnlyAuth({
+  userAgent,
+  clientId: redditConfig.clientId,
+  deviceId,
+  grantType: 'https://oauth.reddit.com/grants/installed_client',
+});
