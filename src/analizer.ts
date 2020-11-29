@@ -1,5 +1,4 @@
 import { Comment } from 'snoowrap';
-import escapeRegex from 'escape-string-regexp';
 import Logger from './logger';
 import { getAllUserComments } from './reddit-api';
 
@@ -15,10 +14,8 @@ function isComment(comment: Comment): boolean {
 
 /** Checks if a comment is a transcription. */
 function isTranscription(comment: Comment): boolean {
-  const footer =
-    "^^I'm&#32;a&#32;human&#32;volunteer&#32;content&#32;transcriber&#32;for&#32;Reddit&#32;and&#32;you&#32;could&#32;be&#32;too!&#32;[If&#32;you'd&#32;like&#32;more&#32;information&#32;on&#32;what&#32;we&#32;do&#32;and&#32;why&#32;we&#32;do&#32;it,&#32;click&#32;here!](https://www.reddit.com/r/TranscribersOfReddit/wiki/index)";
-
-  const footerRegex = new RegExp(`${escapeRegex(footer)}\\s*$`);
+  // Recognizes the ToR footer. Note that there is an extra optional space, needed due to a malformed template
+  const footerRegex = /\^\^I'm&#32;a&#32;human&#32;volunteer&#32;content&#32;transcriber&#32;for&#32;Reddit&#32;and&#32;you&#32;could&#32;be&#32;too!&#32;\[If&#32;(&#32;)?you'd&#32;like&#32;more&#32;information&#32;on&#32;what&#32;we&#32;do&#32;and&#32;why&#32;we&#32;do&#32;it,&#32;click&#32;here!\]\(https:\/\/www\.reddit\.com\/r\/TranscribersOfReddit\/wiki\/index\)/;
 
   // Check if the comment ends with the footer
   return footerRegex.test(comment.body);
@@ -36,6 +33,12 @@ export default async function analizeUser(userName: string): Promise<void> {
 
     const comments = allComments.filter((comment) => isComment(comment));
     commentCount += comments.length;
+
+    comments.forEach((comment) => {
+      if (!isTranscription(comment)) {
+        logger.debug(comment.body);
+      }
+    });
 
     const transcriptions = comments.filter((comment) => isTranscription(comment));
     transcriptionCount += transcriptions.length;
