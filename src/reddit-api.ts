@@ -1,4 +1,4 @@
-import snoowrap from 'snoowrap';
+import snoowrap, { Listing, Comment } from 'snoowrap';
 import FS from 'fs';
 import { v4 as uuidv4 } from 'uuid';
 import appData from './app-data';
@@ -23,9 +23,16 @@ const userAgent = `${appData.name}/v${appData.version} by /u/${redditConfig.user
 /** An ID identifying the current device. */
 const deviceId = uuidv4().substr(0, 30); // Reddit allows only 30 chars
 
-const requester = snoowrap.fromApplicationOnlyAuth({
+/** A 'user-less' requester for the reddit API. */
+export const requester = snoowrap.fromApplicationOnlyAuth({
   userAgent,
   clientId: redditConfig.clientId,
   deviceId,
   grantType: 'https://oauth.reddit.com/grants/installed_client',
 });
+
+/** Get comments of the given user. */
+export async function getUserComments(userName: string): Promise<Listing<Comment>> {
+  const req = await requester;
+  return req.getUser(userName).getComments();
+}
