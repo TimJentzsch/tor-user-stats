@@ -12,7 +12,7 @@ type RedditConfig = {
 };
 
 // Load the reddit config
-const redditConfig: RedditConfig = JSON.parse(
+export const redditConfig: RedditConfig = JSON.parse(
   FS.readFileSync('config/reddit.config.json', 'utf-8'),
 );
 
@@ -32,7 +32,34 @@ export const requester = snoowrap.fromApplicationOnlyAuth({
 });
 
 /** Get comments of the given user. */
-export async function getUserComments(userName: string): Promise<Listing<Comment>> {
+export async function getUserComments(
+  userName: string,
+  options: unknown,
+): Promise<Listing<Comment>> {
   const req = await requester;
-  return req.getUser(userName).getComments();
+  return req.getUser(userName).getComments(options);
+}
+
+export async function getAllUserComments(
+  userName: string,
+  callback: (comments: Listing<Comment>) => void,
+): Promise<void> {
+  const batchSize = 100;
+
+  let comments = await getUserComments(userName, {
+    sort: 'new',
+    limit: batchSize,
+  });
+  callback(comments);
+
+  while (comments.length === batchSize) {
+    // Note: The await IS necessary
+    // eslint-disable-next-line no-await-in-loop
+    comments = await comments.fetchMore({
+      amount: batchSize,
+      skipReplies: true,
+      append: false,
+    });
+    callback(comments);
+  }
 }
