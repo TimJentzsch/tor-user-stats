@@ -8,7 +8,8 @@ const logger = new Logger('Analizer');
 function isComment(comment: Comment): boolean {
   return !(
     comment.subreddit_name_prefixed === 'r/TranscribersOfReddit' &&
-    ['done', 'claim', 'claiming'].includes(comment.body)
+    // Has one of the bot keywords
+    /\b(done|(un)?claim(ing)?)\b/.test(comment.body)
   );
 }
 
@@ -33,12 +34,6 @@ export default async function analizeUser(userName: string): Promise<void> {
 
     const comments = allComments.filter((comment) => isComment(comment));
     commentCount += comments.length;
-
-    comments.forEach((comment) => {
-      if (!isTranscription(comment)) {
-        logger.debug(comment.body);
-      }
-    });
 
     const transcriptions = comments.filter((comment) => isTranscription(comment));
     transcriptionCount += transcriptions.length;
