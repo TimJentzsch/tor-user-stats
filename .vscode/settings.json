@@ -1,0 +1,10 @@
+{
+  "editor.tabSize": 2,
+  "files.eol": "\n",
+  "files.exclude": {
+    "coverage": true,
+    "dist": true,
+    "node_modules": true,
+    "yarn.lock": true
+  }
+}

@@ -1,0 +1,17 @@
+name: tagging
+
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build:
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v2.3.4
+      - name: Set global git conf
+        run: git config --global user.email "" && git config --global user.name "github-actions"
+      - name: Get current version
+        run: echo "project_version=v$(jq -r '.version' package.json)" >> $GITHUB_ENV
+      - name: Create tag and push to GitHub
+        run: git tag $project_version && git push origin $project_version || true
