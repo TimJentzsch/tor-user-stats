@@ -5,6 +5,8 @@ import FS from 'fs';
 type RedditConfig = {
   /** The reddit client ID. */
   clientId: string;
+  /** The username of the app host. Does NOT include '/u/'. */
+  userName: string;
 };
 
 const redditConfig: RedditConfig = JSON.parse(
