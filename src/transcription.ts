@@ -49,8 +49,6 @@ export default class Transcription {
     public bodyMD: string,
     /** The full body of the transcription, formatted in HTML. */
     public bodyHTML: string,
-    /** The creation time of the transcription, in seconds since midnight 1970-01-01. */
-    public created: number,
     /** The creation time of the transcription, in seconds since midnight 1970-01-01 UTC. */
     public createdUTC: number,
     /** The score of the transcription. */
@@ -90,7 +88,6 @@ export default class Transcription {
     return new Transcription(
       comment.body,
       comment.body_html,
-      comment.created,
       comment.created_utc,
       comment.score,
       comment.subreddit_name_prefixed,
