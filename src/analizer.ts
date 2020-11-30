@@ -3,6 +3,7 @@ import Logger from './logger';
 import { getAllUserComments, isToRMod } from './reddit-api';
 import { CountTag, specialTags, countTags, Tag } from './tags';
 import Transcription from './transcription';
+import { limitStart } from './util';
 
 const logger = new Logger('Analizer');
 
@@ -173,6 +174,43 @@ export function getTranscriptionAmount(transcriptions: Transcription[]): Transcr
   };
 }
 
+type SubStats = {
+  /** The name of the subreddit. */
+  sub: string;
+  /** The number of transcriptions for the subreddit. */
+  count: number;
+};
+
+/**
+ * Analyzes the subreddits of the transcriptions.
+ * @param transcriptions The transcriptions to analyze.
+ */
+export function analyzeSubreddits(transcriptions: Transcription[]): SubStats[] {
+  const subStats: SubStats[] = [];
+
+  transcriptions.forEach((transcription) => {
+    const sub = transcription.subredditNamePrefixed;
+
+    const stats = subStats.find((stat) => {
+      return stat.sub === sub;
+    });
+
+    if (stats) {
+      stats.count += 1;
+    } else {
+      subStats.push({
+        sub,
+        count: 1,
+      });
+    }
+  });
+
+  // Sort by count descending
+  return subStats.sort((a, b) => {
+    return b.count - a.count;
+  });
+}
+
 /** Analizes the transcriptions of the given user. */
 export default async function analizeUser(userName: string): Promise<void> {
   let allCount = 0;
@@ -232,6 +270,13 @@ export default async function analizeUser(userName: string): Promise<void> {
   logger.info(
     `Words:      Total: ${amounts.wordTotal} | Peak: ${amounts.wordPeak} | Average: ${amounts.wordAvg}`,
   );
+
+  // Sub stats
+  const subStats = limitStart(analyzeSubreddits(transcriptions), 5).map((stats) => {
+    return `${stats.sub}: ${stats.count}`;
+  });
+
+  logger.info(`Top 5 subs: ${subStats.join(' | ')}`);
 
   // Tags
   const countTag = getCountTag(transcriptions);
