@@ -1,11 +1,11 @@
-interface Tag {
+export interface Tag {
   /** The name of the tag. */
   name: string;
   /** The hex color of the tag. */
   color: string;
 }
 
-interface CountTag extends Tag {
+export interface CountTag extends Tag {
   /** The lower bound for the transcription count. */
   lowerBound: number;
   /** The upper bound for the transcription count. */
@@ -114,18 +114,7 @@ const jade: CountTag = {
 };
 
 /** Tags for the transcription count. */
-export const countTags = {
-  visitor,
-  initiate,
-  green,
-  teal,
-  purple,
-  gold,
-  diamond,
-  ruby,
-  topaz,
-  jade,
-};
+export const countTags = [visitor, initiate, green, teal, purple, gold, diamond, ruby, topaz, jade];
 
 /** All available tags. */
 const tags = {

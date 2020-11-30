@@ -1,6 +1,7 @@
 import { Comment } from 'snoowrap';
 import Logger from './logger';
 import { getAllUserComments } from './reddit-api';
+import { CountTag, countTags } from './tags';
 import Transcription from './transcription';
 
 const logger = new Logger('Analizer');
@@ -78,6 +79,23 @@ export function getTranscriptionAvg(transcriptions: Transcription[], duration: n
   return (duration / transcriptionDur) * count;
 }
 
+/**
+ * Gets the matching count tag for the transcriptions.
+ * @param transcriptions The transcriptions to analize.
+ */
+export function getCountTag(transcriptions: Transcription[]): CountTag {
+  const count = transcriptions.length;
+
+  // From the highest tag downwards, search for the first match
+  for (const countTag of countTags.reverse()) {
+    if (count >= countTag.lowerBound) {
+      return countTag;
+    }
+  }
+
+  throw new Error(`No count tag found for count ${count}`);
+}
+
 /** Analizes the transcriptions of the given user. */
 export default async function analizeUser(userName: string): Promise<void> {
   let allCount = 0;
@@ -127,4 +145,8 @@ export default async function analizeUser(userName: string): Promise<void> {
   const yearAvg = getTranscriptionAvg(transcriptions, 365 * 24 * 60 * 60).toFixed(accuracy); // 365d
 
   logger.info(`Avgs: 1h: ${hourAvg} | 24h: ${dayAvg} | 7d: ${weekAvg} | 365d: ${yearAvg}`);
+
+  const countTag = getCountTag(transcriptions);
+
+  logger.info(`Tags: ${countTag.name} (${countTag.lowerBound}-${countTag.upperBound})`);
 }
