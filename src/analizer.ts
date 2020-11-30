@@ -243,9 +243,8 @@ export default async function analizeUser(userName: string): Promise<void> {
     transcriptions = transcriptions.concat(newTranscriptions);
   });
 
-  logger.info(
-    `All comments fetched. All: ${allCount}, Comments: ${commentCount}, Transcriptions: ${transcriptionCount}`,
-  );
+  logger.info(`Analysis for /u/${userName}:`);
+  logger.info(`All: ${allCount}, Comments: ${commentCount}, Transcriptions: ${transcriptionCount}`);
 
   const accuracy = 2;
 
