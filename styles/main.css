@@ -12,6 +12,7 @@
   --on-error: #000000;
 
   --on-disabled: #cccccc;
+  --on-tag: #222;
 }
 
 * {
@@ -21,6 +22,7 @@
 
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 13px;
   background-color: var(--background);
   color: var(--on-background);
 }
@@ -48,4 +50,41 @@ h1,
 h2,
 h3 {
   color: var(--primary);
+}
+
+h1 {
+  font-size: 32px;
+}
+
+h2 {
+  font-size: 28px;
+}
+
+h3 {
+  font-size: 24px;
+}
+
+#username {
+  color: var(--on-background);
+}
+
+#user-header {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+  align-items: baseline;
+  font-size: 14px;
+}
+
+#scribe-count {
+  margin-left: 10px;
+  font-size: 20px;
+}
+
+.tag {
+  margin-left: 10px;
+  padding: 3px 5px;
+  border-radius: 6px;
+
+  color: var(--on-tag);
 }
