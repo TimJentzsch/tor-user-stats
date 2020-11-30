@@ -107,13 +107,17 @@ export async function getSpecialTags(
 ): Promise<Tag[]> {
   const spTags: Tag[] = [];
 
+  const isMod = await isToRMod(userName);
+
   // Mod tag
-  if (await isToRMod(userName)) {
+  if (isMod) {
     spTags.push(specialTags.mod);
   }
 
+  const dayPeak = getTranscriptionPeak(transcriptions, 24 * 60 * 60); // 24h
+
   // 100/24h tag
-  if (getTranscriptionPeak(transcriptions, 24 * 60 * 60) >= 100) {
+  if (dayPeak >= 100) {
     spTags.push(specialTags.twentyFour);
   }
 

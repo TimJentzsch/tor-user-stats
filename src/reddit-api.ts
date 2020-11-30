@@ -2,6 +2,9 @@ import snoowrap, { Listing, Comment } from 'snoowrap';
 import FS from 'fs';
 import { v4 as uuidv4 } from 'uuid';
 import appData from './app-data';
+import Logger from './logger';
+
+const logger = new Logger('Reddit');
 
 /** The config for the reddit API. */
 type RedditConfig = {
@@ -76,7 +79,8 @@ export async function getAllUserComments(
 export async function isToRMod(userName: string): Promise<boolean> {
   const req = await requester;
   const tor = req.getSubreddit('TranscribersOfReddit');
+  const mods = tor.getModerators();
 
   // Check if the user is one of the mods
-  return tor.getModerators().find((mod) => mod.name === userName) !== undefined;
+  return mods.findIndex((mod) => mod.name === userName) >= 0;
 }
