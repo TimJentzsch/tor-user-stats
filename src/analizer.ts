@@ -1,7 +1,7 @@
 import { Comment } from 'snoowrap';
 import Logger from './logger';
-import { getAllUserComments } from './reddit-api';
-import { CountTag, countTags } from './tags';
+import { getAllUserComments, isToRMod } from './reddit-api';
+import { CountTag, specialTags, countTags, Tag } from './tags';
 import Transcription from './transcription';
 
 const logger = new Logger('Analizer');
@@ -96,6 +96,30 @@ export function getCountTag(transcriptions: Transcription[]): CountTag {
   throw new Error(`No count tag found for count ${count}`);
 }
 
+/**
+ * Returns all special tags for the given user.
+ * @param userName The user to check the special tags for.
+ * @param transcriptions The transcriptions of the user.
+ */
+export async function getSpecialTags(
+  userName: string,
+  transcriptions: Transcription[],
+): Promise<Tag[]> {
+  const spTags: Tag[] = [];
+
+  // Mod tag
+  if (await isToRMod(userName)) {
+    spTags.push(specialTags.mod);
+  }
+
+  // 100/24h tag
+  if (getTranscriptionPeak(transcriptions, 24 * 60 * 60) >= 100) {
+    spTags.push(specialTags.twentyFour);
+  }
+
+  return spTags;
+}
+
 /** Analizes the transcriptions of the given user. */
 export default async function analizeUser(userName: string): Promise<void> {
   let allCount = 0;
@@ -146,7 +170,14 @@ export default async function analizeUser(userName: string): Promise<void> {
 
   logger.info(`Avgs: 1h: ${hourAvg} | 24h: ${dayAvg} | 7d: ${weekAvg} | 365d: ${yearAvg}`);
 
+  // Tags
   const countTag = getCountTag(transcriptions);
+  const countText = `${countTag.name} (${countTag.lowerBound}-${countTag.upperBound})`;
 
-  logger.info(`Tags: ${countTag.name} (${countTag.lowerBound}-${countTag.upperBound})`);
+  const spTags = await getSpecialTags(userName, transcriptions);
+  const spText = spTags.map((tag) => tag.name);
+
+  const tagText = [countText].concat(spText).join(' | ');
+
+  logger.info(`Tags: ${tagText}`);
 }
