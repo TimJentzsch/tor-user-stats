@@ -24,7 +24,7 @@ const winstonLogger = Winston.createLogger({
   transports: [new Winston.transports.Console()],
 });
 
-winstonLogger.info(`[Logger] Started logger with loglevel: ${winstonLogger.level}`, 'Logger');
+// winstonLogger.info(`[Logger] Started logger with loglevel: ${winstonLogger.level}`, 'Logger');
 
 export default class Logger {
   constructor(public customLabel: string) {}
