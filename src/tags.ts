@@ -12,6 +12,27 @@ interface CountTag extends Tag {
   upperBound: number;
 }
 
+// - SPECIAL TAGS -----------------------------------------
+
+/** 100 transcriptions in 24h. */
+const twentyFour: Tag = {
+  name: '100/24h',
+  color: '#fcec3c',
+};
+
+/** Mod on r/TranscribersOfReddit. */
+const mod: Tag = {
+  name: 'Mod',
+  color: '#fc3c46',
+};
+
+export const specialTags = {
+  twentyFour,
+  mod,
+};
+
+// - COUNT TAGS -------------------------------------------
+
 /** Visitor, 0. */
 const visitor: CountTag = {
   name: 'Initiate',
@@ -92,8 +113,8 @@ const jade: CountTag = {
   upperBound: Infinity,
 };
 
-/** All available tags. */
-const tags = {
+/** Tags for the transcription count. */
+export const countTags = {
   visitor,
   initiate,
   green,
@@ -104,6 +125,12 @@ const tags = {
   ruby,
   topaz,
   jade,
+};
+
+/** All available tags. */
+const tags = {
+  specialTags,
+  countTags,
 };
 
 export default tags;
