@@ -96,4 +96,12 @@ export default class Transcription {
       comment.subreddit_name_prefixed,
     );
   }
+
+  /**
+   * Checks if a comment is a transcription.
+   * @param comment The comment to check.
+   */
+  static isTranscription(comment: Comment): boolean {
+    return transcriptionRegex.test(comment.body);
+  }
 }
