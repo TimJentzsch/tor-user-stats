@@ -40,6 +40,11 @@ export async function getUserComments(
   return req.getUser(userName).getComments(options);
 }
 
+/**
+ * Gets all comments of the given user.
+ * @param userName The user to get the comments of.
+ * @param callback The function to call whenever new comments are available.
+ */
 export async function getAllUserComments(
   userName: string,
   callback: (comments: Listing<Comment>) => void,
@@ -62,4 +67,16 @@ export async function getAllUserComments(
     });
     callback(comments);
   }
+}
+
+/**
+ * Determines if the given user is a mod in /r/TranscribersOfReddit.
+ * @param userName The user to check.
+ */
+export async function isToRMod(userName: string): Promise<boolean> {
+  const req = await requester;
+  const tor = req.getSubreddit('TranscribersOfReddit');
+
+  // Check if the user is one of the mods
+  return tor.getModerators().find((mod) => mod.name === userName) !== undefined;
 }
