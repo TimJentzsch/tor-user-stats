@@ -124,6 +124,55 @@ export async function getSpecialTags(
   return spTags;
 }
 
+type TranscriptionAmount = {
+  /** The total number of characters. */
+  charTotal: number;
+  /** The average number of characters. */
+  charAvg: number;
+  /** The maximum amount of characters. */
+  charPeak: number;
+  /** The total number of words. */
+  wordTotal: number;
+  /** The average number of words. */
+  wordAvg: number;
+  /** The maximum amount of words. */
+  wordPeak: number;
+};
+
+/**
+ * Analyzes the character and word count of the transcriptions.
+ * @param transcriptions The transcriptions to analize.
+ */
+export function getTranscriptionAmount(transcriptions: Transcription[]): TranscriptionAmount {
+  const count = transcriptions.length;
+
+  let charTotal = 0;
+  let charPeak = 0;
+  let wordTotal = 0;
+  let wordPeak = 0;
+
+  transcriptions.forEach((transcrition) => {
+    // Determine character and word count of this transcriptions
+    const charCount = transcrition.contentMD.length;
+    const wordCount = transcrition.contentMD.split(/\s+/).length;
+
+    charTotal += charCount;
+    charPeak = Math.max(charPeak, charCount);
+
+    wordTotal += wordCount;
+    wordPeak = Math.max(wordPeak, wordCount);
+  });
+
+  return {
+    charTotal,
+    charAvg: charTotal / count,
+    charPeak,
+    wordTotal,
+    wordAvg: wordTotal / count,
+    wordPeak,
+  };
+}
+
 /** Analizes the transcriptions of the given user. */
 export default async function analizeUser(userName: string): Promise<void> {
   let allCount = 0;
@@ -173,6 +222,16 @@ export default async function analizeUser(userName: string): Promise<void> {
   const yearAvg = getTranscriptionAvg(transcriptions, 365 * 24 * 60 * 60).toFixed(accuracy); // 365d
 
   logger.info(`Avgs: 1h: ${hourAvg} | 24h: ${dayAvg} | 7d: ${weekAvg} | 365d: ${yearAvg}`);
+
+  // Amounts
+  const amounts = getTranscriptionAmount(transcriptions);
+
+  logger.info(
+    `Characters: Total: ${amounts.charTotal} | Peak: ${amounts.charPeak} | Average: ${amounts.charAvg}`,
+  );
+  logger.info(
+    `Words:      Total: ${amounts.wordTotal} | Peak: ${amounts.wordPeak} | Average: ${amounts.wordAvg}`,
+  );
 
   // Tags
   const countTag = getCountTag(transcriptions);

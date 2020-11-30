@@ -73,11 +73,11 @@ export default class Transcription {
       throw new Error(`Failed to convert comment to transcription:\n<<<${bodyMD}>>>`);
     }
 
-    this.headerMD = match.groups.headerMD;
+    this.headerMD = match.groups.header;
     this.format = match.groups.format;
     this.type = match.groups.type;
-    this.contentMD = match.groups.contentMD;
-    this.footerMD = match.groups.footerMD;
+    this.contentMD = match.groups.content;
+    this.footerMD = match.groups.footer;
   }
 
   /**
