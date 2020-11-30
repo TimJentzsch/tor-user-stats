@@ -3,9 +3,10 @@ import { Comment } from 'snoowrap';
 /**
  * Regular expression to recognize transcriptions. Groups:
  * - header: The header of the transcription.
+ * - format: The format of the transcription, e.g. 'Image' or 'Video'.
  * - type: The type of the transcription, e.g. 'Twitter Post'.
  */
-const headerRegex = /^\s*(?<header>\*?Image Transcription:\*?\s*(?<type>Facebook Comments)\*?\s*-{3,})\s*/;
+const headerRegex = /^\s*(?<header>\*?(?<format>.+?)\s+Transcription:\*?\s*(?<type>.*?)\*?\s*-{3,})\s*/;
 /**
  * Regular expression to recognize transcriptions. Groups:
  * - content: The transcription content.
@@ -20,18 +21,22 @@ const footerRegex = /\s*(?<footer>\^\^I'm&#32;a&#32;human&#32;volunteer&#32;cont
 /**
  * Regular expression to recognize transcriptions. Groups:
  * - header: The header of the transcription.
+ * - format: The format of the transcription, e.g. 'Image' or 'Video'.
  * - type: The type of the transcription, e.g. 'Twitter Post'.
  * - content: The transcription content.
  * - footer: The footer of the transcription.
  */
 const transcriptionRegex = new RegExp(
   headerRegex.source + contentRegex.source + footerRegex.source,
-  'm',
+  // Multiline, allow '.' to match newline characters and be case-insensitive
+  'msi',
 );
 
 export default class Transcription {
   /** The header of the transcription, formatted in reddit markdown. */
   public headerMD: string;
+  /** The format of the transcription, e.g. 'Image' or 'Video'. */
+  public format: string;
   /** The type of the transcription, e.g. 'Twitter Post'. */
   public type: string;
   /** The content of the transcription, formatted in reddit markdown. */
@@ -57,10 +62,21 @@ export default class Transcription {
     const match = transcriptionRegex.exec(bodyMD);
 
     if (match === null || match.groups === undefined) {
+      if (!footerRegex.test(bodyMD)) {
+        throw new Error(
+          `Failed to convert comment to transcription, footer not found:\n<<<${bodyMD}>>>`,
+        );
+      }
+      if (!headerRegex.test(bodyMD)) {
+        throw new Error(
+          `Failed to convert comment to transcription, header not found:\n<<<${bodyMD}>>>`,
+        );
+      }
       throw new Error(`Failed to convert comment to transcription:\n<<<${bodyMD}>>>`);
     }
 
     this.headerMD = match.groups.headerMD;
+    this.format = match.groups.format;
     this.type = match.groups.type;
     this.contentMD = match.groups.contentMD;
     this.footerMD = match.groups.footerMD;
