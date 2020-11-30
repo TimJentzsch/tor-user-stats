@@ -45,6 +45,8 @@ export default class Transcription {
   public footerMD: string;
 
   constructor(
+    /** The ID of the comment. */
+    public id: string,
     /** The full body of the transcription, formatted in reddit markdown. */
     public bodyMD: string,
     /** The full body of the transcription, formatted in HTML. */
@@ -86,6 +88,7 @@ export default class Transcription {
    */
   static fromComment(comment: Comment): Transcription {
     return new Transcription(
+      comment.id,
       comment.body,
       comment.body_html,
       comment.created_utc,

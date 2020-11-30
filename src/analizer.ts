@@ -220,6 +220,10 @@ export default async function analizeUser(userName: string): Promise<void> {
   let transcriptions: Transcription[] = [];
 
   await getAllUserComments(userName, (newComments) => {
+    if (newComments.length === 0) {
+      return;
+    }
+
     const endDate = new Date(newComments[0].created_utc * 1000).toISOString();
     const startDate = new Date(
       newComments[newComments.length - 1].created_utc * 1000,

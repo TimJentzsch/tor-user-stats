@@ -27,7 +27,7 @@ describe('Analizer', () => {
     });
     test('should return 1 for one element array', () => {
       const transcriptions: Transcription[] = [
-        new Transcription(defaultTranscriptionMD, '', 1923019, 12, 'r/Old_Recipes'),
+        new Transcription('a', defaultTranscriptionMD, '', 1923019, 12, 'r/Old_Recipes'),
       ];
       const duration = 24 * 60 * 60; // 24h
       const actual = getTranscriptionPeak(transcriptions, duration);
@@ -37,8 +37,8 @@ describe('Analizer', () => {
     test('should include other transcription in timeframe', () => {
       const duration = 24 * 60 * 60; // 24h
       const transcriptions: Transcription[] = [
-        new Transcription(defaultTranscriptionMD, '', 1923019 + duration, 12, 'r/Old_Recipes'),
-        new Transcription(defaultTranscriptionMD, '', 1923019, 12, 'r/Old_Recipes'),
+        new Transcription('a', defaultTranscriptionMD, '', 1923019 + duration, 12, 'r/Old_Recipes'),
+        new Transcription('b', defaultTranscriptionMD, '', 1923019, 12, 'r/Old_Recipes'),
       ];
       const actual = getTranscriptionPeak(transcriptions, duration);
 
@@ -47,8 +47,15 @@ describe('Analizer', () => {
     test('should exclude other transcription outside the timeframe', () => {
       const duration = 24 * 60 * 60; // 24h
       const transcriptions: Transcription[] = [
-        new Transcription(defaultTranscriptionMD, '', 1923019 + duration + 1, 12, 'r/Old_Recipes'),
-        new Transcription(defaultTranscriptionMD, '', 1923019, 12, 'r/Old_Recipes'),
+        new Transcription(
+          'a',
+          defaultTranscriptionMD,
+          '',
+          1923019 + duration + 1,
+          12,
+          'r/Old_Recipes',
+        ),
+        new Transcription('b', defaultTranscriptionMD, '', 1923019, 12, 'r/Old_Recipes'),
       ];
       const actual = getTranscriptionPeak(transcriptions, duration);
 
@@ -60,9 +67,9 @@ describe('Analizer', () => {
     test('should return count for larger timeframe', () => {
       const duration = 60 * 60; // 1h
       const transcriptions: Transcription[] = [
-        new Transcription(defaultTranscriptionMD, '', 1923019 + 20, 12, 'r/Old_Recipes'),
-        new Transcription(defaultTranscriptionMD, '', 1923019 + 10, 12, 'r/Old_Recipes'),
-        new Transcription(defaultTranscriptionMD, '', 1923019, 12, 'r/Old_Recipes'),
+        new Transcription('a', defaultTranscriptionMD, '', 1923019 + 20, 12, 'r/Old_Recipes'),
+        new Transcription('b', defaultTranscriptionMD, '', 1923019 + 10, 12, 'r/Old_Recipes'),
+        new Transcription('c', defaultTranscriptionMD, '', 1923019, 12, 'r/Old_Recipes'),
       ];
       const actual = getTranscriptionAvg(transcriptions, duration);
 
@@ -71,9 +78,23 @@ describe('Analizer', () => {
     test('should return average for smaller timeframe', () => {
       const duration = 60 * 60; // 1h
       const transcriptions: Transcription[] = [
-        new Transcription(defaultTranscriptionMD, '', 1923019 + duration * 3, 12, 'r/Old_Recipes'),
-        new Transcription(defaultTranscriptionMD, '', 1923019 + duration * 2, 12, 'r/Old_Recipes'),
-        new Transcription(defaultTranscriptionMD, '', 1923019, 12, 'r/Old_Recipes'),
+        new Transcription(
+          'a',
+          defaultTranscriptionMD,
+          '',
+          1923019 + duration * 3,
+          12,
+          'r/Old_Recipes',
+        ),
+        new Transcription(
+          'b',
+          defaultTranscriptionMD,
+          '',
+          1923019 + duration * 2,
+          12,
+          'r/Old_Recipes',
+        ),
+        new Transcription('c', defaultTranscriptionMD, '', 1923019, 12, 'r/Old_Recipes'),
       ];
       const actual = getTranscriptionAvg(transcriptions, duration);
 
