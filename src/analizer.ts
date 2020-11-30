@@ -105,10 +105,21 @@ export default async function analizeUser(userName: string): Promise<void> {
     `All comments fetched. All: ${allCount}, Comments: ${commentCount}, Transcriptions: ${transcriptionCount}`,
   );
 
+  const accuracy = 2;
+
+  // Peaks
   const hourPeak = getTranscriptionPeak(transcriptions, 60 * 60); // 1h
   const dayPeak = getTranscriptionPeak(transcriptions, 24 * 60 * 60); // 24h
   const weekPeak = getTranscriptionPeak(transcriptions, 7 * 24 * 60 * 60); // 7d
   const yearPeak = getTranscriptionPeak(transcriptions, 365 * 24 * 60 * 60); // 365d
 
   logger.info(`Peaks: 1h: ${hourPeak} | 24h: ${dayPeak} | 7d: ${weekPeak} | 365d: ${yearPeak}`);
+
+  // Averages
+  const hourAvg = getTranscriptionAvg(transcriptions, 60 * 60).toFixed(accuracy); // 1h
+  const dayAvg = getTranscriptionAvg(transcriptions, 24 * 60 * 60).toFixed(accuracy); // 24h
+  const weekAvg = getTranscriptionAvg(transcriptions, 7 * 24 * 60 * 60).toFixed(accuracy); // 7d
+  const yearAvg = getTranscriptionAvg(transcriptions, 365 * 24 * 60 * 60).toFixed(accuracy); // 365d
+
+  logger.info(`Avgs: 1h: ${hourAvg} | 24h: ${dayAvg} | 7d: ${weekAvg} | 365d: ${yearAvg}`);
 }
