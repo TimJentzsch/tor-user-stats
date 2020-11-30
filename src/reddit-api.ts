@@ -79,7 +79,8 @@ export async function getAllUserComments(
 export async function isToRMod(userName: string): Promise<boolean> {
   const req = await requester;
   const tor = req.getSubreddit('TranscribersOfReddit');
-  const mods = tor.getModerators();
+  // Note: This await IS needed
+  const mods = await tor.getModerators();
 
   // Check if the user is one of the mods
   return mods.findIndex((mod) => mod.name === userName) >= 0;
