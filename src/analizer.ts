@@ -87,7 +87,12 @@ export default async function analizeUser(userName: string): Promise<void> {
   let transcriptions: Transcription[] = [];
 
   await getAllUserComments(userName, (newComments) => {
-    logger.debug(`Fetched ${newComments.length} comments`);
+    const endDate = new Date(newComments[0].created_utc * 1000).toISOString();
+    const startDate = new Date(
+      newComments[newComments.length - 1].created_utc * 1000,
+    ).toISOString();
+
+    logger.debug(`Fetched ${newComments.length} comments, from ${endDate} to ${startDate}`);
     allCount += newComments.length;
 
     const newValidComments = newComments.filter((comment) => isComment(comment));
