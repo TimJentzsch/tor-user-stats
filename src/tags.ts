@@ -1,30 +1,40 @@
-export interface Tag {
-  /** The name of the tag. */
-  name: string;
-  /** The hex color of the tag. */
-  color: string;
+export class Tag {
+  constructor(
+    /** The name of the tag. */
+    public name: string,
+    /** The hex color of the tag. */
+    public color: string,
+  ) {}
+
+  public toString(): string {
+    return this.name;
+  }
 }
 
-export interface CountTag extends Tag {
-  /** The lower bound for the transcription count. */
-  lowerBound: number;
-  /** The upper bound for the transcription count. */
-  upperBound: number;
+export class CountTag extends Tag {
+  constructor(
+    name: string,
+    color: string,
+    /** The lower bound for the transcription count. */
+    public lowerBound: number,
+    /** The upper bound for the transcription count. */
+    public upperBound: number,
+  ) {
+    super(name, color);
+  }
+
+  public toString(): string {
+    return `${this.name} (${this.lowerBound}-${this.upperBound})`;
+  }
 }
 
 // - SPECIAL TAGS -----------------------------------------
 
 /** 100 transcriptions in 24h. */
-const twentyFour: Tag = {
-  name: '100/24h',
-  color: '#fcec3c',
-};
+const twentyFour = new Tag('100/24h', '#fcec3c');
 
 /** Mod on r/TranscribersOfReddit. */
-const mod: Tag = {
-  name: 'Mod',
-  color: '#fc3c46',
-};
+const mod = new Tag('Mod', '#fc3c46');
 
 export const specialTags = {
   twentyFour,
@@ -34,84 +44,34 @@ export const specialTags = {
 // - COUNT TAGS -------------------------------------------
 
 /** Visitor, 0. */
-const visitor: CountTag = {
-  name: 'Initiate',
-  color: '#aaaaaa',
-  lowerBound: 0,
-  upperBound: 0,
-};
+const visitor = new CountTag('Initiate', '#aaaaaa', 0, 0);
 
 /** Initiate, 1-49. */
-const initiate: CountTag = {
-  name: 'Initiate',
-  color: '#eeeeee',
-  lowerBound: 1,
-  upperBound: 49,
-};
+const initiate = new CountTag('Initiate', '#eeeeee', 1, 49);
 
 /** Green, 50-99. */
-const green: CountTag = {
-  name: 'Green',
-  color: '#46d160',
-  lowerBound: 50,
-  upperBound: 99,
-};
+const green = new CountTag('Green', '#46d160', 50, 99);
 
 /** Teal, 100-249. */
-const teal: CountTag = {
-  name: 'Teal',
-  color: '#0aa18f',
-  lowerBound: 100,
-  upperBound: 249,
-};
+const teal = new CountTag('Teal', '#0aa18f', 100, 249);
 
 /** Purple, 250-499. */
-const purple: CountTag = {
-  name: 'Purple',
-  color: '#7f00ff',
-  lowerBound: 250,
-  upperBound: 499,
-};
+const purple = new CountTag('Purple', '#7f00ff', 250, 499);
 
 /** Gold, 500-999. */
-const gold: CountTag = {
-  name: 'Gold',
-  color: '#ffffff',
-  lowerBound: 500,
-  upperBound: 999,
-};
+const gold = new CountTag('Gold', '#ffffff', 500, 999);
 
 /** Diamond, 1000-2499. */
-const diamond: CountTag = {
-  name: 'Diamond',
-  color: '#b9f2ff',
-  lowerBound: 1000,
-  upperBound: 2499,
-};
+const diamond = new CountTag('Diamond', '#b9f2ff', 1000, 2499);
 
 /** Ruby, 2500-4999. */
-const ruby: CountTag = {
-  name: 'Ruby',
-  color: '#ff005d',
-  lowerBound: 2500,
-  upperBound: 4999,
-};
+const ruby = new CountTag('Ruby', '#ff005d', 2500, 4999);
 
 /** Topaz, 5000-9999. */
-const topaz: CountTag = {
-  name: 'Topaz',
-  color: '#ff6200',
-  lowerBound: 5000,
-  upperBound: 9999,
-};
+const topaz = new CountTag('Topaz', '#ff6200', 5000, 9999);
 
 /** Jade, 10000+. */
-const jade: CountTag = {
-  name: 'Jade',
-  color: '#307250',
-  lowerBound: 10000,
-  upperBound: Infinity,
-};
+const jade = new CountTag('Jade', '#307250', 10000, Infinity);
 
 /** Tags for the transcription count. */
 export const countTags = [visitor, initiate, green, teal, purple, gold, diamond, ruby, topaz, jade];
