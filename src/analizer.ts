@@ -298,6 +298,12 @@ export function analyzeType(transcriptions: Transcription[]): TypeStats[] {
   });
 }
 
+export function logStats(label: string, stats: string): void {
+  const logLabel = `${label}:`;
+
+  logger.info(`${logLabel.padEnd(14)} ${stats}`);
+}
+
 /** Analizes the transcriptions of the given user. */
 export default async function analizeUser(userName: string): Promise<void> {
   logger.debug(`Starting analysis for /u/${userName}:`);
@@ -333,7 +339,10 @@ export default async function analizeUser(userName: string): Promise<void> {
   });
 
   logger.info(`Analysis for /u/${userName}:`);
-  logger.info(`All: ${allCount}, Comments: ${commentCount}, Transcriptions: ${transcriptionCount}`);
+  logStats(
+    'Counts',
+    `All: ${allCount}, Comments: ${commentCount}, Transcriptions: ${transcriptionCount}`,
+  );
 
   const accuracy = 2;
 
@@ -343,7 +352,7 @@ export default async function analizeUser(userName: string): Promise<void> {
   const weekPeak = getTranscriptionPeak(transcriptions, 7 * 24 * 60 * 60); // 7d
   const yearPeak = getTranscriptionPeak(transcriptions, 365 * 24 * 60 * 60); // 365d
 
-  logger.info(`Peaks: 1h: ${hourPeak} | 24h: ${dayPeak} | 7d: ${weekPeak} | 365d: ${yearPeak}`);
+  logStats('Peaks', `1h: ${hourPeak} | 24h: ${dayPeak} | 7d: ${weekPeak} | 365d: ${yearPeak}`);
 
   // Averages
   const hourAvg = getTranscriptionAvg(transcriptions, 60 * 60).toFixed(accuracy); // 1h
@@ -351,16 +360,22 @@ export default async function analizeUser(userName: string): Promise<void> {
   const weekAvg = getTranscriptionAvg(transcriptions, 7 * 24 * 60 * 60).toFixed(accuracy); // 7d
   const yearAvg = getTranscriptionAvg(transcriptions, 365 * 24 * 60 * 60).toFixed(accuracy); // 365d
 
-  logger.info(`Avgs: 1h: ${hourAvg} | 24h: ${dayAvg} | 7d: ${weekAvg} | 365d: ${yearAvg}`);
+  logStats('Avgs', `1h: ${hourAvg} | 24h: ${dayAvg} | 7d: ${weekAvg} | 365d: ${yearAvg}`);
 
   // Amounts
   const amounts = getTranscriptionAmount(transcriptions);
 
-  logger.info(
-    `Characters: Total: ${amounts.charTotal} | Peak: ${amounts.charPeak} | Average: ${amounts.charAvg}`,
+  logStats(
+    'Chars',
+    `Total: ${amounts.charTotal} | Peak: ${amounts.charPeak} | Average: ${amounts.charAvg.toFixed(
+      2,
+    )}`,
   );
-  logger.info(
-    `Words:      Total: ${amounts.wordTotal} | Peak: ${amounts.wordPeak} | Average: ${amounts.wordAvg}`,
+  logStats(
+    'Words',
+    `Total: ${amounts.wordTotal} | Peak: ${amounts.wordPeak} | Average: ${amounts.wordAvg.toFixed(
+      2,
+    )}`,
   );
 
   // Fomat stats
@@ -368,21 +383,21 @@ export default async function analizeUser(userName: string): Promise<void> {
     return `${stats.format}: ${stats.count}`;
   });
 
-  logger.info(`Top 5 formats: ${formatStats.join(' | ')}`);
+  logStats('Top 5 formats', `${formatStats.join(' | ')}`);
 
   // Type stats
   const typeStats = limitStart(analyzeType(transcriptions), 5).map((stats) => {
     return `${stats.type}: ${stats.count}`;
   });
 
-  logger.info(`Top 5 types:   ${typeStats.join(' | ')}`);
+  logStats('Top 5 types', `${typeStats.join(' | ')}`);
 
   // Sub stats
   const subStats = limitStart(analyzeSubreddits(transcriptions), 5).map((stats) => {
     return `${stats.sub}: ${stats.count}`;
   });
 
-  logger.info(`Top 5 subs:    ${subStats.join(' | ')}`);
+  logStats('Top 5 subs', `${subStats.join(' | ')}`);
 
   // Tags
   const countTag = getCountTag(transcriptions);
@@ -393,5 +408,5 @@ export default async function analizeUser(userName: string): Promise<void> {
 
   const tagText = [countText].concat(spText).join(' | ');
 
-  logger.info(`Tags: ${tagText}`);
+  logStats('Tags', `${tagText}`);
 }
