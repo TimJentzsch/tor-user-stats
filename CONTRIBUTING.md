@@ -5,6 +5,7 @@
 ### Prerequisites
 
 You will need:
+
 - [node.js](https://nodejs.org/en/download/) >= `0.1.0`
 - [yarn](https://yarnpkg.com/getting-started/install/) >= `1.22.5`
 - [Visual Studio Code](https://code.visualstudio.com/Download) (You may also use other editors, but everything is already configured for this one)
@@ -51,4 +52,10 @@ The project needs to interact with the reddit API. Therefore, you have to create
 
 ### Usage
 
-You should now be able to start the app via `yarn start`.
+You should now be able to start the app via `yarn start`. This will run the analysis for the user specified in the `reddit.config.json`.
+
+To run the analysis for a specific user, use:
+
+```
+yarn start <username>
+```
