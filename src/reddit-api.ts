@@ -1,8 +1,8 @@
 import snoowrap, { Listing, Comment } from 'snoowrap';
-import FS from 'fs';
 import { v4 as uuidv4 } from 'uuid';
 import appData from './app-data';
 import Logger from './logger';
+import config from '../config/reddit.config.json';
 
 const logger = new Logger('Reddit');
 
@@ -14,14 +14,11 @@ type RedditConfig = {
   userName: string;
 };
 
-// Load the reddit config
-export function redditConfig(): RedditConfig {
-  return JSON.parse(FS.readFileSync('config/reddit.config.json', 'utf-8'));
-}
+export const redditConfig = config as RedditConfig;
 
 /** The user agent, so that reddit knows who we are. */
 export function userAgent(): string {
-  return `${appData.name}/v${appData.version} by /u/${redditConfig().userName}`;
+  return `${appData.name}/v${appData.version} by /u/${redditConfig.userName}`;
 }
 
 // TODO: Save this per device
@@ -32,7 +29,7 @@ const deviceId = uuidv4().substr(0, 30); // Reddit allows only 30 chars
 export function requester(): Promise<snoowrap> {
   return snoowrap.fromApplicationOnlyAuth({
     userAgent: userAgent(),
-    clientId: redditConfig().clientId,
+    clientId: redditConfig.clientId,
     deviceId,
     grantType: 'https://oauth.reddit.com/grants/installed_client',
   });
