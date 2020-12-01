@@ -222,7 +222,7 @@ type FormatStats = {
  * Analyzes the given transcriptions by the format, e.g. 'Image' or 'Video'.
  * @param transcriptions The transcriptions to analyze.
  */
-export function analyzeFormat(transcriptions: Transcription[]) {
+export function analyzeFormat(transcriptions: Transcription[]): FormatStats[] {
   const formatStats: FormatStats[] = [];
 
   transcriptions.forEach((transcription) => {
@@ -244,6 +244,56 @@ export function analyzeFormat(transcriptions: Transcription[]) {
 
   // Sort by count descending
   return formatStats.sort((a, b) => {
+    return b.count - a.count;
+  });
+}
+
+type TypeStats = {
+  /** The name of the type. */
+  type: string;
+  /** The number of transcriptions for the format. */
+  count: number;
+};
+
+/**
+ * Analyzes the given transcriptions by the format, e.g. 'Image' or 'Video'.
+ * @param transcriptions The transcriptions to analyze.
+ */
+export function analyzeType(transcriptions: Transcription[]): TypeStats[] {
+  const typeStats: TypeStats[] = [];
+
+  transcriptions.forEach((transcription) => {
+    let type = transcription.type;
+
+    if (type) {
+      // Simplify some common types
+      if (type.includes('Twitter')) {
+        type = 'Twitter';
+      } else if (type.includes('Facebook')) {
+        type = 'Facebook';
+      } else if (type.includes('Tumblr')) {
+        type = 'Tumblr';
+      } else if (type.includes('Reddit')) {
+        type = 'Reddit';
+      }
+
+      const stats = typeStats.find((stat) => {
+        return stat.type === type;
+      });
+
+      if (stats) {
+        stats.count += 1;
+      } else {
+        typeStats.push({
+          type,
+          count: 1,
+        });
+      }
+    }
+  });
+
+  // Sort by count descending
+  return typeStats.sort((a, b) => {
     return b.count - a.count;
   });
 }
@@ -317,6 +367,13 @@ export default async function analizeUser(userName: string): Promise<void> {
   });
 
   logger.info(`Top 5 formats: ${formatStats.join(' | ')}`);
+
+  // Type stats
+  const typeStats = limitStart(analyzeType(transcriptions), 5).map((stats) => {
+    return `${stats.type}: ${stats.count}`;
+  });
+
+  logger.info(`Top 5 types:   ${typeStats.join(' | ')}`);
 
   // Sub stats
   const subStats = limitStart(analyzeSubreddits(transcriptions), 5).map((stats) => {
