@@ -6,7 +6,7 @@
   "author": "Tim Jentzsch",
   "license": "MIT",
   "scripts": {
-    "build": "cross-env NODE_ENV=production parcel build templates/index.html --public-url .",
+    "build": "cross-env NODE_ENV=production parcel build templates/* --public-url .",
     "deploy": "gh-pages -d dist",
     "start": "parcel serve templates/index.html",
     "lint": "eslint \"src/**/*\"",
