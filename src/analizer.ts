@@ -211,6 +211,43 @@ export function analyzeSubreddits(transcriptions: Transcription[]): SubStats[] {
   });
 }
 
+type FormatStats = {
+  /** The name of the format. */
+  format: string;
+  /** The number of transcriptions for the format. */
+  count: number;
+};
+
+/**
+ * Analyzes the given transcriptions by the format, e.g. 'Image' or 'Video'.
+ * @param transcriptions The transcriptions to analyze.
+ */
+export function analyzeFormat(transcriptions: Transcription[]) {
+  const formatStats: FormatStats[] = [];
+
+  transcriptions.forEach((transcription) => {
+    const format = transcription.format;
+
+    const stats = formatStats.find((stat) => {
+      return stat.format === format;
+    });
+
+    if (stats) {
+      stats.count += 1;
+    } else {
+      formatStats.push({
+        format,
+        count: 1,
+      });
+    }
+  });
+
+  // Sort by count descending
+  return formatStats.sort((a, b) => {
+    return b.count - a.count;
+  });
+}
+
 /** Analizes the transcriptions of the given user. */
 export default async function analizeUser(userName: string): Promise<void> {
   let allCount = 0;
@@ -274,12 +311,19 @@ export default async function analizeUser(userName: string): Promise<void> {
     `Words:      Total: ${amounts.wordTotal} | Peak: ${amounts.wordPeak} | Average: ${amounts.wordAvg}`,
   );
 
+  // Fomat stats
+  const formatStats = limitStart(analyzeFormat(transcriptions), 5).map((stats) => {
+    return `${stats.format}: ${stats.count}`;
+  });
+
+  logger.info(`Top 5 formats: ${formatStats.join(' | ')}`);
+
   // Sub stats
   const subStats = limitStart(analyzeSubreddits(transcriptions), 5).map((stats) => {
     return `${stats.sub}: ${stats.count}`;
   });
 
-  logger.info(`Top 5 subs: ${subStats.join(' | ')}`);
+  logger.info(`Top 5 subs:    ${subStats.join(' | ')}`);
 
   // Tags
   const countTag = getCountTag(transcriptions);
