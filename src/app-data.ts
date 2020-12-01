@@ -1,4 +1,4 @@
-import FS from 'fs';
+import packageData from '../package.json';
 
 type AppData = {
   /** The name of the app. */
@@ -8,8 +8,6 @@ type AppData = {
   /** The version number, e.g. '0.1.0'. */
   version: string;
 };
-
-const packageData = JSON.parse(FS.readFileSync('package.json', 'utf-8'));
 
 const appData: AppData = {
   name: packageData.name,

@@ -8,7 +8,7 @@
   "scripts": {
     "build": "cross-env NODE_ENV=production parcel build templates/* --public-url .",
     "deploy": "gh-pages -d dist",
-    "start": "parcel serve templates/index.html",
+    "start": "parcel serve templates/*.html",
     "lint": "eslint \"src/**/*\"",
     "format": "eslint \"src/**/*\" --fix",
     "test": "jest --config jest.config.json",

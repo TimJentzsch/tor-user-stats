@@ -8,7 +8,7 @@ import { limitStart } from './util';
 const logger = new Logger('Analizer');
 
 /** Checks if a comment is an actual comment instead of a ToR bot interaction. */
-function isComment(comment: Comment): boolean {
+export function isComment(comment: Comment): boolean {
   return !(
     comment.subreddit_name_prefixed === 'r/TranscribersOfReddit' &&
     // Has one of the bot keywords
