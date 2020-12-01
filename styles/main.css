@@ -13,6 +13,21 @@
 
   --on-disabled: #cccccc;
   --on-tag: #222;
+
+  /** Tags */
+  --visitor: #aaaaaa;
+  --initiate: #eeeeee;
+  --green: #46d160;
+  --teal: #0aa18f;
+  --purple: #7f00ff;
+  --gold: #f5c234;
+  --diamond: #b9f2ff;
+  --ruby: #ff005d;
+  --topaz: #ff6200;
+  --jade: #307250;
+
+  --twentyFour: #fcec3c;
+  --mod: #fc3c46;
 }
 
 * {
@@ -68,7 +83,8 @@ h3 {
   color: var(--on-background);
 }
 
-#user-header, #tag-container {
+#user-header,
+#tag-container {
   display: flex;
   flex-flow: row wrap;
   justify-content: flex-start;
@@ -81,10 +97,51 @@ h3 {
   font-size: 20px;
 }
 
+/** Tags */
+
 .tag {
   margin-left: 10px;
   padding: 3px 5px;
   border-radius: 6px;
 
   color: var(--on-tag);
+}
+
+.visitor {
+  background-color: var(--visitor);
+}
+.initiate {
+  background-color: var(--initiate);
+}
+.green {
+  background-color: var(--green);
+}
+.teal {
+  background-color: var(--teal);
+}
+.purple {
+  background-color: var(--purple);
+}
+.gold {
+  background-color: var(--gold);
+}
+.diamond {
+  background-color: var(--diamond);
+}
+.ruby {
+  background-color: var(--ruby);
+}
+.topaz {
+  background-color: var(--topaz);
+}
+.jade {
+  background-color: var(--jade);
+}
+
+.mod {
+  background-color: var(--mod);
+}
+
+.twentyFour {
+  background-color: var(--twentyFour);
 }

@@ -56,7 +56,7 @@ function displayGamma(transcriptions: Transcription[]) {
 function getTagElement(tag: Tag): HTMLDivElement {
   const tagElement = document.createElement('div');
   tagElement.innerText = tag.toString();
-  tagElement.classList.add('tag', tag.name.toLocaleLowerCase());
+  tagElement.classList.add('tag', tag.id);
 
   return tagElement;
 }
