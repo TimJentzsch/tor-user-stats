@@ -226,7 +226,15 @@ export function analyzeFormat(transcriptions: Transcription[]): FormatStats[] {
   const formatStats: FormatStats[] = [];
 
   transcriptions.forEach((transcription) => {
-    const format = transcription.format;
+    let format = transcription.format;
+
+    if (format.includes('Image')) {
+      format = 'Image';
+    } else if (format.includes('Video')) {
+      format = 'Video';
+    } else if (format.includes('Text Message')) {
+      format = 'Text Messages';
+    }
 
     const stats = formatStats.find((stat) => {
       return stat.format === format;
