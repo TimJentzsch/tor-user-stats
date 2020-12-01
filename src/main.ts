@@ -9,7 +9,7 @@ logger.info(`Started ${appData.name}/v${appData.version}`);
 
 const args = process.argv.slice(2);
 
-let userName = redditConfig.userName;
+let userName = redditConfig().userName;
 
 if (args.length > 0) {
   userName = args[0];
