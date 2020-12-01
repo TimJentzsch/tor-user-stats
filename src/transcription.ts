@@ -6,7 +6,7 @@ import { Comment } from 'snoowrap';
  * - format: The format of the transcription, e.g. 'Image' or 'Video'.
  * - type: The type of the transcription, e.g. 'Twitter Post'.
  */
-const headerRegex = /^\s*(?<header>\*?(?<format>.+?)\s+Transcription:\*?\s*(?<type>.*?)\*?\s*-{3,})\s*/;
+const headerRegex = /^\s*(?<header>\*?(?<format>.+?)\s+Transcription:?\*?\s*(?<type>.*?)\*?\s*-{3,})\s*/;
 /**
  * Regular expression to recognize transcriptions. Groups:
  * - content: The transcription content.
