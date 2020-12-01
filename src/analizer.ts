@@ -232,8 +232,6 @@ export function analyzeFormat(transcriptions: Transcription[]): FormatStats[] {
       format = 'Image';
     } else if (format.includes('Video')) {
       format = 'Video';
-    } else if (format.includes('Text Message')) {
-      format = 'Text Messages';
     }
 
     const stats = formatStats.find((stat) => {
@@ -283,6 +281,8 @@ export function analyzeType(transcriptions: Transcription[]): TypeStats[] {
         type = 'Tumblr';
       } else if (type.includes('Reddit')) {
         type = 'Reddit';
+      } else if (type.includes('Text Message')) {
+        type = 'Text Messages';
       }
 
       const stats = typeStats.find((stat) => {
