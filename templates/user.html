@@ -4,8 +4,8 @@
     <meta charset="utf-8" />
     <title>tor-user-stats</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" type="text/css" media="screen" href="styles/main.css" />
-    <script src="dist/src/main.js"></script>
+    <link rel="stylesheet" type="text/css" media="screen" href="../styles/main.css" />
+    <script src="../dist/src/main.js"></script>
   </head>
   <body>
     <header>
@@ -15,16 +15,16 @@
           href="https://github.com/TimJentzsch/tor-user-stats"
           title="Check out the project on GitHub"
         >
-          <img width="35px" height="35px" src="images/github-icon.png" alt="GitHub icon" />
+          <img width="35px" height="35px" src="../images/github-icon.png" alt="GitHub icon" />
         </a>
       </div>
     </header>
     <div id="body-container">
-      <form>
-        /u/
-        <input type="text">
-        <input type="submit">
-      </form>
+      <div id="user-header">
+        <h2 id="username">/u/username</h2>
+        <span id="scribe-count" title="Transcription count">(0 &#x393;)</span>
+        <div class="tag" style="background-color: #eee;">Visitor (0)</div>
+      </div>
     </div>
   </body>
 </html>
