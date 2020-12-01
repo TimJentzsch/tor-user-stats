@@ -332,7 +332,9 @@ export default async function analizeUser(userName: string): Promise<void> {
       newComments[newComments.length - 1].created_utc * 1000,
     ).toISOString();
 
-    logger.debug(`Fetched ${newComments.length} comments, from ${endDate} to ${startDate}`);
+    const count = `${newComments.length}`.padStart(3);
+
+    logger.debug(`Fetched ${count} comments, from ${endDate} to ${startDate}`);
     allCount += newComments.length;
 
     const newValidComments = newComments.filter((comment) => isComment(comment));
