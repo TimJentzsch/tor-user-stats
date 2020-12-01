@@ -2,6 +2,7 @@
   "editor.tabSize": 2,
   "files.eol": "\n",
   "files.exclude": {
+    ".cache": true,
     "coverage": true,
     "dist": true,
     "node_modules": true,
