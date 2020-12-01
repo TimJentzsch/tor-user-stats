@@ -68,7 +68,7 @@ h3 {
   color: var(--on-background);
 }
 
-#user-header {
+#user-header, #tag-container {
   display: flex;
   flex-flow: row wrap;
   justify-content: flex-start;

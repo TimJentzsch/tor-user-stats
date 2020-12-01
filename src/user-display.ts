@@ -1,6 +1,7 @@
 import { getAllUserComments } from './reddit-api';
-import { isComment } from './analizer';
+import { getCountTag, getSpecialTags, isComment } from './analizer';
 import Transcription from './transcription';
+import { Tag } from './tags';
 
 function displayUserName(userName: string) {
   const userNameElement = document.getElementById('username') as HTMLElement;
@@ -52,6 +53,27 @@ function displayGamma(transcriptions: Transcription[]) {
   gammaElement.innerHTML = `(${gamma} &#x393;)`;
 }
 
+function getTagElement(tag: Tag): HTMLDivElement {
+  const tagElement = document.createElement('div');
+  tagElement.innerText = tag.toString();
+  tagElement.classList.add('tag', tag.name.toLocaleLowerCase());
+
+  return tagElement;
+}
+
+async function displayTags(userName: string, transcriptions: Transcription[]) {
+  const countTag = getCountTag(transcriptions);
+  const countTagElement = getTagElement(countTag);
+
+  const spTags = await getSpecialTags(userName, transcriptions);
+  const spTagElements = spTags.map((tag) => getTagElement(tag));
+
+  const tagContainer = document.getElementById('tag-container') as HTMLElement;
+  tagContainer.innerHTML = '';
+  tagContainer.appendChild(countTagElement);
+  spTagElements.forEach((tag) => tagContainer.appendChild(tag));
+}
+
 async function displayUser() {
   const urlParams = new URLSearchParams(window.location.search);
   const userName = urlParams.get('user');
@@ -64,6 +86,7 @@ async function displayUser() {
 
   const transcriptions = await getTranscriptions(userName);
   displayGamma(transcriptions);
+  displayTags(userName, transcriptions);
 }
 
 document.addEventListener('DOMContentLoaded', () => {
