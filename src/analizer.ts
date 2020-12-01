@@ -300,6 +300,8 @@ export function analyzeType(transcriptions: Transcription[]): TypeStats[] {
 
 /** Analizes the transcriptions of the given user. */
 export default async function analizeUser(userName: string): Promise<void> {
+  logger.debug(`Starting analysis for /u/${userName}:`);
+
   let allCount = 0;
   let commentCount = 0;
   let transcriptionCount = 0;
