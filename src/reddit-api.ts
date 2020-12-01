@@ -15,31 +15,35 @@ type RedditConfig = {
 };
 
 // Load the reddit config
-export const redditConfig: RedditConfig = JSON.parse(
-  FS.readFileSync('config/reddit.config.json', 'utf-8'),
-);
+export function redditConfig(): RedditConfig {
+  return JSON.parse(FS.readFileSync('config/reddit.config.json', 'utf-8'));
+}
 
 /** The user agent, so that reddit knows who we are. */
-const userAgent = `${appData.name}/v${appData.version} by /u/${redditConfig.userName}`;
+export function userAgent(): string {
+  return `${appData.name}/v${appData.version} by /u/${redditConfig().userName}`;
+}
 
 // TODO: Save this per device
 /** An ID identifying the current device. */
 const deviceId = uuidv4().substr(0, 30); // Reddit allows only 30 chars
 
 /** A 'user-less' requester for the reddit API. */
-export const requester = snoowrap.fromApplicationOnlyAuth({
-  userAgent,
-  clientId: redditConfig.clientId,
-  deviceId,
-  grantType: 'https://oauth.reddit.com/grants/installed_client',
-});
+export function requester(): Promise<snoowrap> {
+  return snoowrap.fromApplicationOnlyAuth({
+    userAgent: userAgent(),
+    clientId: redditConfig().clientId,
+    deviceId,
+    grantType: 'https://oauth.reddit.com/grants/installed_client',
+  });
+}
 
 /** Get comments of the given user. */
 export async function getUserComments(
   userName: string,
   options: unknown,
 ): Promise<Listing<Comment>> {
-  const req = await requester;
+  const req = await requester();
   return req.getUser(userName).getComments(options);
 }
 
@@ -77,7 +81,7 @@ export async function getAllUserComments(
  * @param userName The user to check.
  */
 export async function isToRMod(userName: string): Promise<boolean> {
-  const req = await requester;
+  const req = await requester();
   const tor = req.getSubreddit('TranscribersOfReddit');
   // Note: This await IS needed
   const mods = await tor.getModerators();
