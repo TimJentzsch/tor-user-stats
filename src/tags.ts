@@ -1,5 +1,7 @@
 export class Tag {
   constructor(
+    /** The id of the tag. */
+    public id: string,
     /** The name of the tag. */
     public name: string,
     /** The hex color of the tag. */
@@ -20,7 +22,7 @@ export class CountTag extends Tag {
     /** The upper bound for the transcription count. */
     public upperBound: number,
   ) {
-    super(name, color);
+    super(name.toLocaleLowerCase(), name, color);
   }
 
   public toString(): string {
@@ -31,10 +33,10 @@ export class CountTag extends Tag {
 // - SPECIAL TAGS -----------------------------------------
 
 /** 100 transcriptions in 24h. */
-const twentyFour = new Tag('100/24h', '#fcec3c');
+const twentyFour = new Tag('twentyFour', '100/24h Club', '#fcec3c');
 
 /** Mod on r/TranscribersOfReddit. */
-const mod = new Tag('Mod', '#fc3c46');
+const mod = new Tag('mod', 'Mod', '#fc3c46');
 
 export const specialTags = {
   twentyFour,
