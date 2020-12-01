@@ -49,7 +49,7 @@ function displayGamma(transcriptions: Transcription[]) {
   const gamma = transcriptions.length;
 
   const gammaElement = document.getElementById('scribe-count') as HTMLElement;
-  gammaElement.innerHTML = `(${gamma} &#x393;`;
+  gammaElement.innerHTML = `(${gamma} &#x393;)`;
 }
 
 async function displayUser() {
