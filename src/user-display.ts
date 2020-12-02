@@ -13,6 +13,7 @@ import {
 import Transcription from './transcription';
 import { Tag } from './tags';
 import { limitStart } from './util';
+import { displayFormatDiagram, displayTypeDiagram } from './display/diagrams';
 
 function updateElement(id: string, text: string | number) {
   const element = document.getElementById(id) as HTMLElement;
@@ -142,37 +143,6 @@ function updateTables(transcriptions: Transcription[]) {
   updatePeaks(transcriptions);
   updateAvgs(transcriptions);
   updateCharWords(transcriptions);
-}
-
-function displayFormatDiagram(transcriptions: Transcription[]) {
-  const formatStats = limitStart(analyzeFormat(transcriptions), 5);
-
-  const data = [
-    {
-      values: formatStats.map((stats) => stats.count),
-      labels: formatStats.map((stats) => stats.format),
-      type: 'pie',
-      textinfo: 'label+percent',
-      textposition: 'outside',
-      automargin: true,
-    },
-  ];
-
-  Plotly.newPlot('format-diagram', data);
-}
-
-function displayTypeDiagram(transcriptions: Transcription[]) {
-  const typeStats = limitStart(analyzeType(transcriptions), 5);
-
-  const data = [
-    {
-      y: typeStats.map((stats) => stats.count),
-      x: typeStats.map((stats) => stats.type),
-      type: 'bar',
-    },
-  ];
-
-  Plotly.newPlot('type-diagram', data);
 }
 
 function updateDisplays(userName: string, transcriptions: Transcription[]) {
