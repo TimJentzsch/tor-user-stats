@@ -24,6 +24,14 @@ export class CountTag extends Tag {
   }
 
   public toString(): string {
+    if (this.lowerBound === this.upperBound) {
+      return `${this.name} (${this.lowerBound})`;
+    }
+
+    if (this.upperBound === Infinity) {
+      return `${this.name} (${this.lowerBound}+)`;
+    }
+
     return `${this.name} (${this.lowerBound}-${this.upperBound})`;
   }
 }
