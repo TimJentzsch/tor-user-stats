@@ -1,5 +1,5 @@
 import Plotly from 'plotly.js-dist';
-import { analyzeFormat, analyzeType } from '../analizer';
+import { analyzeFormat, analyzeSubreddits, analyzeType } from '../analizer';
 import Transcription from '../transcription';
 import { limitStart } from '../util';
 import Colors from './colors';
@@ -48,7 +48,36 @@ export function displayTypeDiagram(transcriptions: Transcription[]): void {
 
   const layout = fromTemplate(layoutTemplate, {
     title: 'Top 5 Types',
+    yaxis: {
+      title: 'Transcription Count',
+    },
   });
 
   Plotly.newPlot('type-diagram', data, layout);
+}
+
+export function displaySubredditDiagram(transcriptions: Transcription[]): void {
+  const subStats = limitStart(analyzeSubreddits(transcriptions), 5);
+
+  const data = [
+    {
+      y: subStats.map((stats) => stats.count),
+      x: subStats.map((stats) => stats.sub),
+      text: subStats.map((stats) => stats.count.toString()),
+      textposition: 'auto',
+      type: 'bar',
+      marker: {
+        color: Colors.primary(),
+      },
+    },
+  ];
+
+  const layout = fromTemplate(layoutTemplate, {
+    title: 'Top 5 Subreddits',
+    yaxis: {
+      title: 'Transcription Count',
+    },
+  });
+
+  Plotly.newPlot('subreddit-diagram', data, layout);
 }
