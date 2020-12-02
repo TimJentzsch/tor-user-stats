@@ -8,9 +8,14 @@ function displayUserName(userName: string) {
   userNameElement.innerText = `/u/${userName}`;
 }
 
+function setProgress(progress: number) {
+  const progressBar = document.getElementById('progress-bar') as HTMLProgressElement;
+  progressBar.value = progress;
+}
+
 async function getTranscriptions(
   userName: string,
-  callback: (transcriptions: Transcription[]) => void,
+  callback: (transcriptions: Transcription[], allCount: number) => void,
 ): Promise<Transcription[]> {
   console.debug(`Starting analysis for /u/${userName}:`);
 
@@ -45,7 +50,7 @@ async function getTranscriptions(
 
     transcriptions = transcriptions.concat(newTranscriptions);
 
-    callback(transcriptions);
+    callback(transcriptions, allCount);
   });
 
   return transcriptions;
@@ -95,9 +100,12 @@ async function displayUser() {
 
   displayUserName(userName);
 
-  await getTranscriptions(userName, (transcriptions) => {
+  await getTranscriptions(userName, (transcriptions, allCount) => {
     updateDisplays(userName, transcriptions);
+    setProgress(allCount / 1000);
   });
+
+  setProgress(1);
 }
 
 document.addEventListener('DOMContentLoaded', () => {
