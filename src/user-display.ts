@@ -152,6 +152,9 @@ function displayFormatDiagram(transcriptions: Transcription[]) {
       values: formatStats.map((stats) => stats.count),
       labels: formatStats.map((stats) => stats.format),
       type: 'pie',
+      textinfo: 'label+percent',
+      textposition: 'outside',
+      automargin: true,
     },
   ];
 
