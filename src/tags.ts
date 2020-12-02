@@ -44,7 +44,7 @@ export const specialTags = {
 // - COUNT TAGS -------------------------------------------
 
 /** Visitor, 0. */
-const visitor = new CountTag('Initiate', 0, 0);
+const visitor = new CountTag('Visitor', 0, 0);
 
 /** Initiate, 1-49. */
 const initiate = new CountTag('Initiate', 1, 49);

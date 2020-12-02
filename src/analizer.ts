@@ -88,9 +88,9 @@ export function getCountTag(transcriptions: Transcription[]): CountTag {
   const count = transcriptions.length;
 
   // From the highest tag downwards, search for the first match
-  for (const countTag of countTags.reverse()) {
-    if (count >= countTag.lowerBound) {
-      return countTag;
+  for (let i = countTags.length - 1; i >= 0; i -= 1) {
+    if (count >= countTags[i].lowerBound) {
+      return countTags[i];
     }
   }
 

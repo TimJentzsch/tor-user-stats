@@ -8,7 +8,10 @@ function displayUserName(userName: string) {
   userNameElement.innerText = `/u/${userName}`;
 }
 
-async function getTranscriptions(userName: string): Promise<Transcription[]> {
+async function getTranscriptions(
+  userName: string,
+  callback: (transcriptions: Transcription[]) => void,
+): Promise<Transcription[]> {
   console.debug(`Starting analysis for /u/${userName}:`);
 
   let allCount = 0;
@@ -41,6 +44,8 @@ async function getTranscriptions(userName: string): Promise<Transcription[]> {
     transcriptionCount += newTranscriptions.length;
 
     transcriptions = transcriptions.concat(newTranscriptions);
+
+    callback(transcriptions);
   });
 
   return transcriptions;
@@ -63,6 +68,7 @@ function getTagElement(tag: Tag): HTMLDivElement {
 
 async function displayTags(userName: string, transcriptions: Transcription[]) {
   const countTag = getCountTag(transcriptions);
+  console.debug(`Count tag: ${countTag.toString()}`);
   const countTagElement = getTagElement(countTag);
 
   const spTags = await getSpecialTags(userName, transcriptions);
@@ -72,6 +78,11 @@ async function displayTags(userName: string, transcriptions: Transcription[]) {
   tagContainer.innerHTML = '';
   tagContainer.appendChild(countTagElement);
   spTagElements.forEach((tag) => tagContainer.appendChild(tag));
+}
+
+function updateDisplays(userName: string, transcriptions: Transcription[]) {
+  displayGamma(transcriptions);
+  displayTags(userName, transcriptions);
 }
 
 async function displayUser() {
@@ -84,9 +95,9 @@ async function displayUser() {
 
   displayUserName(userName);
 
-  const transcriptions = await getTranscriptions(userName);
-  displayGamma(transcriptions);
-  displayTags(userName, transcriptions);
+  await getTranscriptions(userName, (transcriptions) => {
+    updateDisplays(userName, transcriptions);
+  });
 }
 
 document.addEventListener('DOMContentLoaded', () => {
