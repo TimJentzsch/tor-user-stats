@@ -1,5 +1,6 @@
 :root {
   --primary: #80cbc4;
+  --primary-variant: #4c968f; 
   --on-primary: #000000;
 
   --background: #121212;
@@ -35,6 +36,11 @@
   padding: 0;
 }
 
+html,
+body {
+  height: 100%;
+}
+
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-size: 13px;
@@ -54,6 +60,7 @@ body {
   flex-flow: row wrap;
   justify-content: space-between;
   align-items: center;
+  height: 50px;
 }
 
 header {
@@ -95,6 +102,38 @@ h3 {
 #scribe-count {
   margin-left: 10px;
   font-size: 20px;
+}
+
+#search-container {
+  margin: 50px 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+}
+
+#user-input,
+#search-button {
+  font-size: 20px;
+  padding: 5px 7px;
+  border-radius: 3px;
+}
+
+#user-input {
+  background-color: var(--surface);
+  color: var(--on-surface);
+  border: solid 1px var(--primary);
+}
+
+#search-button {
+  background-color: var(--primary-variant);
+  color: var(--on-primary);
+  border: solid 1px var(--on-primary);
+}
+
+#search-button:hover {
+  background-color: var(--primary);
+  cursor: pointer;
 }
 
 /** Tags */
