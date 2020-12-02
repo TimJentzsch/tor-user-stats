@@ -6,9 +6,11 @@
   "author": "Tim Jentzsch",
   "license": "MIT",
   "scripts": {
-    "build": "cross-env NODE_ENV=production parcel build templates/* --public-url .",
+    "build": "yarn tsc --build",
+    "start": "yarn build && node dist/src/main.js",
+    "bundle": "cross-env NODE_ENV=production parcel build templates/* --public-url .",
+    "serve": "parcel serve templates/*.html",
     "deploy": "gh-pages -d dist",
-    "start": "parcel serve templates/*.html",
     "lint": "eslint \"src/**/*\"",
     "format": "eslint \"src/**/*\" --fix",
     "test": "jest --config jest.config.json",
