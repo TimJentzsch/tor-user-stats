@@ -52,7 +52,7 @@ body {
 
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  font-size: 13px;
+  font-size: 14px;
   background-color: var(--background);
   color: var(--on-background);
 }
@@ -191,6 +191,12 @@ table {
 th, td {
   text-align: center;
   padding: 5px 7px;
+}
+
+#general-stat-container {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
 }
 
 /** Tags */
