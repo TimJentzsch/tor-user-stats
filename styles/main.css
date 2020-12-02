@@ -155,6 +155,28 @@ h3 {
   cursor: pointer;
 }
 
+#progress-bar {
+  width: 100%;
+  height: 4px;
+}
+
+progress {
+  background-color: var(--surface);
+  border: none;
+}
+
+progress::-webkit-progress-bar {
+  background-color: var(--surface);
+}
+
+progress::-moz-progress-bar {
+  background-color: var(--primary);
+}
+
+progress::-webkit-progress-value {
+  background-color: var(--primary);
+}
+
 /** Tags */
 
 .tag {
