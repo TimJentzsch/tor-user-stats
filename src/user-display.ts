@@ -1,8 +1,6 @@
 import Plotly from 'plotly.js-dist';
 import { getAllUserComments } from './reddit-api';
 import {
-  analyzeFormat,
-  analyzeType,
   getCountTag,
   getSpecialTags,
   getTranscriptionAmount,
@@ -12,8 +10,11 @@ import {
 } from './analizer';
 import Transcription from './transcription';
 import { Tag } from './tags';
-import { limitStart } from './util';
-import { displayFormatDiagram, displayTypeDiagram } from './display/diagrams';
+import {
+  displayFormatDiagram,
+  displaySubredditDiagram,
+  displayTypeDiagram,
+} from './display/diagrams';
 
 function updateElement(id: string, text: string | number) {
   const element = document.getElementById(id) as HTMLElement;
@@ -151,6 +152,7 @@ function updateDisplays(userName: string, transcriptions: Transcription[]) {
   updateTables(transcriptions);
   displayFormatDiagram(transcriptions);
   displayTypeDiagram(transcriptions);
+  displaySubredditDiagram(transcriptions);
 }
 
 async function displayUser() {
