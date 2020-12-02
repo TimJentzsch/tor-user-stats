@@ -1,7 +1,18 @@
 import { getAllUserComments } from './reddit-api';
-import { getCountTag, getSpecialTags, isComment } from './analizer';
+import {
+  getCountTag,
+  getSpecialTags,
+  getTranscriptionAvg,
+  getTranscriptionPeak,
+  isComment,
+} from './analizer';
 import Transcription from './transcription';
 import { Tag } from './tags';
+
+function updateElement(id: string, text: string | number) {
+  const element = document.getElementById(id) as HTMLElement;
+  element.innerText = text.toString();
+}
 
 function displayUserName(userName: string) {
   const userNameElement = document.getElementById('username') as HTMLElement;
@@ -85,9 +96,41 @@ async function displayTags(userName: string, transcriptions: Transcription[]) {
   spTagElements.forEach((tag) => tagContainer.appendChild(tag));
 }
 
+function updatePeaks(transcriptions: Transcription[]) {
+  const hourPeak = getTranscriptionPeak(transcriptions, 60 * 60); // 1h
+  const dayPeak = getTranscriptionPeak(transcriptions, 24 * 60 * 60); // 24h
+  const weekPeak = getTranscriptionPeak(transcriptions, 7 * 24 * 60 * 60); // 7d
+  const yearPeak = getTranscriptionPeak(transcriptions, 365 * 24 * 60 * 60); // 365d
+
+  updateElement('peak-1h', hourPeak);
+  updateElement('peak-24h', dayPeak);
+  updateElement('peak-7d', weekPeak);
+  updateElement('peak-365d', yearPeak);
+}
+
+function updateAvgs(transcriptions: Transcription[]) {
+  const accuracy = 2;
+
+  const hourAvg = getTranscriptionAvg(transcriptions, 60 * 60).toFixed(accuracy); // 1h
+  const dayAvg = getTranscriptionAvg(transcriptions, 24 * 60 * 60).toFixed(accuracy); // 24h
+  const weekAvg = getTranscriptionAvg(transcriptions, 7 * 24 * 60 * 60).toFixed(accuracy); // 7d
+  const yearAvg = getTranscriptionAvg(transcriptions, 365 * 24 * 60 * 60).toFixed(accuracy); // 365d
+
+  updateElement('avg-1h', hourAvg);
+  updateElement('avg-24h', dayAvg);
+  updateElement('avg-7d', weekAvg);
+  updateElement('avg-365d', yearAvg);
+}
+
+function updateTable(transcriptions: Transcription[]) {
+  updatePeaks(transcriptions);
+  updateAvgs(transcriptions);
+}
+
 function updateDisplays(userName: string, transcriptions: Transcription[]) {
   displayGamma(transcriptions);
   displayTags(userName, transcriptions);
+  updateTable(transcriptions);
 }
 
 async function displayUser() {
