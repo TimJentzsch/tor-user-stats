@@ -2,6 +2,7 @@ import Plotly from 'plotly.js-dist';
 import { getAllUserComments } from './reddit-api';
 import {
   analyzeFormat,
+  analyzeType,
   getCountTag,
   getSpecialTags,
   getTranscriptionAmount,
@@ -11,6 +12,7 @@ import {
 } from './analizer';
 import Transcription from './transcription';
 import { Tag } from './tags';
+import { limitStart } from './util';
 
 function updateElement(id: string, text: string | number) {
   const element = document.getElementById(id) as HTMLElement;
@@ -143,7 +145,7 @@ function updateTables(transcriptions: Transcription[]) {
 }
 
 function displayFormatDiagram(transcriptions: Transcription[]) {
-  const formatStats = analyzeFormat(transcriptions);
+  const formatStats = limitStart(analyzeFormat(transcriptions), 5);
 
   const data = [
     {
@@ -153,12 +155,21 @@ function displayFormatDiagram(transcriptions: Transcription[]) {
     },
   ];
 
-  const layout = {
-    height: 400,
-    width: 500,
-  };
+  Plotly.newPlot('format-diagram', data);
+}
 
-  Plotly.newPlot('format-diagram', data, layout);
+function displayTypeDiagram(transcriptions: Transcription[]) {
+  const typeStats = limitStart(analyzeType(transcriptions), 5);
+
+  const data = [
+    {
+      y: typeStats.map((stats) => stats.count),
+      x: typeStats.map((stats) => stats.type),
+      type: 'bar',
+    },
+  ];
+
+  Plotly.newPlot('type-diagram', data);
 }
 
 function updateDisplays(userName: string, transcriptions: Transcription[]) {
@@ -166,6 +177,7 @@ function updateDisplays(userName: string, transcriptions: Transcription[]) {
   displayTags(userName, transcriptions);
   updateTables(transcriptions);
   displayFormatDiagram(transcriptions);
+  displayTypeDiagram(transcriptions);
 }
 
 async function displayUser() {
