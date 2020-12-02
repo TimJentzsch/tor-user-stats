@@ -1,3 +1,4 @@
+import Plotly from 'plotly.js-dist';
 import { getAllUserComments } from './reddit-api';
 import {
   getCountTag,
