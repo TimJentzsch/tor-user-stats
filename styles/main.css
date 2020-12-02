@@ -36,6 +36,15 @@
   padding: 0;
 }
 
+a {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+  text-decoration-color: var(--on-surface);
+}
+
 html,
 body {
   height: 100%;
@@ -66,6 +75,11 @@ body {
 header {
   background-color: var(--surface);
   color: var(---primary);
+  text-decoration-color: var(--primary);
+}
+
+#header-link {
+  text-decoration-color: var(--primary);
 }
 
 h1,
