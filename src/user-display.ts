@@ -2,6 +2,7 @@ import { getAllUserComments } from './reddit-api';
 import {
   getCountTag,
   getSpecialTags,
+  getTranscriptionAmount,
   getTranscriptionAvg,
   getTranscriptionPeak,
   isComment,
@@ -122,15 +123,25 @@ function updateAvgs(transcriptions: Transcription[]) {
   updateElement('avg-365d', yearAvg);
 }
 
-function updateTable(transcriptions: Transcription[]) {
+function updateCharWords(transcriptions: Transcription[]) {
+  const amounts = getTranscriptionAmount(transcriptions);
+
+  updateElement('char-peak', amounts.charPeak);
+  updateElement('char-avg', amounts.charAvg.toFixed(2));
+  updateElement('word-peak', amounts.wordPeak);
+  updateElement('word-avg', amounts.wordAvg.toFixed(2));
+}
+
+function updateTables(transcriptions: Transcription[]) {
   updatePeaks(transcriptions);
   updateAvgs(transcriptions);
+  updateCharWords(transcriptions);
 }
 
 function updateDisplays(userName: string, transcriptions: Transcription[]) {
   displayGamma(transcriptions);
   displayTags(userName, transcriptions);
-  updateTable(transcriptions);
+  updateTables(transcriptions);
 }
 
 async function displayUser() {
