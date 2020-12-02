@@ -1,6 +1,7 @@
 import Plotly from 'plotly.js-dist';
 import { getAllUserComments } from './reddit-api';
 import {
+  analyzeFormat,
   getCountTag,
   getSpecialTags,
   getTranscriptionAmount,
@@ -141,10 +142,30 @@ function updateTables(transcriptions: Transcription[]) {
   updateCharWords(transcriptions);
 }
 
+function displayFormatDiagram(transcriptions: Transcription[]) {
+  const formatStats = analyzeFormat(transcriptions);
+
+  const data = [
+    {
+      values: formatStats.map((stats) => stats.count),
+      labels: formatStats.map((stats) => stats.format),
+      type: 'pie',
+    },
+  ];
+
+  const layout = {
+    height: 400,
+    width: 500,
+  };
+
+  Plotly.newPlot('format-diagram', data, layout);
+}
+
 function updateDisplays(userName: string, transcriptions: Transcription[]) {
   displayGamma(transcriptions);
   displayTags(userName, transcriptions);
   updateTables(transcriptions);
+  displayFormatDiagram(transcriptions);
 }
 
 async function displayUser() {
