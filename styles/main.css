@@ -193,6 +193,10 @@ th, td {
   padding: 5px 7px;
 }
 
+.right-th {
+  text-align: right;
+}
+
 #general-stat-container {
   display: flex;
   flex-flow: row wrap;

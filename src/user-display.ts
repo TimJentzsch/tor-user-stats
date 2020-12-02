@@ -126,8 +126,10 @@ function updateAvgs(transcriptions: Transcription[]) {
 function updateCharWords(transcriptions: Transcription[]) {
   const amounts = getTranscriptionAmount(transcriptions);
 
+  updateElement('char-total', amounts.charTotal);
   updateElement('char-peak', amounts.charPeak);
   updateElement('char-avg', amounts.charAvg.toFixed(2));
+  updateElement('word-total', amounts.wordTotal);
   updateElement('word-peak', amounts.wordPeak);
   updateElement('word-avg', amounts.wordAvg.toFixed(2));
 }
