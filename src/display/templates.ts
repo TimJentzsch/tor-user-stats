@@ -4,8 +4,8 @@ import Colors from './colors';
 // eslint-disable-next-line import/prefer-default-export
 export const layoutTemplate = {
   showlegend: false,
-  paper_bgcolor: Colors.background(),
-  plot_bgcolor: Colors.background(),
+  paper_bgcolor: Colors.transparent(),
+  plot_bgcolor: Colors.transparent(),
   modebar: {
     bgcolor: Colors.background(),
     color: Colors.onSurface(),
@@ -14,5 +14,5 @@ export const layoutTemplate = {
   font: {
     color: Colors.onSurface(),
   },
-  width: 1000,
+  width: 500,
 };

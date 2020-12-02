@@ -2,6 +2,13 @@ import { getVariable } from './display-util';
 
 export default class Colors {
   /**
+   * Transparent color.
+   */
+  static transparent(): string {
+    return 'transparent';
+  }
+
+  /**
    * The primary color.
    */
   static primary(): string {
@@ -9,38 +16,17 @@ export default class Colors {
   }
 
   /**
+   * A variant of the primary color.
+   */
+  static primaryVariant(): string {
+    return getVariable('primary-variant');
+  }
+
+  /**
    * The primary font-color.
    */
   static onPrimary(): string {
     return getVariable('on-primary');
-  }
-
-  /**
-   * The secondary color.
-   */
-  static secondary(): string {
-    return getVariable('secondary');
-  }
-
-  /**
-   * The secondary font-color.
-   */
-  static onSecondary(): string {
-    return getVariable('on-secondary');
-  }
-
-  /**
-   * The color representing success.
-   */
-  static success(): string {
-    return getVariable('success');
-  }
-
-  /**
-   * The color representing failure.
-   */
-  static failure(): string {
-    return getVariable('failure');
   }
 
   /**
@@ -76,12 +62,5 @@ export default class Colors {
    */
   static error(): string {
     return getVariable('error');
-  }
-
-  /**
-   * The background color for elevated elements.
-   */
-  static elevationBackground(): string {
-    return getVariable('elevation-background');
   }
 }
