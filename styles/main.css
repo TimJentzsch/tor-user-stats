@@ -57,6 +57,11 @@ body {
   color: var(--on-background);
 }
 
+::placeholder {
+  color: var(--on-surface);
+  opacity: 0.2;
+}
+
 #body-container,
 #header-content {
   padding: 10px;

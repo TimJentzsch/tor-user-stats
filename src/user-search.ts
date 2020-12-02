@@ -6,6 +6,10 @@ function searchUser() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  const search = document.getElementById('search-button');
-  search?.addEventListener('click', searchUser);
+  const searchForm = document.getElementById('search-form');
+  searchForm?.addEventListener('submit', () => {
+    console.debug('Search submit');
+    searchUser();
+    return false;
+  });
 });

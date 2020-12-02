@@ -23,10 +23,10 @@
     </header>
     <div id="body-container">
       <div id="search-container">
-        <form id="search-form">
+        <form id="search-form" onsubmit="return false;">
           <label for="user-input">/u/</label>
-          <input id="user-input" type="text">
-          <input id="search-button" type="button" value="search">
+          <input id="user-input" placeholder="username" autofocus type="text">
+          <input id="search-button" type="submit" value="search">
         </form>
       </div>
     </div>
