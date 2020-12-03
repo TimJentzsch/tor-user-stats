@@ -7,8 +7,8 @@ export const layoutTemplate = {
   paper_bgcolor: Colors.transparent(),
   plot_bgcolor: Colors.transparent(),
   modebar: {
-    bgcolor: Colors.background(),
-    color: Colors.onSurface(),
+    bgcolor: Colors.transparent(),
+    color: Colors.surface(),
     activecolor: Colors.onSurface(),
   },
   font: {

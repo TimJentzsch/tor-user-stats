@@ -61,6 +61,7 @@ export function displayTypeDiagram(transcriptions: Transcription[]): void {
       marker: {
         color: repeatEndWith(Colors.primary(), typeStats.length - 1, Colors.primaryVariant()),
       },
+      hoverinfo: 'none',
     },
   ];
 
@@ -96,6 +97,7 @@ export function displaySubredditDiagram(transcriptions: Transcription[]): void {
       marker: {
         color: repeatEndWith(Colors.primary(), subStats.length - 1, Colors.primaryVariant()),
       },
+      hoverinfo: 'none',
     },
   ];
 
