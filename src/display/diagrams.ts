@@ -1,13 +1,13 @@
 import Plotly from 'plotly.js-dist';
 import { analyzeFormat, analyzeSubreddits, analyzeType } from '../analizer';
 import Transcription from '../transcription';
-import { limitStart } from '../util';
+import { limitEnd } from '../util';
 import Colors from './colors';
 import { fromTemplate } from './display-util';
 import { layoutTemplate } from './templates';
 
 export function displayFormatDiagram(transcriptions: Transcription[]): void {
-  const formatStats = limitStart(analyzeFormat(transcriptions), 5);
+  const formatStats = limitEnd(analyzeFormat(transcriptions), 5);
 
   const data = [
     {
@@ -31,7 +31,7 @@ export function displayFormatDiagram(transcriptions: Transcription[]): void {
 }
 
 export function displayTypeDiagram(transcriptions: Transcription[]): void {
-  const typeStats = limitStart(analyzeType(transcriptions), 5);
+  const typeStats = limitEnd(analyzeType(transcriptions), 5);
 
   const data = [
     {
@@ -57,7 +57,7 @@ export function displayTypeDiagram(transcriptions: Transcription[]): void {
 }
 
 export function displaySubredditDiagram(transcriptions: Transcription[]): void {
-  const subStats = limitStart(analyzeSubreddits(transcriptions), 5);
+  const subStats = limitEnd(analyzeSubreddits(transcriptions), 5);
 
   const data = [
     {

@@ -3,7 +3,7 @@ import Logger from './logger';
 import { getAllUserComments, isToRMod } from './reddit-api';
 import { CountTag, specialTags, countTags, Tag } from './tags';
 import Transcription from './transcription';
-import { limitStart } from './util';
+import { limitEnd } from './util';
 
 const logger = new Logger('Analizer');
 
@@ -389,21 +389,21 @@ export default async function analizeUser(userName: string): Promise<void> {
   );
 
   // Fomat stats
-  const formatStats = limitStart(analyzeFormat(transcriptions), 5).map((stats) => {
+  const formatStats = limitEnd(analyzeFormat(transcriptions), 5).map((stats) => {
     return `${stats.format}: ${stats.count}`;
   });
 
   logStats('Top 5 formats', `${formatStats.join(' | ')}`);
 
   // Type stats
-  const typeStats = limitStart(analyzeType(transcriptions), 5).map((stats) => {
+  const typeStats = limitEnd(analyzeType(transcriptions), 5).map((stats) => {
     return `${stats.type}: ${stats.count}`;
   });
 
   logStats('Top 5 types', `${typeStats.join(' | ')}`);
 
   // Sub stats
-  const subStats = limitStart(analyzeSubreddits(transcriptions), 5).map((stats) => {
+  const subStats = limitEnd(analyzeSubreddits(transcriptions), 5).map((stats) => {
     return `${stats.sub}: ${stats.count}`;
   });
 

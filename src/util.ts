@@ -1,13 +1,33 @@
 /** Limits the array, returning the first elements. */
-export function limitStart<T>(array: T[], limit?: number): T[] {
+export function limitEnd<T>(array: T[], limit?: number): T[] {
   if (limit !== undefined && array.length > limit) {
     return array.slice(0, limit);
   }
   return array;
 }
 
+/**
+ * Limits the array to the given length and reduces the rest to the last element.
+ * @param array The array to limit and reduce.
+ * @param callbackfn The reduction function.
+ * @param limit The limit of the array.
+ */
+export function limitReduceEnd<T>(
+  array: T[],
+  callbackfn: (previousValue: T, currentValue: T, currentIndex: number, array: T[]) => T,
+  limit?: number,
+): T[] {
+  if (limit !== undefined && array.length > limit) {
+    const limitedArray = array.slice(0, limit);
+    const end = array.slice(limit, array.length).reduce(callbackfn);
+
+    return limitedArray.concat(end);
+  }
+  return array;
+}
+
 /** Limits the array, returning the last elements. */
-export function limitEnd<T>(array: T[], limit?: number): T[] {
+export function limitStart<T>(array: T[], limit?: number): T[] {
   if (limit !== undefined && array.length > limit) {
     return array.slice(array.length - limit, array.length);
   }
