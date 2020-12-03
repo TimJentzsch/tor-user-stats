@@ -282,7 +282,7 @@ export function analyzeType(transcriptions: Transcription[]): TypeStats[] {
       } else if (type.includes('Reddit')) {
         type = 'Reddit';
       } else if (type.includes('Text Message')) {
-        type = 'Text Messages';
+        type = 'Chat';
       }
 
       const stats = typeStats.find((stat) => {
