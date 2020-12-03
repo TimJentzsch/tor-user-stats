@@ -59,3 +59,9 @@ To run the analysis for a specific user, use:
 ```
 yarn start <username>
 ```
+
+You can also run the web-view locally by using
+
+```
+yarn serve
+```

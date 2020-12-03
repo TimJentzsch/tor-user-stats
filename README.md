@@ -4,6 +4,8 @@
 
 This is a tool to obtain user-related statistics to /r/TranscribersOfReddit related transcriptions.
 
+Available on https://timjentzsch.github.io/tor-user-stats/.
+
 # Contributing
 
 If you wish to contribute to this project or run it locally, please refer to the [contribution guidelines](CONTRIBUTING.md).
