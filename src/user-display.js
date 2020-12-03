@@ -46,7 +46,7 @@ var diagrams_1 = require("./display/diagrams");
 function searchUserHeader() {
     var input = document.getElementById('header-user-input');
     var userName = input.value;
-    window.location.href = "/user.html?user=" + userName;
+    window.location.href = "user.html?user=" + userName;
 }
 document.addEventListener('DOMContentLoaded', function () {
     var searchForm = document.getElementById('header-search-form');

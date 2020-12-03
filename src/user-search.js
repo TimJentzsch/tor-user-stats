@@ -2,7 +2,7 @@
 function searchUserMain() {
     var input = document.getElementById('main-user-input');
     var userName = input.value;
-    window.location.href = "/user.html?user=" + userName;
+    window.location.href = "user.html?user=" + userName;
 }
 document.addEventListener('DOMContentLoaded', function () {
     var searchForm = document.getElementById('main-search-form');
