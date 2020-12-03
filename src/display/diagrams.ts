@@ -1,13 +1,22 @@
 import Plotly from 'plotly.js-dist';
 import { analyzeFormat, analyzeSubreddits, analyzeType } from '../analizer';
 import Transcription from '../transcription';
-import { limitEnd } from '../util';
+import { limitReduceEnd, repeat, repeatEndWith } from '../util';
 import Colors from './colors';
 import { fromTemplate } from './display-util';
 import { layoutTemplate } from './templates';
 
 export function displayFormatDiagram(transcriptions: Transcription[]): void {
-  const formatStats = limitEnd(analyzeFormat(transcriptions), 5);
+  const formatStats = limitReduceEnd(
+    analyzeFormat(transcriptions),
+    (a, b) => {
+      return {
+        format: 'Other',
+        count: a.count + b.count,
+      };
+    },
+    5,
+  );
 
   const data = [
     {
@@ -18,7 +27,7 @@ export function displayFormatDiagram(transcriptions: Transcription[]): void {
       textposition: 'outside',
       automargin: true,
       marker: {
-        colors: [Colors.primary(), Colors.primaryVariant()],
+        colors: repeat([Colors.primary(), Colors.primaryVariant()], formatStats.length),
       },
     },
   ];
@@ -31,7 +40,16 @@ export function displayFormatDiagram(transcriptions: Transcription[]): void {
 }
 
 export function displayTypeDiagram(transcriptions: Transcription[]): void {
-  const typeStats = limitEnd(analyzeType(transcriptions), 5);
+  const typeStats = limitReduceEnd(
+    analyzeType(transcriptions),
+    (a, b) => {
+      return {
+        type: 'Other',
+        count: a.count + b.count,
+      };
+    },
+    5,
+  );
 
   const data = [
     {
@@ -41,7 +59,7 @@ export function displayTypeDiagram(transcriptions: Transcription[]): void {
       textposition: 'auto',
       type: 'bar',
       marker: {
-        color: Colors.primary(),
+        color: repeatEndWith(Colors.primary(), typeStats.length - 1, Colors.primaryVariant()),
       },
     },
   ];
@@ -57,7 +75,16 @@ export function displayTypeDiagram(transcriptions: Transcription[]): void {
 }
 
 export function displaySubredditDiagram(transcriptions: Transcription[]): void {
-  const subStats = limitEnd(analyzeSubreddits(transcriptions), 5);
+  const subStats = limitReduceEnd(
+    analyzeSubreddits(transcriptions),
+    (a, b) => {
+      return {
+        sub: 'Other',
+        count: a.count + b.count,
+      };
+    },
+    5,
+  );
 
   const data = [
     {
@@ -67,7 +94,7 @@ export function displaySubredditDiagram(transcriptions: Transcription[]): void {
       textposition: 'auto',
       type: 'bar',
       marker: {
-        color: Colors.primary(),
+        color: repeatEndWith(Colors.primary(), subStats.length - 1, Colors.primaryVariant()),
       },
     },
   ];
