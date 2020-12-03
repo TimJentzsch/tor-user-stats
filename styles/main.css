@@ -131,26 +131,29 @@ h3 {
   font-size: 20px;
 }
 
-#user-input,
-#search-button {
-  font-size: 20px;
+.user-input,
+.search-button {
   padding: 5px 7px;
   border-radius: 3px;
 }
 
-#user-input {
+#main-user-input, #main-search-button {
+  font-size: 20px;
+}
+
+.user-input {
   background-color: var(--surface);
   color: var(--on-surface);
   border: solid 1px var(--primary);
 }
 
-#search-button {
+.search-button {
   background-color: var(--primary-variant);
   color: var(--on-primary);
   border: solid 1px var(--on-primary);
 }
 
-#search-button:hover {
+.search-button:hover {
   background-color: var(--primary);
   cursor: pointer;
 }

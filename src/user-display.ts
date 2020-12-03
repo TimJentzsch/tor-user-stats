@@ -16,6 +16,21 @@ import {
   displayTypeDiagram,
 } from './display/diagrams';
 
+function searchUserHeader() {
+  const input = document.getElementById('header-user-input') as HTMLInputElement;
+  const userName = input.value;
+
+  window.location.href = `/user.html?user=${userName}`;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const searchForm = document.getElementById('header-search-form');
+  searchForm?.addEventListener('submit', () => {
+    searchUserHeader();
+    return false;
+  });
+});
+
 function updateElement(id: string, text: string | number) {
   const element = document.getElementById(id) as HTMLElement;
   element.innerText = text.toString();
