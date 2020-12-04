@@ -1,4 +1,5 @@
-export default interface Comment {
+/** A Reddit comment. */
+export default interface RComment {
   /** The unique ID of the comment. */
   id: string;
   /** The body of the comment, formatted in Reddit markdown. */
