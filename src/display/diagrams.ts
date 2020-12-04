@@ -1,5 +1,6 @@
 import Plotly from 'plotly.js-dist';
 import { analyzeFormat, analyzeSubreddits, analyzeType } from '../analizer';
+import { historyData } from '../stats/history';
 import Transcription from '../transcription';
 import { limitReduceEnd, repeat, repeatEndWith } from '../util';
 import Colors from './colors';
@@ -70,6 +71,9 @@ export function displayTypeDiagram(transcriptions: Transcription[]): void {
     yaxis: {
       title: 'Transcription Count',
     },
+    xaxis: {
+      type: 'category',
+    },
   });
 
   Plotly.newPlot('type-diagram', data, layout);
@@ -106,7 +110,37 @@ export function displaySubredditDiagram(transcriptions: Transcription[]): void {
     yaxis: {
       title: 'Transcription Count',
     },
+    xaxis: {
+      type: 'category',
+    },
   });
 
   Plotly.newPlot('subreddit-diagram', data, layout);
+}
+
+export function displayHistoryDiagram(transcriptions: Transcription[]): void {
+  const history = historyData(transcriptions);
+
+  const data = [
+    {
+      y: history.map((stats) => stats.count),
+      x: history.map((stats) => stats.date.valueOf()),
+      type: 'scatter',
+      marker: {
+        color: Colors.primary(),
+      },
+    },
+  ];
+
+  const layout = fromTemplate(layoutTemplate, {
+    title: 'History',
+    yaxis: {
+      title: 'Transcription Count',
+    },
+    xaxis: {
+      type: 'date',
+    },
+  });
+
+  Plotly.newPlot('history-diagram', data, layout);
 }
