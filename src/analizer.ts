@@ -16,16 +16,31 @@ export function isComment(comment: Comment): boolean {
   );
 }
 
+type PeakStats = {
+  /** The number of transcriptions at the peak. */
+  count: number;
+  /** The start of the peak. */
+  startDate: Date;
+  /** The end of the peak. */
+  endDate: Date;
+};
+
 /**
  * Gets the peak transcription count during the given duration.
  * @param transcriptions The transcriptions to analyze.
  * @param duration The duration to determine the peak in, in seconds.
  */
-export function getTranscriptionPeak(transcriptions: Transcription[], duration: number): number {
+export function getTranscriptionPeak(transcriptions: Transcription[], duration: number): PeakStats {
   let peak = 0;
+  let startDate = new Date();
+  let endDate = new Date();
 
   if (transcriptions.length === 0) {
-    return 0;
+    return {
+      count: peak,
+      startDate,
+      endDate,
+    };
   }
 
   // Start with the oldest transcriptions
@@ -46,12 +61,18 @@ export function getTranscriptionPeak(transcriptions: Transcription[], duration: 
     // Update the peak if necessary
     if (count > peak) {
       peak = count;
+      startDate = new Date(transcriptions[oldIndex].createdUTC * 1000);
+      endDate = new Date(transcriptions[newIndex + 1].createdUTC * 1000);
     }
 
     oldIndex -= 1;
   }
 
-  return peak;
+  return {
+    count: peak,
+    startDate,
+    endDate,
+  };
 }
 
 /**
@@ -118,7 +139,7 @@ export async function getSpecialTags(
   const dayPeak = getTranscriptionPeak(transcriptions, 24 * 60 * 60); // 24h
 
   // 100/24h tag
-  if (dayPeak >= 100) {
+  if (dayPeak.count >= 100) {
     spTags.push(specialTags.twentyFour);
   }
 
