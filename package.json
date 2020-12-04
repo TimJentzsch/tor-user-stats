@@ -6,15 +6,16 @@
   "author": "Tim Jentzsch",
   "license": "MIT",
   "scripts": {
-    "build": "yarn tsc --build",
-    "start": "yarn build && node dist/src/main.js",
-    "bundle": "cross-env NODE_ENV=production parcel build templates/* --public-url .",
-    "serve": "parcel serve templates/*.html",
+    "init-config": "cp -n config/reddit.example.config.json config/reddit.config.json",
+    "build": "yarn init-config && yarn tsc --build",
+    "start": "yarn init-config && yarn build && node dist/src/main.js",
+    "bundle": "yarn init-config && cross-env NODE_ENV=production parcel build templates/* --public-url .",
+    "serve": "yarn init-config && parcel serve templates/*.html",
     "deploy": "gh-pages -d dist",
-    "lint": "eslint \"src/**/*\"",
-    "format": "eslint \"src/**/*\" --fix",
-    "test": "jest --config jest.config.json",
-    "coverage": "jest --config jest.config.json --coverage"
+    "lint": "yarn init-config && eslint \"src/**/*\"",
+    "format": "yarn init-config && eslint \"src/**/*\" --fix",
+    "test": "yarn init-config && jest --config jest.config.json",
+    "coverage": "yarn init-config && jest --config jest.config.json --coverage"
   },
   "engines": {
     "node": ">=14.15.1",
