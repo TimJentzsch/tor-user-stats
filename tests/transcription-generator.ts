@@ -47,8 +47,8 @@ export default class TranscriptionGenerator {
     return this;
   }
 
-  /** Returns the generated transcriptions. */
+  /** Returns the generated transcriptions, sorted from newest to oldest. */
   public generate(): Transcription[] {
-    return this.transcriptions;
+    return this.transcriptions.reverse();
   }
 }

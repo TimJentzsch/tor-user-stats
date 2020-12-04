@@ -1,5 +1,6 @@
 import { getTranscriptionAvg, getTranscriptionPeak } from '../src/analizer';
 import Transcription from '../src/transcription';
+import TranscriptionGenerator from './transcription-generator';
 import { imageMD } from './transcription-templates';
 
 describe('Analizer', () => {
@@ -40,6 +41,53 @@ describe('Analizer', () => {
       const actual = getTranscriptionPeak(transcriptions, duration);
 
       expect(actual).toBe(1);
+    });
+    test('should work for longer timeframes with oldest peak', () => {
+      const duration = 24 * 60 * 60; // 24h
+      const transcriptions = new TranscriptionGenerator(new Date('2020-10-03'))
+        // Peak
+        .addTranscriptions(100, duration)
+        .addPause(duration / 2)
+        .addTranscriptions(90, duration)
+        .addPause(duration)
+        .addTranscriptions(20, duration / 2)
+        .generate();
+
+      const actual = getTranscriptionPeak(transcriptions, duration);
+
+      expect(actual).toBe(100);
+    });
+
+    test('should work for longer timeframes with middle peak', () => {
+      const duration = 24 * 60 * 60; // 24h
+      const transcriptions = new TranscriptionGenerator(new Date('2020-10-03'))
+        .addTranscriptions(50, duration)
+        .addPause(duration / 2)
+        // Peak
+        .addTranscriptions(100, duration)
+        .addPause(duration / 2)
+        .addTranscriptions(90, duration)
+        .generate();
+
+      const actual = getTranscriptionPeak(transcriptions, duration);
+
+      expect(actual).toBe(100);
+    });
+
+    test('should work for longer timeframes with newest peak', () => {
+      const duration = 24 * 60 * 60; // 24h
+      const transcriptions = new TranscriptionGenerator(new Date('2020-10-03'))
+        .addTranscriptions(50, duration)
+        .addPause(duration / 2)
+        .addTranscriptions(90, duration)
+        .addPause(duration / 2)
+        // Peak
+        .addTranscriptions(100, duration)
+        .generate();
+
+      const actual = getTranscriptionPeak(transcriptions, duration);
+
+      expect(actual).toBe(100);
     });
   });
   // Transcription average
