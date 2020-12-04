@@ -1,4 +1,4 @@
-import { Comment } from 'snoowrap';
+import RComment from './comment';
 
 /**
  * Regular expression to recognize transcriptions. Groups:
@@ -86,7 +86,7 @@ export default class Transcription {
    * Creates a new transcription from a comment.
    * @param comment The comment to create the transcription from.
    */
-  static fromComment(comment: Comment): Transcription {
+  static fromComment(comment: RComment): Transcription {
     return new Transcription(
       comment.id,
       comment.body,
@@ -101,7 +101,7 @@ export default class Transcription {
    * Checks if a comment is a transcription.
    * @param comment The comment to check.
    */
-  static isTranscription(comment: Comment): boolean {
+  static isTranscription(comment: RComment): boolean {
     // Has the transcription been posted to a test subreddit?
     const isTest = ['r/TranscribersOfReddit', 'r/kierra'].includes(comment.subreddit_name_prefixed);
     // Is the transcription formatted correctly?
