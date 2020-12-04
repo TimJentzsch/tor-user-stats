@@ -24,31 +24,31 @@ export function isComment(comment: Comment): boolean {
 export function getTranscriptionPeak(transcriptions: Transcription[], duration: number): number {
   let peak = 0;
 
-  for (let anchorIndex = 0; anchorIndex < transcriptions.length; anchorIndex += 1) {
-    // Take one transcription as anchor
-    const anchor = transcriptions[anchorIndex];
-    const anchorTime = anchor.createdUTC;
-    let counter = 0;
+  if (transcriptions.length === 0) {
+    return 0;
+  }
 
-    // Count all transcriptions that are within the given timeframe
-    for (let index = anchorIndex; index < transcriptions.length; index += 1) {
-      const cur = transcriptions[index];
-      const curTime = cur.createdUTC;
+  // Start with the oldest transcriptions
+  let oldIndex = transcriptions.length - 1;
+  let newIndex = transcriptions.length - 1;
 
-      const timeDiff = anchorTime - curTime;
+  while (newIndex >= 0) {
+    // Take as many transcriptions as fit into the timeframe
+    while (
+      newIndex >= 0 &&
+      transcriptions[newIndex].createdUTC - transcriptions[oldIndex].createdUTC <= duration
+    ) {
+      newIndex -= 1;
+    }
+    // Count the transcriptions in that timeframe
+    const count = oldIndex - newIndex;
 
-      // Check if the post is within the given timeframe
-      if (timeDiff <= duration) {
-        counter += 1;
-      } else {
-        break;
-      }
+    // Update the peak if necessary
+    if (count > peak) {
+      peak = count;
     }
 
-    // Update the maximum if necessary
-    if (counter > peak) {
-      peak = counter;
-    }
+    oldIndex -= 1;
   }
 
   return peak;
