@@ -124,10 +124,10 @@ function updatePeaks(transcriptions: Transcription[]) {
   const weekPeak = getTranscriptionPeak(transcriptions, 7 * 24 * 60 * 60); // 7d
   const yearPeak = getTranscriptionPeak(transcriptions, 365 * 24 * 60 * 60); // 365d
 
-  updateElement('peak-1h', hourPeak);
-  updateElement('peak-24h', dayPeak);
-  updateElement('peak-7d', weekPeak);
-  updateElement('peak-365d', yearPeak);
+  updateElement('peak-1h', hourPeak.count);
+  updateElement('peak-24h', dayPeak.count);
+  updateElement('peak-7d', weekPeak.count);
+  updateElement('peak-365d', yearPeak.count);
 }
 
 function updateAvgs(transcriptions: Transcription[]) {
