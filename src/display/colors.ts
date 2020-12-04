@@ -45,4 +45,9 @@ export default class Colors {
   static error(): string {
     return getVariable('error');
   }
+
+  /** The color of the grid lines. */
+  static grid(): string {
+    return getVariable('grid');
+  }
 }
