@@ -1,65 +1,47 @@
 import { getVariable } from './display-util';
 
 export default class Colors {
-  /**
-   * Transparent color.
-   */
+  /** Transparent color. */
   static transparent(): string {
     return 'transparent';
   }
 
-  /**
-   * The primary color.
-   */
+  /** The primary color. */
   static primary(): string {
     return getVariable('primary');
   }
 
-  /**
-   * A variant of the primary color.
-   */
+  /** A variant of the primary color. */
   static primaryVariant(): string {
     return getVariable('primary-variant');
   }
 
-  /**
-   * The primary font-color.
-   */
+  /** The primary font-color. */
   static onPrimary(): string {
     return getVariable('on-primary');
   }
 
-  /**
-   * The background color.
-   */
+  /** The background color. */
   static background(): string {
     return getVariable('background');
   }
 
-  /**
-   * The background font-color.
-   */
+  /** The background font-color. */
   static onBackground(): string {
     return getVariable('on-background');
   }
 
-  /**
-   * The surface color.
-   */
+  /** The surface color. */
   static surface(): string {
     return getVariable('surface');
   }
 
-  /**
-   * The surface font-color.
-   */
+  /** The surface font-color. */
   static onSurface(): string {
     return getVariable('on-surface');
   }
 
-  /**
-   * The color representing an error.
-   */
+  /** The color representing an error. */
   static error(): string {
     return getVariable('error');
   }

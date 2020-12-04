@@ -1,10 +1,11 @@
 import Plotly from 'plotly.js-dist';
 import { analyzeFormat, analyzeSubreddits, analyzeType } from '../analizer';
 import { historyData, rateData } from '../stats/history';
+import { countTags } from '../tags';
 import Transcription from '../transcription';
 import { limitReduceEnd, repeat, repeatEndWith } from '../util';
 import Colors from './colors';
-import { fromTemplate } from './display-util';
+import { fromTemplate, getVariable } from './display-util';
 import { layoutTemplate } from './templates';
 
 export function displayFormatDiagram(transcriptions: Transcription[]): void {
@@ -121,16 +122,38 @@ export function displaySubredditDiagram(transcriptions: Transcription[]): void {
 export function displayHistoryDiagram(transcriptions: Transcription[]): void {
   const history = historyData(transcriptions);
 
-  const data = [
-    {
-      y: history.map((stats) => stats.count),
-      x: history.map((stats) => stats.date.valueOf()),
-      type: 'scatter',
-      marker: {
-        color: Colors.primary(),
-      },
+  const data = [];
+
+  if (transcriptions.length > 0) {
+    const start = history[0].date.valueOf();
+    const end = history[history.length - 1].date.valueOf();
+    const max = history[history.length - 1].count;
+
+    // Add milestone lines
+    countTags.forEach((tag) => {
+      if (tag.lowerBound <= max * 1.2) {
+        data.push({
+          y: [tag.lowerBound, tag.lowerBound],
+          x: [start, end],
+          type: 'scatter',
+          marker: {
+            color: getVariable(tag.id),
+          },
+          mode: 'lines',
+        });
+      }
+    });
+  }
+
+  // Add actual history graph
+  data.push({
+    y: history.map((stats) => stats.count),
+    x: history.map((stats) => stats.date.valueOf()),
+    type: 'scatter',
+    marker: {
+      color: Colors.primary(),
     },
-  ];
+  });
 
   const layout = fromTemplate(layoutTemplate, {
     title: 'History',
