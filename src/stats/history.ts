@@ -42,6 +42,7 @@ export function rateData(transcriptions: Transcription[], duration: number): Rat
   const peak = getTranscriptionPeak(transcriptions, duration);
 
   const start = transcriptions[transcriptions.length - 1].createdUTC;
+  const end = transcriptions[0].createdUTC;
   let rateStart = peak.startDate.valueOf() / 1000;
 
   // Determine rate start
@@ -49,24 +50,24 @@ export function rateData(transcriptions: Transcription[], duration: number): Rat
     rateStart -= duration;
   }
 
-  let nextRate = rateStart + duration;
-  let rate = 0;
+  let curDate = rateStart;
+  let curRate = 0;
+  let curIndex = transcriptions.length - 1;
 
-  // Determine the rate data
-  for (let i = transcriptions.length - 1; i >= 0; i -= 1) {
-    // If the transcription belongs to the current rate, add it
-    if (transcriptions[i].createdUTC <= nextRate) {
-      rate += 1;
-    } else {
-      data.push({
-        date: new Date((nextRate - duration) * 1000),
-        rate,
-      });
-
-      // Reset counters
-      rate = 0;
-      nextRate += duration;
+  while (curIndex >= 0 && curDate <= end) {
+    // Add all transcriptions in that timeframe to the rate
+    while (curIndex >= 0 && transcriptions[curIndex].createdUTC <= curDate + duration) {
+      curRate += 1;
+      curIndex -= 1;
     }
+    // Save the timeframe
+    data.push({
+      rate: curRate,
+      date: new Date(curDate * 1000),
+    });
+    // Move to the next timeframe
+    curRate = 0;
+    curDate += duration;
   }
 
   return data;
