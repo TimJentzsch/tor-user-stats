@@ -102,6 +102,11 @@ export default class Transcription {
    * @param comment The comment to check.
    */
   static isTranscription(comment: Comment): boolean {
-    return transcriptionRegex.test(comment.body);
+    // Has the transcription been posted to a test subreddit?
+    const isTest = ['r/TranscribersOfReddit', 'r/kierra'].includes(comment.subreddit_name_prefixed);
+    // Is the transcription formatted correctly?
+    const hasFormat = transcriptionRegex.test(comment.body);
+
+    return !isTest && hasFormat;
   }
 }
