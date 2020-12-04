@@ -12,6 +12,7 @@ import { Tag } from './tags';
 import {
   displayFormatDiagram,
   displayHistoryDiagram,
+  displayRateDiagram,
   displaySubredditDiagram,
   displayTypeDiagram,
 } from './display/diagrams';
@@ -169,6 +170,7 @@ function updateDisplays(userName: string, transcriptions: Transcription[]) {
   displayTypeDiagram(transcriptions);
   displaySubredditDiagram(transcriptions);
   displayHistoryDiagram(transcriptions);
+  displayRateDiagram(transcriptions);
 }
 
 async function displayUser() {

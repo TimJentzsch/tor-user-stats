@@ -1,6 +1,6 @@
 import Plotly from 'plotly.js-dist';
 import { analyzeFormat, analyzeSubreddits, analyzeType } from '../analizer';
-import { historyData } from '../stats/history';
+import { historyData, rateData } from '../stats/history';
 import Transcription from '../transcription';
 import { limitReduceEnd, repeat, repeatEndWith } from '../util';
 import Colors from './colors';
@@ -143,4 +143,31 @@ export function displayHistoryDiagram(transcriptions: Transcription[]): void {
   });
 
   Plotly.newPlot('history-diagram', data, layout);
+}
+
+export function displayRateDiagram(transcriptions: Transcription[]): void {
+  const history = rateData(transcriptions, 24 * 60 * 60); // 24h
+
+  const data = [
+    {
+      y: history.map((stats) => stats.rate),
+      x: history.map((stats) => stats.date.valueOf()),
+      type: 'scatter',
+      marker: {
+        color: Colors.primary(),
+      },
+    },
+  ];
+
+  const layout = fromTemplate(layoutTemplate, {
+    title: 'Rate (24 h)',
+    yaxis: {
+      title: 'Transcription Rate',
+    },
+    xaxis: {
+      type: 'date',
+    },
+  });
+
+  Plotly.newPlot('rate-diagram', data, layout);
 }
