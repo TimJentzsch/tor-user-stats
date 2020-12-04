@@ -71,6 +71,7 @@ export function displayTypeDiagram(transcriptions: Transcription[]): void {
     title: 'Top 5 Types',
     yaxis: {
       title: 'Transcription Count',
+      gridcolor: Colors.grid(),
     },
     xaxis: {
       type: 'category',
@@ -110,6 +111,7 @@ export function displaySubredditDiagram(transcriptions: Transcription[]): void {
     title: 'Top 5 Subreddits',
     yaxis: {
       title: 'Transcription Count',
+      gridcolor: Colors.grid(),
     },
     xaxis: {
       type: 'category',
@@ -159,9 +161,11 @@ export function displayHistoryDiagram(transcriptions: Transcription[]): void {
     title: 'History',
     yaxis: {
       title: 'Transcription Count',
+      gridcolor: Colors.grid(),
     },
     xaxis: {
       type: 'date',
+      gridcolor: Colors.grid(),
     },
   });
 
@@ -205,9 +209,11 @@ export function displayRateDiagram(transcriptions: Transcription[]): void {
     title: 'Rate (24 h)',
     yaxis: {
       title: 'Transcription Rate',
+      gridcolor: Colors.grid(),
     },
     xaxis: {
       type: 'date',
+      gridcolor: Colors.grid(),
     },
   });
 

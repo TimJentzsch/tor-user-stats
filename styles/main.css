@@ -15,6 +15,8 @@
   --on-disabled: #cccccc;
   --on-tag: #222;
 
+  --grid: #555;
+
   /** Tags */
   --visitor: #aaaaaa;
   --initiate: #eeeeee;
