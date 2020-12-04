@@ -84,5 +84,7 @@ export async function isToRMod(userName: string): Promise<boolean> {
   const mods = await tor.getModerators();
 
   // Check if the user is one of the mods
-  return mods.findIndex((mod) => mod.name === userName) >= 0;
+  return (
+    mods.findIndex((mod) => mod.name.toLocaleLowerCase() === userName.toLocaleLowerCase()) >= 0
+  );
 }
