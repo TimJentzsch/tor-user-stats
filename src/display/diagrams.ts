@@ -1,5 +1,5 @@
 import Plotly from 'plotly.js-dist';
-import { analyzeFormat, analyzeSubreddits, analyzeType } from '../analizer';
+import { analyzeFormat, analyzeSubreddits, analyzeType, getTranscriptionPeak } from '../analizer';
 import { historyData, rateData } from '../stats/history';
 import { countTags } from '../tags';
 import Transcription from '../transcription';
@@ -169,18 +169,37 @@ export function displayHistoryDiagram(transcriptions: Transcription[]): void {
 }
 
 export function displayRateDiagram(transcriptions: Transcription[]): void {
-  const history = rateData(transcriptions, 24 * 60 * 60); // 24h
+  const rate = rateData(transcriptions, 24 * 60 * 60); // 24h
 
-  const data = [
-    {
-      y: history.map((stats) => stats.rate),
-      x: history.map((stats) => stats.date.valueOf()),
-      type: 'scatter',
-      marker: {
-        color: Colors.primary(),
-      },
+  const data = [];
+
+  if (transcriptions.length > 0) {
+    const start = rate[0].date.valueOf();
+    const end = rate[rate.length - 1].date.valueOf();
+    const max = getTranscriptionPeak(transcriptions, 24 * 60 * 60).count; // 24h
+
+    // Display 100/24h line if close
+    if (max >= 75) {
+      data.push({
+        y: [100, 100],
+        x: [start, end],
+        type: 'scatter',
+        marker: {
+          color: getVariable('twentyFour'),
+        },
+        mode: 'lines',
+      });
+    }
+  }
+
+  data.push({
+    y: rate.map((stats) => stats.rate),
+    x: rate.map((stats) => stats.date.valueOf()),
+    type: 'scatter',
+    marker: {
+      color: Colors.primary(),
     },
-  ];
+  });
 
   const layout = fromTemplate(layoutTemplate, {
     title: 'Rate (24 h)',
