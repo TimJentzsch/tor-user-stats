@@ -11,6 +11,7 @@ import Transcription from './transcription';
 import { Tag } from './tags';
 import {
   displayFormatDiagram,
+  displayHistoryDiagram,
   displaySubredditDiagram,
   displayTypeDiagram,
 } from './display/diagrams';
@@ -167,6 +168,7 @@ function updateDisplays(userName: string, transcriptions: Transcription[]) {
   displayFormatDiagram(transcriptions);
   displayTypeDiagram(transcriptions);
   displaySubredditDiagram(transcriptions);
+  displayHistoryDiagram(transcriptions);
 }
 
 async function displayUser() {
