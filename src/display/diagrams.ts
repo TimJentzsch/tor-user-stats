@@ -1,7 +1,7 @@
 import Plotly from 'plotly.js-dist';
 import { analyzeFormat, analyzeType, getTranscriptionPeak } from '../analizer';
 import { historyData, rateData } from '../stats/history';
-import { subredditGamma } from '../stats/subreddits';
+import { subredditGamma, subredditKarma } from '../stats/subreddits';
 import { countTags } from '../tags';
 import Transcription from '../transcription';
 import { limitReduceEnd, repeat, repeatEndWith } from '../util';
@@ -82,7 +82,7 @@ export function displayTypeDiagram(transcriptions: Transcription[]): void {
   Plotly.newPlot('type-diagram', data, layout);
 }
 
-export function displaySubredditDiagram(transcriptions: Transcription[]): void {
+export function displaySubGammaDiagram(transcriptions: Transcription[]): void {
   const subStats = limitReduceEnd(
     subredditGamma(transcriptions),
     (a, b) => {
@@ -109,7 +109,7 @@ export function displaySubredditDiagram(transcriptions: Transcription[]): void {
   ];
 
   const layout = fromTemplate(layoutTemplate, {
-    title: 'Top 5 Subreddits',
+    title: 'Top 5 Subreddits (Gamma)',
     yaxis: {
       title: 'Transcription Count',
       gridcolor: Colors.grid(),
@@ -119,7 +119,47 @@ export function displaySubredditDiagram(transcriptions: Transcription[]): void {
     },
   });
 
-  Plotly.newPlot('subreddit-diagram', data, layout);
+  Plotly.newPlot('sub-gamma-diagram', data, layout);
+}
+
+export function displaySubKarmaDiagram(transcriptions: Transcription[]): void {
+  const subStats = limitReduceEnd(
+    subredditKarma(transcriptions),
+    (a, b) => {
+      return {
+        sub: 'Other',
+        karma: a.karma + b.karma,
+      };
+    },
+    5,
+  );
+
+  const data = [
+    {
+      y: subStats.map((stats) => stats.karma),
+      x: subStats.map((stats) => stats.sub),
+      text: subStats.map((stats) => stats.karma.toString()),
+      textposition: 'auto',
+      type: 'bar',
+      marker: {
+        color: repeatEndWith(Colors.primary(), subStats.length - 1, Colors.primaryVariant()),
+      },
+      hoverinfo: 'none',
+    },
+  ];
+
+  const layout = fromTemplate(layoutTemplate, {
+    title: 'Top 5 Subreddits (Karma)',
+    yaxis: {
+      title: 'Transcription Karma',
+      gridcolor: Colors.grid(),
+    },
+    xaxis: {
+      type: 'category',
+    },
+  });
+
+  Plotly.newPlot('sub-karma-diagram', data, layout);
 }
 
 export function displayHistoryDiagram(transcriptions: Transcription[]): void {

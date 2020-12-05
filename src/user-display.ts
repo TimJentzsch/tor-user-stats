@@ -13,7 +13,8 @@ import {
   displayFormatDiagram,
   displayHistoryDiagram,
   displayRateDiagram,
-  displaySubredditDiagram,
+  displaySubGammaDiagram,
+  displaySubKarmaDiagram,
   displayTypeDiagram,
 } from './display/diagrams';
 
@@ -168,7 +169,8 @@ function updateDisplays(userName: string, transcriptions: Transcription[]) {
   updateTables(transcriptions);
   displayFormatDiagram(transcriptions);
   displayTypeDiagram(transcriptions);
-  displaySubredditDiagram(transcriptions);
+  displaySubGammaDiagram(transcriptions);
+  displaySubKarmaDiagram(transcriptions);
   displayHistoryDiagram(transcriptions);
   displayRateDiagram(transcriptions);
 }
