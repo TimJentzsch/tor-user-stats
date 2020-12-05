@@ -11,11 +11,12 @@ import Transcription from './transcription';
 import { Tag } from './tags';
 import {
   displayFormatDiagram,
-  displayHistoryDiagram,
-  displayRateDiagram,
+  gammaHistoryDiagram,
+  gammaRateDiagram,
   displaySubGammaDiagram,
   displaySubKarmaDiagram,
   displayTypeDiagram,
+  karmaHistoryDiagram,
 } from './display/diagrams';
 
 function searchUserHeader() {
@@ -171,8 +172,9 @@ function updateDisplays(userName: string, transcriptions: Transcription[]) {
   displayTypeDiagram(transcriptions);
   displaySubGammaDiagram(transcriptions);
   displaySubKarmaDiagram(transcriptions);
-  displayHistoryDiagram(transcriptions);
-  displayRateDiagram(transcriptions);
+  gammaHistoryDiagram(transcriptions);
+  gammaRateDiagram(transcriptions);
+  karmaHistoryDiagram(transcriptions);
 }
 
 async function displayUser() {
