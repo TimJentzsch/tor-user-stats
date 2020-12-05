@@ -43,10 +43,10 @@ export function formatGamma(transcriptions: Transcription[]): FormatGammaStats[]
   });
 }
 
-type TypeStats = {
+type TypeGammaStats = {
   /** The name of the type. */
   type: string;
-  /** The number of transcriptions for the format. */
+  /** The transcription gamma for the type. */
   count: number;
 };
 
@@ -54,8 +54,8 @@ type TypeStats = {
  * Analyzes the given transcriptions by the format, e.g. 'Image' or 'Video'.
  * @param transcriptions The transcriptions to analyze.
  */
-export function analyzeType(transcriptions: Transcription[]): TypeStats[] {
-  const typeStats: TypeStats[] = [];
+export function typeGamma(transcriptions: Transcription[]): TypeGammaStats[] {
+  const typeStats: TypeGammaStats[] = [];
 
   transcriptions.forEach((transcription) => {
     let type = transcription.type;
@@ -134,6 +134,58 @@ export function formatKarma(transcriptions: Transcription[]): FormatKarmaStats[]
 
   // Sort by karma descending
   return formatStats.sort((a, b) => {
+    return b.karma - a.karma;
+  });
+}
+
+type TypeKarmaStats = {
+  /** The name of the type. */
+  type: string;
+  /** The transcriptions by karma for the type. */
+  karma: number;
+};
+
+/**
+ * Analyzes the given transcriptions by the format, e.g. 'Image' or 'Video'.
+ * @param transcriptions The transcriptions to analyze.
+ */
+export function typeKarma(transcriptions: Transcription[]): TypeKarmaStats[] {
+  const typeStats: TypeKarmaStats[] = [];
+
+  transcriptions.forEach((transcription) => {
+    let type = transcription.type;
+
+    if (type) {
+      // Simplify some common types
+      if (type.includes('Twitter')) {
+        type = 'Twitter';
+      } else if (type.includes('Facebook')) {
+        type = 'Facebook';
+      } else if (type.includes('Tumblr')) {
+        type = 'Tumblr';
+      } else if (type.includes('Reddit')) {
+        type = 'Reddit';
+      } else if (type.includes('Text Message')) {
+        type = 'Chat';
+      }
+
+      const stats = typeStats.find((stat) => {
+        return stat.type === type;
+      });
+
+      if (stats) {
+        stats.karma += transcription.score;
+      } else {
+        typeStats.push({
+          type,
+          karma: transcription.score,
+        });
+      }
+    }
+  });
+
+  // Sort by karma descending
+  return typeStats.sort((a, b) => {
     return b.karma - a.karma;
   });
 }
