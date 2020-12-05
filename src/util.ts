@@ -63,3 +63,20 @@ export function repeatEndWith<T>(repeatItem: T | T[], count: number, endItem: T 
   const repeatArray = repeat(repeatItem, count);
   return repeatArray.concat(endItem);
 }
+
+/**
+ * Calculates the sum of the given numbers.
+ * @param array The array to sum up.
+ */
+export function arraySum(array: number[]): number {
+  return array.reduce((sum, cur) => sum + cur);
+}
+
+/**
+ * Calculates the sum over the given array.
+ * @param array The array to sum up.
+ * @param valuefn The value of a given item.
+ */
+export function arraySumBy<T>(array: T[], valuefn: (value: T) => number): number {
+  return arraySum(array.map(valuefn));
+}
