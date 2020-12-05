@@ -1,5 +1,5 @@
 import Plotly from 'plotly.js-dist';
-import { gammaHistory, gammaRate, karmaHistory } from '../stats/history';
+import { gammaHistory, gammaRate, karmaHistory, karmaRate } from '../stats/history';
 import { gammaPeak } from '../stats/peak';
 import { subredditGamma, subredditKarma } from '../stats/subreddits';
 import { formatGamma, formatKarma, typeGamma, typeKarma } from '../stats/type';
@@ -362,4 +362,33 @@ export function karmaHistoryDiagram(transcriptions: Transcription[]): void {
   });
 
   Plotly.newPlot('karma-history-diagram', data, layout);
+}
+
+export function karmaRateDiagram(transcriptions: Transcription[]): void {
+  const rate = karmaRate(transcriptions, 24 * 60 * 60); // 24h
+
+  const data = [
+    {
+      y: rate.map((stats) => stats.rate),
+      x: rate.map((stats) => stats.date.valueOf()),
+      type: 'scatter',
+      marker: {
+        color: Colors.primary(),
+      },
+    },
+  ];
+
+  const layout = fromTemplate(layoutTemplate, {
+    title: 'Rate (Karma, 24 h)',
+    yaxis: {
+      title: 'Karma Rate',
+      gridcolor: Colors.grid(),
+    },
+    xaxis: {
+      type: 'date',
+      gridcolor: Colors.grid(),
+    },
+  });
+
+  Plotly.newPlot('karma-rate-diagram', data, layout);
 }
