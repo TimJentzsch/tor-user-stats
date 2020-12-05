@@ -14,7 +14,6 @@ type PeakCountStats = {
  * @param transcriptions The transcriptions to analyze.
  * @param duration The duration to determine the peak in, in seconds.
  */
-// eslint-disable-next-line import/prefer-default-export
 export function gammaPeak(transcriptions: Transcription[], duration: number): PeakCountStats {
   let peak = 0;
   let startDate = new Date();
@@ -74,7 +73,6 @@ type PeakKarmaStats = {
  * @param transcriptions The transcriptions to analyze.
  * @param duration The duration to determine the peak in, in seconds.
  */
-// eslint-disable-next-line import/prefer-default-export
 export function karmaPeak(transcriptions: Transcription[], duration: number): PeakKarmaStats {
   let peak = 0;
   let startDate = new Date();

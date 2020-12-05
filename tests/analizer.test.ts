@@ -1,4 +1,4 @@
-import { getTranscriptionAvg } from '../src/stats/avg';
+import { gammaAvg } from '../src/stats/avg';
 import { gammaPeak } from '../src/stats/peak';
 import Transcription from '../src/transcription';
 import TranscriptionGenerator from './transcription-generator';
@@ -100,7 +100,7 @@ describe('Analizer', () => {
         new Transcription('b', imageMD, '', 1923019 + 10, 12, 'r/Old_Recipes'),
         new Transcription('c', imageMD, '', 1923019, 12, 'r/Old_Recipes'),
       ];
-      const actual = getTranscriptionAvg(transcriptions, duration);
+      const actual = gammaAvg(transcriptions, duration);
 
       expect(actual).toBe(3);
     });
@@ -111,7 +111,7 @@ describe('Analizer', () => {
         new Transcription('b', imageMD, '', 1923019 + duration * 2, 12, 'r/Old_Recipes'),
         new Transcription('c', imageMD, '', 1923019, 12, 'r/Old_Recipes'),
       ];
-      const actual = getTranscriptionAvg(transcriptions, duration);
+      const actual = gammaAvg(transcriptions, duration);
 
       // 3 transcriptions in 3h => 1 transcription in 1h
       expect(actual).toBe(1);
