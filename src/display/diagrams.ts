@@ -1,6 +1,7 @@
 import Plotly from 'plotly.js-dist';
-import { analyzeFormat, analyzeSubreddits, analyzeType, getTranscriptionPeak } from '../analizer';
+import { analyzeFormat, analyzeType, getTranscriptionPeak } from '../analizer';
 import { historyData, rateData } from '../stats/history';
+import { analyzeSubreddits } from '../stats/subreddits';
 import { countTags } from '../tags';
 import Transcription from '../transcription';
 import { limitReduceEnd, repeat, repeatEndWith } from '../util';
