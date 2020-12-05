@@ -80,3 +80,24 @@ export function arraySum(array: number[]): number {
 export function arraySumBy<T>(array: T[], valuefn: (value: T) => number): number {
   return arraySum(array.map(valuefn));
 }
+
+/**
+ * Calculates the average of the given numbers.
+ * @param array The array to determine the average of.
+ */
+export function arrayAvg(array: number[]): number {
+  if (array.length === 0) {
+    return 0;
+  }
+
+  return arraySum(array) / array.length;
+}
+
+/**
+ * Calculates the average of the given items.
+ * @param array The array to determine the average of.
+ * @param valuefn The value of a given item.
+ */
+export function arrayAvgBy<T>(array: T[], valuefn: (value: T) => number): number {
+  return arrayAvg(array.map(valuefn));
+}
