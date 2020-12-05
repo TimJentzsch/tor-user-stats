@@ -2,7 +2,7 @@ import { Comment } from 'snoowrap';
 import Logger from './logger';
 import { getAllUserComments, isToRMod } from './reddit-api';
 import { subredditGamma, subredditKarma } from './stats/subreddits';
-import { formatGamma, analyzeType } from './stats/type';
+import { formatGamma, analyzeType, formatKarma } from './stats/type';
 import { CountTag, specialTags, countTags, Tag } from './tags';
 import Transcription from './transcription';
 import { limitEnd } from './util';
@@ -200,7 +200,7 @@ export function getTranscriptionAmount(transcriptions: Transcription[]): Transcr
 export function logStats(label: string, stats: string): void {
   const logLabel = `${label}:`;
 
-  logger.info(`${logLabel.padEnd(20)} ${stats}`);
+  logger.info(`${logLabel.padEnd(22)} ${stats}`);
 }
 
 /** Analizes the transcriptions of the given user. */
@@ -248,10 +248,10 @@ export default async function analizeUser(userName: string): Promise<void> {
   const accuracy = 2;
 
   // Peaks
-  const hourPeak = getTranscriptionPeak(transcriptions, 60 * 60); // 1h
-  const dayPeak = getTranscriptionPeak(transcriptions, 24 * 60 * 60); // 24h
-  const weekPeak = getTranscriptionPeak(transcriptions, 7 * 24 * 60 * 60); // 7d
-  const yearPeak = getTranscriptionPeak(transcriptions, 365 * 24 * 60 * 60); // 365d
+  const hourPeak = getTranscriptionPeak(transcriptions, 60 * 60).count; // 1h
+  const dayPeak = getTranscriptionPeak(transcriptions, 24 * 60 * 60).count; // 24h
+  const weekPeak = getTranscriptionPeak(transcriptions, 7 * 24 * 60 * 60).count; // 7d
+  const yearPeak = getTranscriptionPeak(transcriptions, 365 * 24 * 60 * 60).count; // 365d
 
   logStats('Peaks', `1h: ${hourPeak} | 24h: ${dayPeak} | 7d: ${weekPeak} | 365d: ${yearPeak}`);
 
@@ -280,11 +280,17 @@ export default async function analizeUser(userName: string): Promise<void> {
   );
 
   // Fomat stats
-  const formatStats = limitEnd(formatGamma(transcriptions), 5).map((stats) => {
+  const formatGammaStats = limitEnd(formatGamma(transcriptions), 5).map((stats) => {
     return `${stats.format}: ${stats.count}`;
   });
 
-  logStats('Top 5 formats', `${formatStats.join(' | ')}`);
+  logStats('Top 5 formats (gamma)', `${formatGammaStats.join(' | ')}`);
+
+  const formatKarmaStats = limitEnd(formatKarma(transcriptions), 5).map((stats) => {
+    return `${stats.format}: ${stats.karma}`;
+  });
+
+  logStats('Top 5 formats (karma)', `${formatKarmaStats.join(' | ')}`);
 
   // Type stats
   const typeStats = limitEnd(analyzeType(transcriptions), 5).map((stats) => {
