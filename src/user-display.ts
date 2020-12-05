@@ -10,13 +10,15 @@ import {
 import Transcription from './transcription';
 import { Tag } from './tags';
 import {
-  displayFormatDiagram,
+  formatGammaDiagram,
   gammaHistoryDiagram,
   gammaRateDiagram,
   displaySubGammaDiagram,
   displaySubKarmaDiagram,
-  displayTypeDiagram,
+  typeGammaDiagram,
   karmaHistoryDiagram,
+  formatKarmaDiagram,
+  typeKarmaDiagram,
 } from './display/diagrams';
 
 function searchUserHeader() {
@@ -168,8 +170,10 @@ function updateDisplays(userName: string, transcriptions: Transcription[]) {
   displayGamma(transcriptions);
   displayTags(userName, transcriptions);
   updateTables(transcriptions);
-  displayFormatDiagram(transcriptions);
-  displayTypeDiagram(transcriptions);
+  formatGammaDiagram(transcriptions);
+  typeGammaDiagram(transcriptions);
+  formatKarmaDiagram(transcriptions);
+  typeKarmaDiagram(transcriptions);
   displaySubGammaDiagram(transcriptions);
   displaySubKarmaDiagram(transcriptions);
   gammaHistoryDiagram(transcriptions);
