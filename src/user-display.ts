@@ -125,20 +125,20 @@ function updatePeaks(transcriptions: Transcription[]) {
   const gammaWeekPeak = gammaPeak(transcriptions, 7 * 24 * 60 * 60); // 7d
   const gammaYearPeak = gammaPeak(transcriptions, 365 * 24 * 60 * 60); // 365d
 
-  updateElement('gamma-peak-1h', gammaHourPeak.count);
-  updateElement('gamma-peak-24h', gammaDayPeak.count);
-  updateElement('gamma-peak-7d', gammaWeekPeak.count);
-  updateElement('gamma-peak-365d', gammaYearPeak.count);
+  updateElement('gamma-peak-1h', gammaHourPeak.peak);
+  updateElement('gamma-peak-24h', gammaDayPeak.peak);
+  updateElement('gamma-peak-7d', gammaWeekPeak.peak);
+  updateElement('gamma-peak-365d', gammaYearPeak.peak);
 
   const karmaHourPeak = karmaPeak(transcriptions, 60 * 60); // 1h
   const karmaDayPeak = karmaPeak(transcriptions, 24 * 60 * 60); // 24h
   const karmaWeekPeak = karmaPeak(transcriptions, 7 * 24 * 60 * 60); // 7d
   const karmaYearPeak = karmaPeak(transcriptions, 365 * 24 * 60 * 60); // 365d
 
-  updateElement('karma-peak-1h', karmaHourPeak.karma);
-  updateElement('karma-peak-24h', karmaDayPeak.karma);
-  updateElement('karma-peak-7d', karmaWeekPeak.karma);
-  updateElement('karma-peak-365d', karmaYearPeak.karma);
+  updateElement('karma-peak-1h', karmaHourPeak.peak);
+  updateElement('karma-peak-24h', karmaDayPeak.peak);
+  updateElement('karma-peak-7d', karmaWeekPeak.peak);
+  updateElement('karma-peak-365d', karmaYearPeak.peak);
 }
 
 function updateAvgs(transcriptions: Transcription[]) {
