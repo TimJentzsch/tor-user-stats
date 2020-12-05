@@ -2,7 +2,7 @@ import { Comment } from 'snoowrap';
 import Logger from './logger';
 import { getAllUserComments, isToRMod } from './reddit-api';
 import { getTranscriptionAvg } from './stats/avg';
-import { gammaPeak } from './stats/peak';
+import { gammaPeak, karmaPeak } from './stats/peak';
 import { subredditGamma, subredditKarma } from './stats/subreddits';
 import { formatGamma, typeGamma, formatKarma, typeKarma } from './stats/type';
 import { CountTag, specialTags, countTags, Tag } from './tags';
@@ -165,12 +165,25 @@ export default async function analizeUser(userName: string): Promise<void> {
   const accuracy = 2;
 
   // Peaks
-  const hourPeak = gammaPeak(transcriptions, 60 * 60).count; // 1h
-  const dayPeak = gammaPeak(transcriptions, 24 * 60 * 60).count; // 24h
-  const weekPeak = gammaPeak(transcriptions, 7 * 24 * 60 * 60).count; // 7d
-  const yearPeak = gammaPeak(transcriptions, 365 * 24 * 60 * 60).count; // 365d
+  const gammaHourPeak = gammaPeak(transcriptions, 60 * 60).count; // 1h
+  const gammaDayPeak = gammaPeak(transcriptions, 24 * 60 * 60).count; // 24h
+  const gammaWeekPeak = gammaPeak(transcriptions, 7 * 24 * 60 * 60).count; // 7d
+  const gammaYearPeak = gammaPeak(transcriptions, 365 * 24 * 60 * 60).count; // 365d
 
-  logStats('Peaks', `1h: ${hourPeak} | 24h: ${dayPeak} | 7d: ${weekPeak} | 365d: ${yearPeak}`);
+  logStats(
+    'Peaks (gamma)',
+    `1h: ${gammaHourPeak} | 24h: ${gammaDayPeak} | 7d: ${gammaWeekPeak} | 365d: ${gammaYearPeak}`,
+  );
+
+  const karmaHourPeak = karmaPeak(transcriptions, 60 * 60).karma; // 1h
+  const karmaDayPeak = karmaPeak(transcriptions, 24 * 60 * 60).karma; // 24h
+  const karmaWeekPeak = karmaPeak(transcriptions, 7 * 24 * 60 * 60).karma; // 7d
+  const karmaYearPeak = karmaPeak(transcriptions, 365 * 24 * 60 * 60).karma; // 365d
+
+  logStats(
+    'Peaks (karma)',
+    `1h: ${karmaHourPeak} | 24h: ${karmaDayPeak} | 7d: ${karmaWeekPeak} | 365d: ${karmaYearPeak}`,
+  );
 
   // Averages
   const hourAvg = getTranscriptionAvg(transcriptions, 60 * 60).toFixed(accuracy); // 1h
