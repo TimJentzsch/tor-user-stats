@@ -59,11 +59,16 @@ export function transcriptionPeakBy(
 
     // Update the peak if necessary
     if (cur > peak) {
+      peak = cur;
+
       first = transcriptions[oldIndex];
       last = transcriptions[newIndex + 1];
-      peak = cur;
-      startDate = new Date(first.createdUTC * 1000);
-      endDate = new Date(first.createdUTC * 1000 + duration);
+
+      // Center the peak in the given timeframe
+      const offset = duration - (last.createdUTC - first.createdUTC) / 2;
+
+      startDate = new Date((first.createdUTC - offset) * 1000);
+      endDate = new Date((first.createdUTC - offset + duration) * 1000);
     }
 
     cur -= valuefn(transcriptions[oldIndex]);
