@@ -1,6 +1,6 @@
 import Transcription from '../transcription';
 
-type PeakStats = {
+export type PeakStats = {
   /** The peak of the transcriptions. */
   peak: number;
   /** The start of the peak. */
