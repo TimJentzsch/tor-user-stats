@@ -1,6 +1,6 @@
 import Plotly from 'plotly.js-dist';
-import { getTranscriptionPeak } from '../analizer';
 import { gammaHistory, gammaRate, karmaHistory } from '../stats/history';
+import { getTranscriptionPeak } from '../stats/peak';
 import { subredditGamma, subredditKarma } from '../stats/subreddits';
 import { formatGamma, formatKarma, typeGamma, typeKarma } from '../stats/type';
 import { countTags } from '../tags';

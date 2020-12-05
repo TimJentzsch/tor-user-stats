@@ -1,12 +1,5 @@
 import { getAllUserComments } from './reddit-api';
-import {
-  getCountTag,
-  getSpecialTags,
-  getTranscriptionAmount,
-  getTranscriptionAvg,
-  getTranscriptionPeak,
-  isComment,
-} from './analizer';
+import { getCountTag, getSpecialTags, getTranscriptionAmount, isComment } from './analizer';
 import Transcription from './transcription';
 import { Tag } from './tags';
 import {
@@ -20,6 +13,8 @@ import {
   formatKarmaDiagram,
   typeKarmaDiagram,
 } from './display/diagrams';
+import { getTranscriptionPeak } from './stats/peak';
+import { getTranscriptionAvg } from './stats/avg';
 
 function searchUserHeader() {
   const input = document.getElementById('header-user-input') as HTMLInputElement;

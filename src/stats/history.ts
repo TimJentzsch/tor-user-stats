@@ -1,5 +1,5 @@
-import { getTranscriptionPeak } from '../analizer';
 import Transcription from '../transcription';
+import { getTranscriptionPeak } from './peak';
 
 type HistoryGammaData = {
   /** The date of the data. */
