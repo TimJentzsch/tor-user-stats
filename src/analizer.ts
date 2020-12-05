@@ -2,7 +2,7 @@ import { Comment } from 'snoowrap';
 import Logger from './logger';
 import { getAllUserComments, isToRMod } from './reddit-api';
 import { subredditGamma, subredditKarma } from './stats/subreddits';
-import { formatGamma, analyzeType, formatKarma } from './stats/type';
+import { formatGamma, typeGamma, formatKarma } from './stats/type';
 import { CountTag, specialTags, countTags, Tag } from './tags';
 import Transcription from './transcription';
 import { limitEnd } from './util';
@@ -293,7 +293,7 @@ export default async function analizeUser(userName: string): Promise<void> {
   logStats('Top 5 formats (karma)', `${formatKarmaStats.join(' | ')}`);
 
   // Type stats
-  const typeStats = limitEnd(analyzeType(transcriptions), 5).map((stats) => {
+  const typeStats = limitEnd(typeGamma(transcriptions), 5).map((stats) => {
     return `${stats.type}: ${stats.count}`;
   });
 
