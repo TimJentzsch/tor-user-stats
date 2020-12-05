@@ -1,5 +1,5 @@
 import Transcription from '../transcription';
-import { getTranscriptionPeak } from './peak';
+import { gammaPeak } from './peak';
 
 type HistoryGammaData = {
   /** The date of the data. */
@@ -39,7 +39,7 @@ export function gammaRate(transcriptions: Transcription[], duration: number): Ra
   }
 
   // The peak should be included in the rate diagram
-  const peak = getTranscriptionPeak(transcriptions, duration);
+  const peak = gammaPeak(transcriptions, duration);
 
   const start = transcriptions[transcriptions.length - 1].createdUTC;
   const end = transcriptions[0].createdUTC;
