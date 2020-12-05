@@ -28,7 +28,13 @@ export function transcriptionRateBy(
   }
 
   // The peak should be included in the rate diagram
-  const peak = peakfn(transcriptions, duration);
+  const peak = peakfn(transcriptions, duration) as {
+    peak: number;
+    first: Transcription;
+    last: Transcription;
+    startDate: Date;
+    endDate: Date;
+  };
 
   const start = transcriptions[transcriptions.length - 1].createdUTC;
   const end = transcriptions[0].createdUTC;
