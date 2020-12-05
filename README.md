@@ -1,8 +1,8 @@
 # tor-user-stats
 
-> **DISCLAIMER**: This is a community-maintained project and is not officially endorsed by /r/TranscribersOfReddit nor Grafeas Group; they are in no way involved with this tool and are not liable for any matters relating to it.
+> **DISCLAIMER**: This is a community-maintained project and is not officially endorsed by [/r/TranscribersOfReddit](https://www.reddit.com/r/TranscribersOfReddit/wiki/index) nor [Grafeas Group](https://www.grafeas.org/about); they are in no way involved with this tool and are not liable for any matters relating to it.
 
-This is a tool to obtain user-related statistics to /r/TranscribersOfReddit related transcriptions.
+This is a tool to obtain user-related statistics to [/r/TranscribersOfReddit](https://www.reddit.com/r/TranscribersOfReddit/) related transcriptions.
 
 Available on https://timjentzsch.github.io/tor-user-stats/.
 
