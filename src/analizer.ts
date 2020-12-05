@@ -1,7 +1,7 @@
 import { Comment } from 'snoowrap';
 import Logger from './logger';
 import { getAllUserComments, isToRMod } from './reddit-api';
-import { subredditGamma } from './stats/subreddits';
+import { subredditGamma, subredditKarma } from './stats/subreddits';
 import { CountTag, specialTags, countTags, Tag } from './tags';
 import Transcription from './transcription';
 import { limitEnd } from './util';
@@ -294,7 +294,7 @@ export function analyzeType(transcriptions: Transcription[]): TypeStats[] {
 export function logStats(label: string, stats: string): void {
   const logLabel = `${label}:`;
 
-  logger.info(`${logLabel.padEnd(14)} ${stats}`);
+  logger.info(`${logLabel.padEnd(20)} ${stats}`);
 }
 
 /** Analizes the transcriptions of the given user. */
@@ -388,11 +388,17 @@ export default async function analizeUser(userName: string): Promise<void> {
   logStats('Top 5 types', `${typeStats.join(' | ')}`);
 
   // Sub stats
-  const subStats = limitEnd(subredditGamma(transcriptions), 5).map((stats) => {
+  const subGamma = limitEnd(subredditGamma(transcriptions), 5).map((stats) => {
     return `${stats.sub}: ${stats.count}`;
   });
 
-  logStats('Top 5 subs', `${subStats.join(' | ')}`);
+  logStats('Top 5 subs (gamma)', `${subGamma.join(' | ')}`);
+
+  const subKarma = limitEnd(subredditKarma(transcriptions), 5).map((stats) => {
+    return `${stats.sub}: ${stats.karma}`;
+  });
+
+  logStats('Top 5 subs (karma)', `${subKarma.join(' | ')}`);
 
   // Tags
   const countTag = getCountTag(transcriptions);
