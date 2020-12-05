@@ -2,7 +2,7 @@ import { Comment } from 'snoowrap';
 import Logger from './logger';
 import { getAllUserComments, isToRMod } from './reddit-api';
 import { subredditGamma, subredditKarma } from './stats/subreddits';
-import { analyzeFormat, analyzeType } from './stats/type';
+import { formatGamma, analyzeType } from './stats/type';
 import { CountTag, specialTags, countTags, Tag } from './tags';
 import Transcription from './transcription';
 import { limitEnd } from './util';
@@ -280,7 +280,7 @@ export default async function analizeUser(userName: string): Promise<void> {
   );
 
   // Fomat stats
-  const formatStats = limitEnd(analyzeFormat(transcriptions), 5).map((stats) => {
+  const formatStats = limitEnd(formatGamma(transcriptions), 5).map((stats) => {
     return `${stats.format}: ${stats.count}`;
   });
 
