@@ -1,7 +1,7 @@
 import { Comment } from 'snoowrap';
 import Logger from './logger';
 import { getAllUserComments, isToRMod } from './reddit-api';
-import { analyzeSubreddits } from './stats/subreddits';
+import { subredditGamma } from './stats/subreddits';
 import { CountTag, specialTags, countTags, Tag } from './tags';
 import Transcription from './transcription';
 import { limitEnd } from './util';
@@ -388,7 +388,7 @@ export default async function analizeUser(userName: string): Promise<void> {
   logStats('Top 5 types', `${typeStats.join(' | ')}`);
 
   // Sub stats
-  const subStats = limitEnd(analyzeSubreddits(transcriptions), 5).map((stats) => {
+  const subStats = limitEnd(subredditGamma(transcriptions), 5).map((stats) => {
     return `${stats.sub}: ${stats.count}`;
   });
 

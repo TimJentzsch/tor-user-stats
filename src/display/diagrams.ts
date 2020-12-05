@@ -1,7 +1,7 @@
 import Plotly from 'plotly.js-dist';
 import { analyzeFormat, analyzeType, getTranscriptionPeak } from '../analizer';
 import { historyData, rateData } from '../stats/history';
-import { analyzeSubreddits } from '../stats/subreddits';
+import { subredditGamma } from '../stats/subreddits';
 import { countTags } from '../tags';
 import Transcription from '../transcription';
 import { limitReduceEnd, repeat, repeatEndWith } from '../util';
@@ -84,7 +84,7 @@ export function displayTypeDiagram(transcriptions: Transcription[]): void {
 
 export function displaySubredditDiagram(transcriptions: Transcription[]): void {
   const subStats = limitReduceEnd(
-    analyzeSubreddits(transcriptions),
+    subredditGamma(transcriptions),
     (a, b) => {
       return {
         sub: 'Other',
