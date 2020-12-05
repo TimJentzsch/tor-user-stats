@@ -1,6 +1,6 @@
 import Transcription from '../transcription';
 
-type FormatStats = {
+type FormatGammaStats = {
   /** The name of the format. */
   format: string;
   /** The number of transcriptions for the format. */
@@ -11,8 +11,8 @@ type FormatStats = {
  * Analyzes the given transcriptions by the format, e.g. 'Image' or 'Video'.
  * @param transcriptions The transcriptions to analyze.
  */
-export function analyzeFormat(transcriptions: Transcription[]): FormatStats[] {
-  const formatStats: FormatStats[] = [];
+export function formatGamma(transcriptions: Transcription[]): FormatGammaStats[] {
+  const formatStats: FormatGammaStats[] = [];
 
   transcriptions.forEach((transcription) => {
     let format = transcription.format;
@@ -92,5 +92,48 @@ export function analyzeType(transcriptions: Transcription[]): TypeStats[] {
   // Sort by count descending
   return typeStats.sort((a, b) => {
     return b.count - a.count;
+  });
+}
+
+type FormatKarmaStats = {
+  /** The name of the format. */
+  format: string;
+  /** The transcription karma for the format. */
+  karma: number;
+};
+
+/**
+ * Analyzes the given transcriptions by the format, e.g. 'Image' or 'Video'.
+ * @param transcriptions The transcriptions to analyze.
+ */
+export function formatKarma(transcriptions: Transcription[]): FormatKarmaStats[] {
+  const formatStats: FormatKarmaStats[] = [];
+
+  transcriptions.forEach((transcription) => {
+    let format = transcription.format;
+
+    if (format.includes('Image')) {
+      format = 'Image';
+    } else if (format.includes('Video')) {
+      format = 'Video';
+    }
+
+    const stats = formatStats.find((stat) => {
+      return stat.format === format;
+    });
+
+    if (stats) {
+      stats.karma += transcription.score;
+    } else {
+      formatStats.push({
+        format,
+        karma: transcription.score,
+      });
+    }
+  });
+
+  // Sort by karma descending
+  return formatStats.sort((a, b) => {
+    return b.karma - a.karma;
   });
 }

@@ -2,7 +2,7 @@ import Plotly from 'plotly.js-dist';
 import { getTranscriptionPeak } from '../analizer';
 import { gammaHistory, gammaRate, karmaHistory } from '../stats/history';
 import { subredditGamma, subredditKarma } from '../stats/subreddits';
-import { analyzeFormat, analyzeType } from '../stats/type';
+import { formatGamma, analyzeType } from '../stats/type';
 import { countTags } from '../tags';
 import Transcription from '../transcription';
 import { limitReduceEnd, repeat, repeatEndWith } from '../util';
@@ -12,7 +12,7 @@ import { layoutTemplate } from './templates';
 
 export function displayFormatDiagram(transcriptions: Transcription[]): void {
   const formatStats = limitReduceEnd(
-    analyzeFormat(transcriptions),
+    formatGamma(transcriptions),
     (a, b) => {
       return {
         format: 'Other',
