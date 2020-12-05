@@ -1,4 +1,5 @@
-import { getTranscriptionAvg, getTranscriptionPeak } from '../src/analizer';
+import { getTranscriptionAvg } from '../src/stats/avg';
+import { getTranscriptionPeak } from '../src/stats/peak';
 import Transcription from '../src/transcription';
 import TranscriptionGenerator from './transcription-generator';
 import { imageMD } from './transcription-templates';

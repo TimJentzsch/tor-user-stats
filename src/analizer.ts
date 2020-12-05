@@ -1,6 +1,8 @@
 import { Comment } from 'snoowrap';
 import Logger from './logger';
 import { getAllUserComments, isToRMod } from './reddit-api';
+import { getTranscriptionAvg } from './stats/avg';
+import { getTranscriptionPeak } from './stats/peak';
 import { subredditGamma, subredditKarma } from './stats/subreddits';
 import { formatGamma, typeGamma, formatKarma, typeKarma } from './stats/type';
 import { CountTag, specialTags, countTags, Tag } from './tags';
@@ -16,91 +18,6 @@ export function isComment(comment: Comment): boolean {
     // Has one of the bot keywords
     /\b(done|(un)?claim(ing)?)\b/.test(comment.body)
   );
-}
-
-type PeakStats = {
-  /** The number of transcriptions at the peak. */
-  count: number;
-  /** The start of the peak. */
-  startDate: Date;
-  /** The end of the peak. */
-  endDate: Date;
-};
-
-/**
- * Gets the peak transcription count during the given duration.
- * @param transcriptions The transcriptions to analyze.
- * @param duration The duration to determine the peak in, in seconds.
- */
-export function getTranscriptionPeak(transcriptions: Transcription[], duration: number): PeakStats {
-  let peak = 0;
-  let startDate = new Date();
-  let endDate = new Date();
-
-  if (transcriptions.length === 0) {
-    return {
-      count: peak,
-      startDate,
-      endDate,
-    };
-  }
-
-  // Start with the oldest transcriptions
-  let oldIndex = transcriptions.length - 1;
-  let newIndex = transcriptions.length - 1;
-
-  while (newIndex >= 0) {
-    // Take as many transcriptions as fit into the timeframe
-    while (
-      newIndex >= 0 &&
-      transcriptions[newIndex].createdUTC - transcriptions[oldIndex].createdUTC <= duration
-    ) {
-      newIndex -= 1;
-    }
-    // Count the transcriptions in that timeframe
-    const count = oldIndex - newIndex;
-
-    // Update the peak if necessary
-    if (count > peak) {
-      peak = count;
-      startDate = new Date(transcriptions[oldIndex].createdUTC * 1000);
-      endDate = new Date(transcriptions[newIndex + 1].createdUTC * 1000);
-    }
-
-    oldIndex -= 1;
-  }
-
-  return {
-    count: peak,
-    startDate,
-    endDate,
-  };
-}
-
-/**
- * Gets the average number of transcriptions made in the given timeframe.
- * @param transcriptions The transcriptions to analyze.
- * @param duration The duration to get the average for, in seconds.
- */
-export function getTranscriptionAvg(transcriptions: Transcription[], duration: number): number {
-  const count = transcriptions.length;
-
-  // Check if transcriptions have been made
-  if (count === 0) {
-    return 0;
-  }
-
-  const transcriptionStart = transcriptions[transcriptions.length - 1].createdUTC;
-  const transcriptionEnd = transcriptions[0].createdUTC;
-  const transcriptionDur = transcriptionEnd - transcriptionStart;
-
-  // If the timeframe is larger than the transcription frame, return the number of transcriptions
-  if (transcriptionDur <= duration) {
-    return count;
-  }
-
-  // Return the avg count of transcriptions in the given timeframe
-  return (duration / transcriptionDur) * count;
 }
 
 /**
