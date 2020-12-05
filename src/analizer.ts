@@ -1,7 +1,7 @@
 import { Comment } from 'snoowrap';
 import Logger from './logger';
 import { getAllUserComments, isToRMod } from './reddit-api';
-import { gammaAvg } from './stats/avg';
+import { gammaAvg, karmaAvg } from './stats/avg';
 import { gammaPeak, karmaPeak } from './stats/peak';
 import { subredditGamma, subredditKarma } from './stats/subreddits';
 import { formatGamma, typeGamma, formatKarma, typeKarma } from './stats/type';
@@ -186,12 +186,25 @@ export default async function analizeUser(userName: string): Promise<void> {
   );
 
   // Averages
-  const hourAvg = gammaAvg(transcriptions, 60 * 60).toFixed(accuracy); // 1h
-  const dayAvg = gammaAvg(transcriptions, 24 * 60 * 60).toFixed(accuracy); // 24h
-  const weekAvg = gammaAvg(transcriptions, 7 * 24 * 60 * 60).toFixed(accuracy); // 7d
-  const yearAvg = gammaAvg(transcriptions, 365 * 24 * 60 * 60).toFixed(accuracy); // 365d
+  const gammaHourAvg = gammaAvg(transcriptions, 60 * 60).toFixed(accuracy); // 1h
+  const gammaDayAvg = gammaAvg(transcriptions, 24 * 60 * 60).toFixed(accuracy); // 24h
+  const gammaWeekAvg = gammaAvg(transcriptions, 7 * 24 * 60 * 60).toFixed(accuracy); // 7d
+  const gammaYearAvg = gammaAvg(transcriptions, 365 * 24 * 60 * 60).toFixed(accuracy); // 365d
 
-  logStats('Avgs', `1h: ${hourAvg} | 24h: ${dayAvg} | 7d: ${weekAvg} | 365d: ${yearAvg}`);
+  logStats(
+    'Avgs (gamma)',
+    `1h: ${gammaHourAvg} | 24h: ${gammaDayAvg} | 7d: ${gammaWeekAvg} | 365d: ${gammaYearAvg}`,
+  );
+
+  const karmaHourAvg = karmaAvg(transcriptions, 60 * 60).toFixed(accuracy); // 1h
+  const karmaDayAvg = karmaAvg(transcriptions, 24 * 60 * 60).toFixed(accuracy); // 24h
+  const karmaWeekAvg = karmaAvg(transcriptions, 7 * 24 * 60 * 60).toFixed(accuracy); // 7d
+  const karmaYearAvg = karmaAvg(transcriptions, 365 * 24 * 60 * 60).toFixed(accuracy); // 365d
+
+  logStats(
+    'Avgs (karma)',
+    `1h: ${karmaHourAvg} | 24h: ${karmaDayAvg} | 7d: ${karmaWeekAvg} | 365d: ${karmaYearAvg}`,
+  );
 
   // Amounts
   const amounts = getTranscriptionAmount(transcriptions);
