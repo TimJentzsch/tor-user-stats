@@ -1,6 +1,6 @@
 import Plotly from 'plotly.js-dist';
 import { gammaHistory, gammaRate, karmaHistory } from '../stats/history';
-import { getTranscriptionPeak } from '../stats/peak';
+import { gammaPeak } from '../stats/peak';
 import { subredditGamma, subredditKarma } from '../stats/subreddits';
 import { formatGamma, formatKarma, typeGamma, typeKarma } from '../stats/type';
 import { countTags } from '../tags';
@@ -295,7 +295,7 @@ export function gammaRateDiagram(transcriptions: Transcription[]): void {
   if (transcriptions.length > 0) {
     const start = rate[0].date.valueOf();
     const end = rate[rate.length - 1].date.valueOf();
-    const max = getTranscriptionPeak(transcriptions, 24 * 60 * 60).count; // 24h
+    const max = gammaPeak(transcriptions, 24 * 60 * 60).count; // 24h
 
     // Display 100/24h line if close
     if (max >= 75) {

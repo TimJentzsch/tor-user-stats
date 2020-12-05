@@ -1,5 +1,5 @@
 import { getTranscriptionAvg } from '../src/stats/avg';
-import { getTranscriptionPeak } from '../src/stats/peak';
+import { gammaPeak } from '../src/stats/peak';
 import Transcription from '../src/transcription';
 import TranscriptionGenerator from './transcription-generator';
 import { imageMD } from './transcription-templates';
@@ -10,7 +10,7 @@ describe('Analizer', () => {
     test('should return 0 for empty array', () => {
       const transcriptions: Transcription[] = [];
       const duration = 24 * 60 * 60; // 24h
-      const actual = getTranscriptionPeak(transcriptions, duration).count;
+      const actual = gammaPeak(transcriptions, duration).count;
 
       expect(actual).toBe(0);
     });
@@ -19,7 +19,7 @@ describe('Analizer', () => {
         new Transcription('a', imageMD, '', 1923019, 12, 'r/Old_Recipes'),
       ];
       const duration = 24 * 60 * 60; // 24h
-      const actual = getTranscriptionPeak(transcriptions, duration).count;
+      const actual = gammaPeak(transcriptions, duration).count;
 
       expect(actual).toBe(1);
     });
@@ -29,7 +29,7 @@ describe('Analizer', () => {
         new Transcription('a', imageMD, '', 1923019 + duration, 12, 'r/Old_Recipes'),
         new Transcription('b', imageMD, '', 1923019, 12, 'r/Old_Recipes'),
       ];
-      const actual = getTranscriptionPeak(transcriptions, duration).count;
+      const actual = gammaPeak(transcriptions, duration).count;
 
       expect(actual).toBe(2);
     });
@@ -39,7 +39,7 @@ describe('Analizer', () => {
         new Transcription('a', imageMD, '', 1923019 + duration + 1, 12, 'r/Old_Recipes'),
         new Transcription('b', imageMD, '', 1923019, 12, 'r/Old_Recipes'),
       ];
-      const actual = getTranscriptionPeak(transcriptions, duration).count;
+      const actual = gammaPeak(transcriptions, duration).count;
 
       expect(actual).toBe(1);
     });
@@ -54,7 +54,7 @@ describe('Analizer', () => {
         .addTranscriptions(20, duration / 2)
         .generate();
 
-      const actual = getTranscriptionPeak(transcriptions, duration).count;
+      const actual = gammaPeak(transcriptions, duration).count;
 
       expect(actual).toBe(100);
     });
@@ -70,7 +70,7 @@ describe('Analizer', () => {
         .addTranscriptions(90, duration)
         .generate();
 
-      const actual = getTranscriptionPeak(transcriptions, duration).count;
+      const actual = gammaPeak(transcriptions, duration).count;
 
       expect(actual).toBe(100);
     });
@@ -86,7 +86,7 @@ describe('Analizer', () => {
         .addTranscriptions(100, duration)
         .generate();
 
-      const actual = getTranscriptionPeak(transcriptions, duration).count;
+      const actual = gammaPeak(transcriptions, duration).count;
 
       expect(actual).toBe(100);
     });

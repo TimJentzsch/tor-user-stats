@@ -2,7 +2,7 @@ import { Comment } from 'snoowrap';
 import Logger from './logger';
 import { getAllUserComments, isToRMod } from './reddit-api';
 import { getTranscriptionAvg } from './stats/avg';
-import { getTranscriptionPeak } from './stats/peak';
+import { gammaPeak } from './stats/peak';
 import { subredditGamma, subredditKarma } from './stats/subreddits';
 import { formatGamma, typeGamma, formatKarma, typeKarma } from './stats/type';
 import { CountTag, specialTags, countTags, Tag } from './tags';
@@ -55,7 +55,7 @@ export async function getSpecialTags(
     spTags.push(specialTags.mod);
   }
 
-  const dayPeak = getTranscriptionPeak(transcriptions, 24 * 60 * 60); // 24h
+  const dayPeak = gammaPeak(transcriptions, 24 * 60 * 60); // 24h
 
   // 100/24h tag
   if (dayPeak.count >= 100) {
@@ -165,10 +165,10 @@ export default async function analizeUser(userName: string): Promise<void> {
   const accuracy = 2;
 
   // Peaks
-  const hourPeak = getTranscriptionPeak(transcriptions, 60 * 60).count; // 1h
-  const dayPeak = getTranscriptionPeak(transcriptions, 24 * 60 * 60).count; // 24h
-  const weekPeak = getTranscriptionPeak(transcriptions, 7 * 24 * 60 * 60).count; // 7d
-  const yearPeak = getTranscriptionPeak(transcriptions, 365 * 24 * 60 * 60).count; // 365d
+  const hourPeak = gammaPeak(transcriptions, 60 * 60).count; // 1h
+  const dayPeak = gammaPeak(transcriptions, 24 * 60 * 60).count; // 24h
+  const weekPeak = gammaPeak(transcriptions, 7 * 24 * 60 * 60).count; // 7d
+  const yearPeak = gammaPeak(transcriptions, 365 * 24 * 60 * 60).count; // 365d
 
   logStats('Peaks', `1h: ${hourPeak} | 24h: ${dayPeak} | 7d: ${weekPeak} | 365d: ${yearPeak}`);
 

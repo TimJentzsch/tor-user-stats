@@ -13,7 +13,7 @@ import {
   formatKarmaDiagram,
   typeKarmaDiagram,
 } from './display/diagrams';
-import { getTranscriptionPeak } from './stats/peak';
+import { gammaPeak } from './stats/peak';
 import { getTranscriptionAvg } from './stats/avg';
 
 function searchUserHeader() {
@@ -119,10 +119,10 @@ async function displayTags(userName: string, transcriptions: Transcription[]) {
 }
 
 function updatePeaks(transcriptions: Transcription[]) {
-  const hourPeak = getTranscriptionPeak(transcriptions, 60 * 60); // 1h
-  const dayPeak = getTranscriptionPeak(transcriptions, 24 * 60 * 60); // 24h
-  const weekPeak = getTranscriptionPeak(transcriptions, 7 * 24 * 60 * 60); // 7d
-  const yearPeak = getTranscriptionPeak(transcriptions, 365 * 24 * 60 * 60); // 365d
+  const hourPeak = gammaPeak(transcriptions, 60 * 60); // 1h
+  const dayPeak = gammaPeak(transcriptions, 24 * 60 * 60); // 24h
+  const weekPeak = gammaPeak(transcriptions, 7 * 24 * 60 * 60); // 7d
+  const yearPeak = gammaPeak(transcriptions, 365 * 24 * 60 * 60); // 365d
 
   updateElement('peak-1h', hourPeak.count);
   updateElement('peak-24h', dayPeak.count);
