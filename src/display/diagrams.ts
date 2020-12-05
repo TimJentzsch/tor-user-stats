@@ -1,6 +1,6 @@
 import Plotly from 'plotly.js-dist';
 import { analyzeFormat, analyzeType, getTranscriptionPeak } from '../analizer';
-import { historyData, rateData } from '../stats/history';
+import { gammaHistory, gammaRate } from '../stats/history';
 import { subredditGamma, subredditKarma } from '../stats/subreddits';
 import { countTags } from '../tags';
 import Transcription from '../transcription';
@@ -163,7 +163,7 @@ export function displaySubKarmaDiagram(transcriptions: Transcription[]): void {
 }
 
 export function displayHistoryDiagram(transcriptions: Transcription[]): void {
-  const history = historyData(transcriptions);
+  const history = gammaHistory(transcriptions);
 
   const data = [];
 
@@ -214,7 +214,7 @@ export function displayHistoryDiagram(transcriptions: Transcription[]): void {
 }
 
 export function displayRateDiagram(transcriptions: Transcription[]): void {
-  const rate = rateData(transcriptions, 24 * 60 * 60); // 24h
+  const rate = gammaRate(transcriptions, 24 * 60 * 60); // 24h
 
   const data = [];
 

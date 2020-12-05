@@ -1,15 +1,15 @@
 import { getTranscriptionPeak } from '../analizer';
 import Transcription from '../transcription';
 
-type HistoryData = {
+type HistoryGammaData = {
   /** The date of the data. */
   date: Date;
   /** The number of transcriptions at the date. */
   count: number;
 };
 
-export function historyData(transcriptions: Transcription[]): HistoryData[] {
-  const data: HistoryData[] = [];
+export function gammaHistory(transcriptions: Transcription[]): HistoryGammaData[] {
+  const data: HistoryGammaData[] = [];
   let count = 0;
 
   for (let i = transcriptions.length - 1; i >= 0; i -= 1) {
@@ -31,7 +31,7 @@ type RateData = {
   rate: number;
 };
 
-export function rateData(transcriptions: Transcription[], duration: number): RateData[] {
+export function gammaRate(transcriptions: Transcription[], duration: number): RateData[] {
   const data: RateData[] = [];
 
   if (transcriptions.length === 0) {
@@ -68,6 +68,29 @@ export function rateData(transcriptions: Transcription[], duration: number): Rat
     // Move to the next timeframe
     curRate = 0;
     curDate += duration;
+  }
+
+  return data;
+}
+
+type HistoryKarmaData = {
+  /** The date of the data. */
+  date: Date;
+  /** The transcription karma at the date. */
+  karma: number;
+};
+
+export function karmaHistory(transcriptions: Transcription[]): HistoryKarmaData[] {
+  const data: HistoryKarmaData[] = [];
+  let karma = 0;
+
+  for (let i = transcriptions.length - 1; i >= 0; i -= 1) {
+    karma += transcriptions[i].score;
+
+    data.push({
+      date: new Date(transcriptions[i].createdUTC * 1000),
+      karma,
+    });
   }
 
   return data;
