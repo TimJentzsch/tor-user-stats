@@ -1,13 +1,22 @@
 import Transcription from '../transcription';
 
-export type PeakStats = {
-  /** The peak of the transcriptions. */
-  peak: number;
-  /** The start of the peak. */
-  startDate: Date;
-  /** The end of the peak. */
-  endDate: Date;
-};
+export type PeakStats =
+  | {
+      /** The peak of the transcriptions. */
+      peak: number;
+      /** The first transcription in the peak timeframe. */
+      first: Transcription;
+      /** The last transcription in the peak timeframe. */
+      last: Transcription;
+      /** The start of the peak timeframe. */
+      startDate: Date;
+      /** The end of the peak timeframe. */
+      endDate: Date;
+    }
+  | {
+      /** The peak of the transcriptions. */
+      peak: 0;
+    };
 
 /**
  * Determines the peak of the given transcriptions by the given value.
@@ -23,12 +32,13 @@ export function transcriptionPeakBy(
   let peak = 0;
   let startDate = new Date();
   let endDate = new Date();
+  // TODO: Figure out a better way to initialize this
+  let first;
+  let last;
 
   if (transcriptions.length === 0) {
     return {
-      peak,
-      startDate,
-      endDate,
+      peak: 0,
     };
   }
 
@@ -49,9 +59,11 @@ export function transcriptionPeakBy(
 
     // Update the peak if necessary
     if (cur > peak) {
+      first = transcriptions[oldIndex];
+      last = transcriptions[newIndex + 1];
       peak = cur;
-      startDate = new Date(transcriptions[oldIndex].createdUTC * 1000);
-      endDate = new Date(transcriptions[newIndex + 1].createdUTC * 1000);
+      startDate = new Date(first.createdUTC * 1000);
+      endDate = new Date(first.createdUTC * 1000 + duration);
     }
 
     cur -= valuefn(transcriptions[oldIndex]);
@@ -60,6 +72,8 @@ export function transcriptionPeakBy(
 
   return {
     peak,
+    first: first as Transcription,
+    last: last as Transcription,
     startDate,
     endDate,
   };
