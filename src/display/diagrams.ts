@@ -296,7 +296,7 @@ export function gammaRateDiagram(transcriptions: Transcription[]): void {
   if (transcriptions.length > 0) {
     const start = rate[0].date.valueOf();
     const end = rate[rate.length - 1].date.valueOf();
-    const max = gammaPeak(transcriptions, 24 * 60 * 60).count; // 24h
+    const max = gammaPeak(transcriptions, 24 * 60 * 60).peak; // 24h
 
     // Display 100/24h line if close
     if (max >= 75) {
