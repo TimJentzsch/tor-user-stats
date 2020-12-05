@@ -12,6 +12,7 @@ import {
   karmaHistoryDiagram,
   formatKarmaDiagram,
   typeKarmaDiagram,
+  karmaRateDiagram,
 } from './display/diagrams';
 import { gammaPeak, karmaPeak } from './stats/peak';
 import { gammaAvg, karmaAvg } from './stats/avg';
@@ -194,6 +195,7 @@ function updateDisplays(userName: string, transcriptions: Transcription[]) {
   gammaHistoryDiagram(transcriptions);
   gammaRateDiagram(transcriptions);
   karmaHistoryDiagram(transcriptions);
+  karmaRateDiagram(transcriptions);
 }
 
 async function displayUser() {
