@@ -2,7 +2,7 @@ import Plotly from 'plotly.js-dist';
 import { getTranscriptionPeak } from '../analizer';
 import { gammaHistory, gammaRate, karmaHistory } from '../stats/history';
 import { subredditGamma, subredditKarma } from '../stats/subreddits';
-import { formatGamma, typeGamma } from '../stats/type';
+import { formatGamma, formatKarma, typeGamma, typeKarma } from '../stats/type';
 import { countTags } from '../tags';
 import Transcription from '../transcription';
 import { limitReduceEnd, repeat, repeatEndWith } from '../util';
@@ -10,7 +10,7 @@ import Colors from './colors';
 import { fromTemplate, getVariable } from './display-util';
 import { layoutTemplate } from './templates';
 
-export function displayFormatDiagram(transcriptions: Transcription[]): void {
+export function formatGammaDiagram(transcriptions: Transcription[]): void {
   const formatStats = limitReduceEnd(
     formatGamma(transcriptions),
     (a, b) => {
@@ -37,13 +37,13 @@ export function displayFormatDiagram(transcriptions: Transcription[]): void {
   ];
 
   const layout = fromTemplate(layoutTemplate, {
-    title: 'Top 5 Formats',
+    title: 'Top 5 Formats (Gamma)',
   });
 
-  Plotly.newPlot('format-diagram', data, layout);
+  Plotly.newPlot('format-gamma-diagram', data, layout);
 }
 
-export function displayTypeDiagram(transcriptions: Transcription[]): void {
+export function typeGammaDiagram(transcriptions: Transcription[]): void {
   const typeStats = limitReduceEnd(
     typeGamma(transcriptions),
     (a, b) => {
@@ -70,9 +70,9 @@ export function displayTypeDiagram(transcriptions: Transcription[]): void {
   ];
 
   const layout = fromTemplate(layoutTemplate, {
-    title: 'Top 5 Types',
+    title: 'Top 5 Types (Gamma)',
     yaxis: {
-      title: 'Transcription Count',
+      title: 'Gamma',
       gridcolor: Colors.grid(),
     },
     xaxis: {
@@ -80,7 +80,80 @@ export function displayTypeDiagram(transcriptions: Transcription[]): void {
     },
   });
 
-  Plotly.newPlot('type-diagram', data, layout);
+  Plotly.newPlot('type-gamma-diagram', data, layout);
+}
+
+export function formatKarmaDiagram(transcriptions: Transcription[]): void {
+  const formatStats = limitReduceEnd(
+    formatKarma(transcriptions),
+    (a, b) => {
+      return {
+        format: 'Other',
+        karma: a.karma + b.karma,
+      };
+    },
+    5,
+  );
+
+  const data = [
+    {
+      values: formatStats.map((stats) => stats.karma),
+      labels: formatStats.map((stats) => stats.format),
+      type: 'pie',
+      textinfo: 'label+percent',
+      textposition: 'outside',
+      automargin: true,
+      marker: {
+        colors: repeat([Colors.primary(), Colors.primaryVariant()], formatStats.length),
+      },
+    },
+  ];
+
+  const layout = fromTemplate(layoutTemplate, {
+    title: 'Top 5 Formats (Karma)',
+  });
+
+  Plotly.newPlot('format-karma-diagram', data, layout);
+}
+
+export function typeKarmaDiagram(transcriptions: Transcription[]): void {
+  const typeStats = limitReduceEnd(
+    typeKarma(transcriptions),
+    (a, b) => {
+      return {
+        type: 'Other',
+        karma: a.karma + b.karma,
+      };
+    },
+    5,
+  );
+
+  const data = [
+    {
+      y: typeStats.map((stats) => stats.karma),
+      x: typeStats.map((stats) => stats.type),
+      text: typeStats.map((stats) => stats.karma.toString()),
+      textposition: 'auto',
+      type: 'bar',
+      marker: {
+        color: repeatEndWith(Colors.primary(), typeStats.length - 1, Colors.primaryVariant()),
+      },
+      hoverinfo: 'none',
+    },
+  ];
+
+  const layout = fromTemplate(layoutTemplate, {
+    title: 'Top 5 Types (Karma)',
+    yaxis: {
+      title: 'Karma',
+      gridcolor: Colors.grid(),
+    },
+    xaxis: {
+      type: 'category',
+    },
+  });
+
+  Plotly.newPlot('type-karma-diagram', data, layout);
 }
 
 export function displaySubGammaDiagram(transcriptions: Transcription[]): void {
