@@ -1,7 +1,7 @@
 import { Comment } from 'snoowrap';
 import Logger from './logger';
 import { getAllUserComments, isToRMod } from './reddit-api';
-import { getTranscriptionAvg } from './stats/avg';
+import { gammaAvg } from './stats/avg';
 import { gammaPeak, karmaPeak } from './stats/peak';
 import { subredditGamma, subredditKarma } from './stats/subreddits';
 import { formatGamma, typeGamma, formatKarma, typeKarma } from './stats/type';
@@ -186,10 +186,10 @@ export default async function analizeUser(userName: string): Promise<void> {
   );
 
   // Averages
-  const hourAvg = getTranscriptionAvg(transcriptions, 60 * 60).toFixed(accuracy); // 1h
-  const dayAvg = getTranscriptionAvg(transcriptions, 24 * 60 * 60).toFixed(accuracy); // 24h
-  const weekAvg = getTranscriptionAvg(transcriptions, 7 * 24 * 60 * 60).toFixed(accuracy); // 7d
-  const yearAvg = getTranscriptionAvg(transcriptions, 365 * 24 * 60 * 60).toFixed(accuracy); // 365d
+  const hourAvg = gammaAvg(transcriptions, 60 * 60).toFixed(accuracy); // 1h
+  const dayAvg = gammaAvg(transcriptions, 24 * 60 * 60).toFixed(accuracy); // 24h
+  const weekAvg = gammaAvg(transcriptions, 7 * 24 * 60 * 60).toFixed(accuracy); // 7d
+  const yearAvg = gammaAvg(transcriptions, 365 * 24 * 60 * 60).toFixed(accuracy); // 365d
 
   logStats('Avgs', `1h: ${hourAvg} | 24h: ${dayAvg} | 7d: ${weekAvg} | 365d: ${yearAvg}`);
 

@@ -14,7 +14,7 @@ import {
   typeKarmaDiagram,
 } from './display/diagrams';
 import { gammaPeak } from './stats/peak';
-import { getTranscriptionAvg } from './stats/avg';
+import { gammaAvg } from './stats/avg';
 
 function searchUserHeader() {
   const input = document.getElementById('header-user-input') as HTMLInputElement;
@@ -133,10 +133,10 @@ function updatePeaks(transcriptions: Transcription[]) {
 function updateAvgs(transcriptions: Transcription[]) {
   const accuracy = 2;
 
-  const hourAvg = getTranscriptionAvg(transcriptions, 60 * 60).toFixed(accuracy); // 1h
-  const dayAvg = getTranscriptionAvg(transcriptions, 24 * 60 * 60).toFixed(accuracy); // 24h
-  const weekAvg = getTranscriptionAvg(transcriptions, 7 * 24 * 60 * 60).toFixed(accuracy); // 7d
-  const yearAvg = getTranscriptionAvg(transcriptions, 365 * 24 * 60 * 60).toFixed(accuracy); // 365d
+  const hourAvg = gammaAvg(transcriptions, 60 * 60).toFixed(accuracy); // 1h
+  const dayAvg = gammaAvg(transcriptions, 24 * 60 * 60).toFixed(accuracy); // 24h
+  const weekAvg = gammaAvg(transcriptions, 7 * 24 * 60 * 60).toFixed(accuracy); // 7d
+  const yearAvg = gammaAvg(transcriptions, 365 * 24 * 60 * 60).toFixed(accuracy); // 365d
 
   updateElement('avg-1h', hourAvg);
   updateElement('avg-24h', dayAvg);
