@@ -1,7 +1,8 @@
 import Plotly from 'plotly.js-dist';
-import { analyzeFormat, analyzeType, getTranscriptionPeak } from '../analizer';
-import { gammaHistory, gammaRate } from '../stats/history';
+import { getTranscriptionPeak } from '../analizer';
+import { gammaHistory, gammaRate, karmaHistory } from '../stats/history';
 import { subredditGamma, subredditKarma } from '../stats/subreddits';
+import { analyzeFormat, analyzeType } from '../stats/type';
 import { countTags } from '../tags';
 import Transcription from '../transcription';
 import { limitReduceEnd, repeat, repeatEndWith } from '../util';
@@ -162,7 +163,7 @@ export function displaySubKarmaDiagram(transcriptions: Transcription[]): void {
   Plotly.newPlot('sub-karma-diagram', data, layout);
 }
 
-export function displayHistoryDiagram(transcriptions: Transcription[]): void {
+export function gammaHistoryDiagram(transcriptions: Transcription[]): void {
   const history = gammaHistory(transcriptions);
 
   const data = [];
@@ -199,9 +200,9 @@ export function displayHistoryDiagram(transcriptions: Transcription[]): void {
   });
 
   const layout = fromTemplate(layoutTemplate, {
-    title: 'History',
+    title: 'History (Gamma)',
     yaxis: {
-      title: 'Transcription Count',
+      title: 'Gamma',
       gridcolor: Colors.grid(),
     },
     xaxis: {
@@ -210,10 +211,10 @@ export function displayHistoryDiagram(transcriptions: Transcription[]): void {
     },
   });
 
-  Plotly.newPlot('history-diagram', data, layout);
+  Plotly.newPlot('gamma-history-diagram', data, layout);
 }
 
-export function displayRateDiagram(transcriptions: Transcription[]): void {
+export function gammaRateDiagram(transcriptions: Transcription[]): void {
   const rate = gammaRate(transcriptions, 24 * 60 * 60); // 24h
 
   const data = [];
@@ -247,9 +248,9 @@ export function displayRateDiagram(transcriptions: Transcription[]): void {
   });
 
   const layout = fromTemplate(layoutTemplate, {
-    title: 'Rate (24 h)',
+    title: 'Rate (Gamma, 24 h)',
     yaxis: {
-      title: 'Transcription Rate',
+      title: 'Gamma Rate',
       gridcolor: Colors.grid(),
     },
     xaxis: {
@@ -258,5 +259,34 @@ export function displayRateDiagram(transcriptions: Transcription[]): void {
     },
   });
 
-  Plotly.newPlot('rate-diagram', data, layout);
+  Plotly.newPlot('gamma-rate-diagram', data, layout);
+}
+
+export function karmaHistoryDiagram(transcriptions: Transcription[]): void {
+  const history = karmaHistory(transcriptions);
+
+  const data = [
+    {
+      y: history.map((stats) => stats.karma),
+      x: history.map((stats) => stats.date.valueOf()),
+      type: 'scatter',
+      marker: {
+        color: Colors.primary(),
+      },
+    },
+  ];
+
+  const layout = fromTemplate(layoutTemplate, {
+    title: 'History (Karma)',
+    yaxis: {
+      title: 'Karma',
+      gridcolor: Colors.grid(),
+    },
+    xaxis: {
+      type: 'date',
+      gridcolor: Colors.grid(),
+    },
+  });
+
+  Plotly.newPlot('karma-history-diagram', data, layout);
 }
