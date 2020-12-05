@@ -101,3 +101,43 @@ export function arrayAvg(array: number[]): number {
 export function arrayAvgBy<T>(array: T[], valuefn: (value: T) => number): number {
   return arrayAvg(array.map(valuefn));
 }
+
+/**
+ * Calculates the maximum of the given numbers.
+ * @param array The array to determine the maximum of.
+ */
+export function arrayMax(array: number[]): number {
+  if (array.length === 0) {
+    return 0;
+  }
+
+  return array.reduce((max, cur) => Math.max(max, cur));
+}
+
+/**
+ * Calculates the maximum of the given items.
+ * @param array The array to determine the maximum of.
+ */
+export function arrayMaxBy<T>(array: T[], valuefn: (value: T) => number): number {
+  return arrayMax(array.map(valuefn));
+}
+
+/**
+ * Calculates the minimum of the given numbers.
+ * @param array The array to determine the minimum of.
+ */
+export function arrayMin(array: number[]): number {
+  if (array.length === 0) {
+    return 0;
+  }
+
+  return array.reduce((max, cur) => Math.max(max, cur));
+}
+
+/**
+ * Calculates the minimum of the given items.
+ * @param array The array to determine the minimum of.
+ */
+export function arrayMinBy<T>(array: T[], valuefn: (value: T) => number): number {
+  return arrayMin(array.map(valuefn));
+}
