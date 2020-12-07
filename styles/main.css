@@ -1,6 +1,6 @@
 :root {
   --primary: #80cbc4;
-  --primary-variant: #4c968f; 
+  --primary-variant: #4c968f;
   --on-primary: #000000;
 
   --background: #121212;
@@ -18,6 +18,12 @@
   --on-footer: #999;
 
   --grid: #555;
+
+  /** Heatmap */
+  --heatmap-0: transparent;
+  --heatmap-1: #80cbc4;
+  --heatmap-2: #4c968f;
+  --heatmap-3: #cf6679;
 
   /** Tags */
   --visitor: #aaaaaa;
@@ -64,7 +70,8 @@ body {
   flex-flow: column;
 }
 
-header, footer {
+header,
+footer {
   flex-grow: 0;
 }
 
@@ -128,7 +135,6 @@ footer {
   text-decoration: underline;
 }
 
-
 #footer-content a:hover {
   color: var(--on-surface);
   text-decoration: underline;
@@ -184,7 +190,8 @@ h3 {
   border-radius: 3px;
 }
 
-#main-user-input, #main-search-button {
+#main-user-input,
+#main-search-button {
   font-size: 20px;
 }
 
@@ -238,7 +245,8 @@ table {
   border-collapse: collapse;
 }
 
-th, td {
+th,
+td {
   text-align: center;
   padding: 5px 7px;
 }
@@ -251,6 +259,25 @@ th, td {
   display: flex;
   flex-flow: row wrap;
   justify-content: space-around;
+}
+
+/** Heatmap */
+
+#heatmap>tr>td {
+  color: var(--on-primary);
+}
+
+.heatmap-0 {
+  background-color: var(--heatmap-0);
+}
+.heatmap-1 {
+  background-color: var(--heatmap-1);
+}
+.heatmap-2 {
+  background-color: var(--heatmap-2);
+}
+.heatmap-3 {
+  background-color: var(--heatmap-3);
 }
 
 /** Tags */
