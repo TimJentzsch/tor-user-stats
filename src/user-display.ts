@@ -16,6 +16,7 @@ import {
 } from './display/diagrams';
 import { gammaPeak, karmaPeak } from './stats/peak';
 import { gammaAvg, karmaAvg } from './stats/avg';
+import { initHeatmapTable } from './display/heatmap';
 
 function searchUserHeader() {
   const input = document.getElementById('header-user-input') as HTMLInputElement;
@@ -217,5 +218,6 @@ async function displayUser() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+  initHeatmapTable();
   displayUser();
 });
