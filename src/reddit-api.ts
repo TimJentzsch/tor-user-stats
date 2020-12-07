@@ -1,5 +1,4 @@
 import snoowrap, { Listing, Comment } from 'snoowrap';
-import { v4 as uuidv4 } from 'uuid';
 import appData from './app-data';
 import Logger from './logger';
 import config from '../config/reddit.config.json';
@@ -21,9 +20,8 @@ export function userAgent(): string {
   return `${appData.name}/v${appData.version} by /u/${redditConfig.userName}`;
 }
 
-// TODO: Save this per device
-/** An ID identifying the current device. */
-const deviceId = uuidv4().substr(0, 30); // Reddit allows only 30 chars
+// Anonymous client
+const deviceId = 'DO_NOT_TRACK_THIS_DEVICE';
 
 /** A 'user-less' requester for the reddit API. */
 export function requester(): Promise<snoowrap> {
