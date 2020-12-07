@@ -1,17 +1,27 @@
+import { stringify } from 'querystring';
+
 /**
  * Creates an object from a template.
  * @param template The template to create the object from.
  * @param obj The object to create from the template.
  */
 export function fromTemplate(
-  template: Record<string, unknown>,
-  obj: Record<string, unknown>,
-): Record<string, unknown> {
+  template: Record<string | number, unknown>,
+  obj: Record<string | number, unknown>,
+): Record<string | number, unknown> {
   const result = template;
 
   // Override the template values with the ones set in the object
   Object.keys(obj).forEach((key) => {
-    result[key] = obj[key];
+    if (typeof obj[key] === 'object' && obj[key] !== null && template[key] !== undefined) {
+      // Rekursively apply the template
+      result[key] = fromTemplate(
+        template[key] as Record<string, unknown>,
+        obj[key] as Record<string, unknown>,
+      );
+    } else {
+      result[key] = obj[key];
+    }
   });
 
   return result;
