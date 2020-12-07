@@ -1,22 +1,24 @@
 import Transcription from '../transcription';
 
-export type PeakStats =
-  | {
-      /** The peak of the transcriptions. */
-      peak: number;
-      /** The first transcription in the peak timeframe. */
-      first: Transcription;
-      /** The last transcription in the peak timeframe. */
-      last: Transcription;
-      /** The start of the peak timeframe. */
-      startDate: Date;
-      /** The end of the peak timeframe. */
-      endDate: Date;
-    }
-  | {
-      /** The peak of the transcriptions. */
-      peak: 0;
-    };
+export type NullPeak = {
+  /** The peak of the transcriptions. */
+  peak: 0;
+};
+
+export type Peak = {
+  /** The peak of the transcriptions. */
+  peak: number;
+  /** The first transcription in the peak timeframe. */
+  first: Transcription;
+  /** The last transcription in the peak timeframe. */
+  last: Transcription;
+  /** The start of the peak timeframe. */
+  startDate: Date;
+  /** The end of the peak timeframe. */
+  endDate: Date;
+};
+
+export type PeakStats = NullPeak | Peak;
 
 /**
  * Determines the peak of the given transcriptions by the given value.
@@ -65,7 +67,7 @@ export function transcriptionPeakBy(
       last = transcriptions[newIndex + 1];
 
       // Center the peak in the given timeframe
-      const offset = duration - (last.createdUTC - first.createdUTC) / 2;
+      const offset = (duration - (last.createdUTC - first.createdUTC)) / 2;
 
       startDate = new Date((first.createdUTC - offset) * 1000);
       endDate = new Date((first.createdUTC - offset + duration) * 1000);

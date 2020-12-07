@@ -55,10 +55,12 @@ export function transcriptionRateBy(
       curRate += valuefn(transcriptions[curIndex]);
       curIndex -= 1;
     }
+    // The center of the timeframe
+    const date = new Date((curDate + duration / 2) * 1000);
     // Save the timeframe
     data.push({
       rate: curRate,
-      date: new Date(curDate * 1000),
+      date,
     });
     // Move to the next timeframe
     curRate = 0;
