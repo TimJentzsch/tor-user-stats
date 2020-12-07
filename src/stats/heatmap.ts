@@ -1,6 +1,14 @@
 import Transcription from '../transcription';
 
-export type HeatMapDay = Record<number, number>;
+export type HeatMapDay = Record<
+  number,
+  {
+    /** The number of entries in this timeslot. */
+    entries: number;
+    /** The 'heat' of this timeslot, a number from 0 to 1. */
+    heat: number;
+  }
+>;
 
 export type HeatMap = Record<number, HeatMapDay>;
 
@@ -15,7 +23,10 @@ export function initHeatmap(): HeatMap {
     // And every hour of the day...
     for (let h = 0; h < 24; h += 1) {
       // Generate a '0' entry
-      dayMap[h] = 0;
+      dayMap[h] = {
+        entries: 0,
+        heat: 0,
+      };
     }
 
     heatMap[d] = dayMap;
@@ -31,14 +42,33 @@ export function initHeatmap(): HeatMap {
 export function heatmap(transcriptions: Transcription[]): HeatMap {
   const heatMap = initHeatmap();
 
+  let peak = 0;
+
+  // Count entries
   transcriptions.forEach((transcription) => {
     const date = new Date(transcription.createdUTC * 1000);
     const day = date.getUTCDay();
     const hour = date.getUTCHours();
 
     // Increase the corresponding heat map entry
-    heatMap[day][hour] += 1;
+    heatMap[day][hour].entries += 1;
+
+    // Update peak if necessary
+    if (heatMap[day][hour].entries > peak) {
+      peak = heatMap[day][hour].entries;
+    }
   });
+
+  if (peak !== 0) {
+    // For every day...
+    for (let d = 0; d < 7; d += 1) {
+      // And every hour of the day...
+      for (let h = 0; h < 24; h += 1) {
+        // Update heat
+        heatMap[d][h].heat = heatMap[d][h].entries / peak;
+      }
+    }
+  }
 
   return heatMap;
 }
