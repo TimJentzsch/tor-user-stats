@@ -9,10 +9,14 @@ describe('Heatmap', () => {
     test('should be 0 for every entry', () => {
       const transcriptions: Transcription[] = [];
       const actual = heatmap(transcriptions);
+      const expected = {
+        entries: 0,
+        heat: 0,
+      };
 
       for (let d = 0; d < 7; d += 1) {
         for (let h = 0; h < 24; h += 1) {
-          expect(actual[d][h]).toBe(0);
+          expect(actual[d][h]).toEqual(expected);
         }
       }
     });
@@ -36,7 +40,7 @@ describe('Heatmap', () => {
       const actual = heatmap(transcriptions);
 
       const expected = fromTemplate(initHeatmap(), {
-        2: { 13: 1 },
+        2: { 13: { entries: 1, heat: 1 } },
       });
 
       expect(actual).toEqual(expected);

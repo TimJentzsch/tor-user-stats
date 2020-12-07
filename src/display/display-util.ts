@@ -1,4 +1,7 @@
-import { stringify } from 'querystring';
+export function updateElement(id: string, text: string | number): void {
+  const element = document.getElementById(id) as HTMLElement;
+  element.innerText = text.toString();
+}
 
 /**
  * Creates an object from a template.

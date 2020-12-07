@@ -1,3 +1,7 @@
+import { heatmap } from '../stats/heatmap';
+import Transcription from '../transcription';
+import { updateElement } from './display-util';
+
 function getTableHeader(): HTMLTableRowElement {
   const row = document.createElement('tr');
 
@@ -14,7 +18,7 @@ function getTableHeader(): HTMLTableRowElement {
   return row;
 }
 
-function getTableRow(day: string, index: number): HTMLTableRowElement {
+function getTableRow(day: string, dID: number): HTMLTableRowElement {
   const row = document.createElement('tr');
 
   // The day heading
@@ -25,14 +29,8 @@ function getTableRow(day: string, index: number): HTMLTableRowElement {
 
   // Add an element for every hour
   for (let h = 0; h < 24; h += 1) {
-    // Wrap the index around, so that Monday is 0 and Sunday is 6
-    let dayId = index + 1;
-    if (dayId >= 7) {
-      dayId -= 7;
-    }
-
     const td = document.createElement('td');
-    td.id = `heatmap-d${dayId}-h${h}`;
+    td.id = `heatmap-d${dID}-h${h}`;
     row.appendChild(td);
   }
 
@@ -46,7 +44,24 @@ export function initHeatmapTable(): void {
 
   const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
-  days.forEach((day, index) => {
-    table.appendChild(getTableRow(day, index));
+  days.forEach((day, dID) => {
+    table.appendChild(getTableRow(day, dID));
   });
+}
+
+export function displayHeatmap(transcriptions: Transcription[]): void {
+  const data = heatmap(transcriptions);
+
+  for (let d = 0; d < 7; d += 1) {
+    for (let h = 0; h < 24; h += 1) {
+      const entries = data[d][h].entries !== 0 ? data[d][h].entries.toString() : '';
+
+      // Wrap the index around, so that Monday is 0 and Sunday is 6
+      let dID = d + 1;
+      if (dID >= 7) {
+        dID -= 7;
+      }
+      updateElement(`heatmap-d${dID}-h${h}`, entries);
+    }
+  }
 }

@@ -16,7 +16,8 @@ import {
 } from './display/diagrams';
 import { gammaPeak, karmaPeak } from './stats/peak';
 import { gammaAvg, karmaAvg } from './stats/avg';
-import { initHeatmapTable } from './display/heatmap';
+import { displayHeatmap, initHeatmapTable } from './display/heatmap';
+import { updateElement } from './display/display-util';
 
 function searchUserHeader() {
   const input = document.getElementById('header-user-input') as HTMLInputElement;
@@ -32,11 +33,6 @@ document.addEventListener('DOMContentLoaded', () => {
     return false;
   });
 });
-
-function updateElement(id: string, text: string | number) {
-  const element = document.getElementById(id) as HTMLElement;
-  element.innerText = text.toString();
-}
 
 function displayUserName(userName: string) {
   const userNameElement = document.getElementById('username') as HTMLElement;
@@ -197,6 +193,7 @@ function updateDisplays(userName: string, transcriptions: Transcription[]) {
   gammaRateDiagram(transcriptions);
   karmaHistoryDiagram(transcriptions);
   karmaRateDiagram(transcriptions);
+  displayHeatmap(transcriptions);
 }
 
 async function displayUser() {
