@@ -2,6 +2,9 @@ import { heatmap } from '../stats/heatmap';
 import Transcription from '../transcription';
 import { updateElement } from './display-util';
 
+/** The number of heatmap levels */
+const HEATMAP_LEVELS = 3;
+
 function getTableHeader(): HTMLTableRowElement {
   const row = document.createElement('tr');
 
@@ -55,13 +58,23 @@ export function displayHeatmap(transcriptions: Transcription[]): void {
   for (let d = 0; d < 7; d += 1) {
     for (let h = 0; h < 24; h += 1) {
       const entries = data[d][h].entries !== 0 ? data[d][h].entries.toString() : '';
+      const level = Math.ceil(data[d][h].heat * HEATMAP_LEVELS);
 
       // Wrap the index around, so that Monday is 0 and Sunday is 6
       let dID = d + 1;
       if (dID >= 7) {
         dID -= 7;
       }
-      updateElement(`heatmap-d${dID}-h${h}`, entries);
+      const id = `heatmap-d${dID}-h${h}`;
+      updateElement(id, entries);
+
+      const td = document.getElementById(id);
+
+      for (let i = 0; i <= HEATMAP_LEVELS; i += 1) {
+        td?.classList.remove(`heatmap-${i}`);
+      }
+
+      td?.classList.add(`heatmap-${level}`);
     }
   }
 }
