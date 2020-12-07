@@ -5,15 +5,15 @@ export type HeatMapDay = Record<number, number>;
 export type HeatMap = Record<number, HeatMapDay>;
 
 /** Initializes the heatmap with 0 entries. */
-function initHeatmap(): HeatMap {
+export function initHeatmap(): HeatMap {
   const heatMap: HeatMap = {};
 
   // For every day...
-  for (let d = 0; d <= 7; d += 1) {
+  for (let d = 0; d < 7; d += 1) {
     const dayMap: HeatMapDay = {};
 
     // And every hour of the day...
-    for (let h = 0; h <= 23; h += 1) {
+    for (let h = 0; h < 24; h += 1) {
       // Generate a '0' entry
       dayMap[h] = 0;
     }
