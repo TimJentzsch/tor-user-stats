@@ -3,7 +3,7 @@ import Transcription from '../transcription';
 import { updateElement } from './display-util';
 
 /** The number of heatmap levels */
-const HEATMAP_LEVELS = 3;
+const HEATMAP_LEVELS = 6;
 
 function getTableHeader(): HTMLTableRowElement {
   const row = document.createElement('tr');

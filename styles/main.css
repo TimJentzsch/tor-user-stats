@@ -21,9 +21,12 @@
 
   /** Heatmap */
   --heatmap-0: transparent;
-  --heatmap-1: #80cbc4;
-  --heatmap-2: #4c968f;
-  --heatmap-3: #cf6679;
+  --heatmap-1: #0d2220;
+  --heatmap-2: #143130;
+  --heatmap-3: #224b47;
+  --heatmap-4: #438078;
+  --heatmap-5: #62b4ac;
+  --heatmap-6: #80cbc4;
 
   /** Tags */
   --visitor: #aaaaaa;
@@ -263,21 +266,33 @@ td {
 
 /** Heatmap */
 
-#heatmap>tr>td {
-  color: var(--on-primary);
-}
-
 .heatmap-0 {
   background-color: var(--heatmap-0);
+  color: var(--on-surface);
 }
 .heatmap-1 {
   background-color: var(--heatmap-1);
+  color: var(--on-surface);
 }
 .heatmap-2 {
   background-color: var(--heatmap-2);
+  color: var(--on-surface);
 }
 .heatmap-3 {
   background-color: var(--heatmap-3);
+  color: var(--on-surface);
+}
+.heatmap-4 {
+  background-color: var(--heatmap-4);
+  color: var(--on-surface);
+}
+.heatmap-5 {
+  background-color: var(--heatmap-5);
+  color: var(--on-primary);
+}
+.heatmap-6 {
+  background-color: var(--heatmap-6);
+  color: var(--on-primary);
 }
 
 /** Tags */
