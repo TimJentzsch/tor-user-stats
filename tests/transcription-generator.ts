@@ -4,7 +4,7 @@ import { imageMD } from './transcription-templates';
 export default class TranscriptionGenerator {
   /** The currently generated transcriptions. */
   protected transcriptions: Transcription[];
-  /** The current time. */
+  /** The current time, in seconds. */
   protected curTime: number;
   /** The next transcription ID. */
   protected nextId = 0;
@@ -15,7 +15,7 @@ export default class TranscriptionGenerator {
     protected startDate: Date,
   ) {
     this.transcriptions = [];
-    this.curTime = startDate.valueOf();
+    this.curTime = startDate.valueOf() / 1000;
   }
 
   /**
@@ -24,7 +24,9 @@ export default class TranscriptionGenerator {
    * @param duration The duration in which the transcriptions have been made, in seconds.
    */
   public addTranscriptions(count: number, duration: number): TranscriptionGenerator {
-    const timeIncr = duration / count;
+    const timeIncr = Math.floor(duration / (count + 1));
+
+    this.curTime += timeIncr;
 
     for (let i = 0; i < count; i += 1) {
       this.transcriptions.push(
