@@ -38,6 +38,9 @@ document.addEventListener('DOMContentLoaded', () => {
 function displayUserName(userName: string) {
   const userNameElement = document.getElementById('username') as HTMLElement;
   userNameElement.innerText = `/u/${userName}`;
+
+  const userLink = document.getElementById('user-link') as HTMLLinkElement;
+  userLink.href = `https://www.reddit.com/u/${userName}/comments`;
 }
 
 function setProgress(progress: number) {
