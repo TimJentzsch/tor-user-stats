@@ -291,11 +291,19 @@ td {
 }
 
 .transcription-disclaimer {
+  text-align: center;
   margin: 5px 10px;
   padding: 10px;
   border-left: solid 2px var(--primary);
   background-color: var(--disclaimer);
-  text-align: center;
+}
+
+.transcription-content blockquote {
+  margin: 5px;
+  padding: 2px;
+  padding-left: 10px;
+  border-left: solid 2px var(--primary);
+  background-color: var(--disclaimer);
 }
 
 .subreddit {
