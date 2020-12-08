@@ -18,6 +18,7 @@ import { gammaPeak, karmaPeak } from './stats/peak';
 import { gammaAvg, karmaAvg } from './stats/avg';
 import { displayHeatmap, initHeatmapTable } from './display/heatmap';
 import { updateElement } from './display/display-util';
+import { displayHallOfFame } from './display/hall-of-fame';
 
 function searchUserHeader() {
   const input = document.getElementById('header-user-input') as HTMLInputElement;
@@ -104,7 +105,6 @@ function getTagElement(tag: Tag): HTMLDivElement {
 
 async function displayTags(userName: string, transcriptions: Transcription[]) {
   const countTag = getCountTag(transcriptions);
-  console.debug(`Count tag: ${countTag.toString()}`);
   const countTagElement = getTagElement(countTag);
 
   const spTags = await getSpecialTags(userName, transcriptions);
@@ -194,6 +194,7 @@ function updateDisplays(userName: string, transcriptions: Transcription[]) {
   karmaHistoryDiagram(transcriptions);
   karmaRateDiagram(transcriptions);
   displayHeatmap(transcriptions);
+  displayHallOfFame(transcriptions);
 }
 
 async function displayUser() {

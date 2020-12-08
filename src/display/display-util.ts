@@ -37,3 +37,12 @@ export function fromTemplate(
 export function getVariable(varName: string): string {
   return getComputedStyle(document.documentElement).getPropertyValue(`--${varName}`);
 }
+
+/**
+ * Removes all child nodes of the given element.
+ * @param element The elment to remove the children of.
+ */
+export function clearChildren(element: HTMLElement): HTMLElement {
+  element.innerHTML = '';
+  return element;
+}
