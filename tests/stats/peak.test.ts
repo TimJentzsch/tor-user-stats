@@ -18,7 +18,7 @@ describe('Transcription Peak', () => {
     });
     test('should return 1 for one element array', () => {
       const date = new Date('2020-11-02').valueOf() / 1000;
-      const transcription = new Transcription('a', imageMD, '', date, 12, 'r/Old_Recipes');
+      const transcription = new Transcription('a', '', imageMD, '', date, 12, 'r/Old_Recipes');
       const transcriptions: Transcription[] = [transcription];
       const duration = 24 * 60 * 60; // 24h
 
@@ -37,8 +37,8 @@ describe('Transcription Peak', () => {
     test('should include other transcription in timeframe', () => {
       const duration = 24 * 60 * 60; // 24h
       const transcriptions: Transcription[] = [
-        new Transcription('a', imageMD, '', 1923019 + duration, 12, 'r/Old_Recipes'),
-        new Transcription('b', imageMD, '', 1923019, 12, 'r/Old_Recipes'),
+        new Transcription('a', '', imageMD, '', 1923019 + duration, 12, 'r/Old_Recipes'),
+        new Transcription('b', '', imageMD, '', 1923019, 12, 'r/Old_Recipes'),
       ];
       const actual = gammaPeak(transcriptions, duration).peak;
 
@@ -47,8 +47,8 @@ describe('Transcription Peak', () => {
     test('should exclude other transcription outside the timeframe', () => {
       const duration = 24 * 60 * 60; // 24h
       const transcriptions: Transcription[] = [
-        new Transcription('a', imageMD, '', 1923019 + duration + 1, 12, 'r/Old_Recipes'),
-        new Transcription('b', imageMD, '', 1923019, 12, 'r/Old_Recipes'),
+        new Transcription('a', '', imageMD, '', 1923019 + duration + 1, 12, 'r/Old_Recipes'),
+        new Transcription('b', '', imageMD, '', 1923019, 12, 'r/Old_Recipes'),
       ];
       const actual = gammaPeak(transcriptions, duration).peak;
 

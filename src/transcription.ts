@@ -47,6 +47,8 @@ export default class Transcription {
   constructor(
     /** The ID of the comment. */
     public id: string,
+    /** The link to the comment. */
+    public permalink: string,
     /** The full body of the transcription, formatted in reddit markdown. */
     public bodyMD: string,
     /** The full body of the transcription, formatted in HTML. */
@@ -89,6 +91,7 @@ export default class Transcription {
   static fromComment(comment: RComment): Transcription {
     return new Transcription(
       comment.id,
+      comment.permalink,
       comment.body,
       comment.body_html,
       comment.created_utc,
