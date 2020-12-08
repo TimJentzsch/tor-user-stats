@@ -4,7 +4,8 @@
   "files.exclude": {
     ".cache": true,
     "coverage": true,
-    "dist": true,
+    "dist-web": true,
+    "dist-cli": true,
     "node_modules": true,
     "yarn.lock": true
   }
