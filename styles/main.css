@@ -264,6 +264,32 @@ td {
   justify-content: space-around;
 }
 
+.transcription {
+  flex-basis: 40%;
+  flex-grow: 1;
+
+  padding: 10px;
+  margin: 5px;
+  border: solid 1px var(--primary);
+  border-radius: 10px;
+}
+
+.transcription p {
+  margin: 10px 0px;
+}
+
+.transcription ol, .transcription ul {
+  margin-left: 15px;
+}
+
+.transcription a {
+  text-decoration: underline;
+}
+
+.transcription a:hover {
+  color: var(--primary);
+}
+
 /** Heatmap */
 
 .heatmap-0 {
