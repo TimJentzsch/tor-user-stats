@@ -19,6 +19,8 @@
 
   --grid: #555;
 
+  --disclaimer: #80cbc411;
+
   /** Heatmap */
   --heatmap-0: transparent;
   --heatmap-1: #0d2220;
@@ -264,6 +266,8 @@ td {
   justify-content: space-around;
 }
 
+/** Transcriptions */
+
 .transcription {
   flex-basis: 40%;
   flex-grow: 1;
@@ -284,6 +288,14 @@ td {
   flex-flow: row wrap;
   justify-content: space-between;
   align-items: center;
+}
+
+.transcription-disclaimer {
+  margin: 5px 10px;
+  padding: 10px;
+  border-left: solid 2px var(--primary);
+  background-color: var(--disclaimer);
+  text-align: center;
 }
 
 .subreddit {
