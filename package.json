@@ -1,6 +1,6 @@
 {
   "name": "tor-user-stats",
-  "version": "0.4.2",
+  "version": "0.4.3",
   "description": "Inofficial unser stats for /r/TranscribersOfReddit",
   "main": "dist/src/main.js",
   "author": "Tim Jentzsch",
