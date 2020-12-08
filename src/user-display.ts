@@ -18,7 +18,7 @@ import { gammaPeak, karmaPeak } from './stats/peak';
 import { gammaAvg, karmaAvg } from './stats/avg';
 import { displayHeatmap, initHeatmapTable } from './display/heatmap';
 import { updateElement } from './display/display-util';
-import { displayHallOfFame } from './display/hall-of-fame';
+import { displayHallOfFame, displayRecent } from './display/hall-of-fame';
 
 function searchUserHeader() {
   const input = document.getElementById('header-user-input') as HTMLInputElement;
@@ -195,6 +195,7 @@ function updateDisplays(userName: string, transcriptions: Transcription[]) {
   karmaRateDiagram(transcriptions);
   displayHeatmap(transcriptions);
   displayHallOfFame(transcriptions);
+  displayRecent(transcriptions);
 }
 
 async function displayUser() {

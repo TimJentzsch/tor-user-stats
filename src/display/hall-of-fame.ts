@@ -52,17 +52,29 @@ export function getTranscriptionElement(transcription: Transcription): HTMLDivEl
  * @param transcriptions The transcriptions to display.
  */
 export function displayHallOfFame(transcriptions: Transcription[]): void {
-  const top5 = limitEnd(
+  const top = limitEnd(
     [...transcriptions].sort((a, b) => {
       return b.score - a.score;
     }),
-    4,
+    6,
   );
 
   const container = document.getElementById('hall-of-fame-container') as HTMLDivElement;
   clearChildren(container);
 
-  top5.forEach((transcription) => {
+  top.forEach((transcription) => {
+    const element = getTranscriptionElement(transcription);
+    container.appendChild(element);
+  });
+}
+
+export function displayRecent(transcriptions: Transcription[]): void {
+  const recent = limitEnd(transcriptions, 6);
+
+  const container = document.getElementById('recent-container') as HTMLDivElement;
+  clearChildren(container);
+
+  recent.forEach((transcription) => {
     const element = getTranscriptionElement(transcription);
     container.appendChild(element);
   });
