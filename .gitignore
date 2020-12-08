@@ -1,6 +1,7 @@
 node_modules
 .cache
 coverage
-dist
+dist-web
+dist-cli
 config/*config.json
 !config/*.example.config.json
