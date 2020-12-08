@@ -7,6 +7,7 @@ describe('Transcription', () => {
     test('should reject r/TranscribersOfReddit posts', () => {
       const comment: RComment = {
         id: '1',
+        permalink: '',
         body: imageMD,
         body_html: '',
         created_utc: new Date('2020-12-01').valueOf(),
@@ -21,6 +22,7 @@ describe('Transcription', () => {
     test('should reject r/kierra posts', () => {
       const comment: RComment = {
         id: '1',
+        permalink: '',
         body: imageMD,
         body_html: '',
         created_utc: new Date('2020-12-01').valueOf(),

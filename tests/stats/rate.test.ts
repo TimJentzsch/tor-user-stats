@@ -19,6 +19,7 @@ describe('Transcription Rate', () => {
       const transcriptions = [
         new Transcription(
           '1',
+          '',
           imageMD,
           '',
           new Date('2020-11-01T00:00:00').valueOf() / 1000,

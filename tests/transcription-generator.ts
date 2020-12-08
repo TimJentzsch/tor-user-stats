@@ -30,7 +30,15 @@ export default class TranscriptionGenerator {
 
     for (let i = 0; i < count; i += 1) {
       this.transcriptions.push(
-        new Transcription(this.nextId.toString(), imageMD, '', this.curTime, 1, '/r/Old_Recipe'),
+        new Transcription(
+          this.nextId.toString(),
+          '',
+          imageMD,
+          '',
+          this.curTime,
+          1,
+          '/r/Old_Recipe',
+        ),
       );
 
       this.nextId += 1;

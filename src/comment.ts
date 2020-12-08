@@ -2,6 +2,8 @@
 export default interface RComment {
   /** The unique ID of the comment. */
   id: string;
+  /** The link to the comment. */
+  permalink: string;
   /** The body of the comment, formatted in Reddit markdown. */
   body: string;
   /** The body of the comment, formatted in HTML. */

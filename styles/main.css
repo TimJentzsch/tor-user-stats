@@ -268,18 +268,59 @@ td {
   flex-basis: 40%;
   flex-grow: 1;
 
-  padding: 10px;
   margin: 5px;
   border: solid 1px var(--primary);
   border-radius: 10px;
+
+  max-width: 100%;
 }
 
-.transcription p {
+.transcription-header {
+  padding: 10px;
+  background-color: var(--surface);
+  height: 30px;
+
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.subreddit {
+  font-size: 20px;
+}
+
+.transcription-content {
+  padding: 10px;
+}
+
+.transcription-content pre {
+  max-width: 100%;
+  overflow-y: hidden;
+}
+
+.transcription-content p {
   margin: 10px 0px;
 }
 
-.transcription ol, .transcription ul {
+.transcription-content ol, .transcription-content ul {
   margin-left: 15px;
+}
+
+.transcription-content h1,
+.transcription-content h2,
+.transcription-content h3 {
+  color: var(--on-surface);
+}
+
+.transcription-content h1 {
+  font-size: 25px;
+}
+.transcription-content h2 {
+  font-size: 22px;
+}
+.transcription-content h3 {
+  font-size: 20px;
 }
 
 .transcription a {

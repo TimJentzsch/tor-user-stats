@@ -35,7 +35,7 @@ describe('Heatmap', () => {
       // Tuesday, 13 h
       const date = new Date('2020-12-01T13:00:00Z');
       const transcriptions: Transcription[] = [
-        new Transcription('1', imageMD, '', date.valueOf() / 1000, 1, 'r/Old_Recipes'),
+        new Transcription('1', '', imageMD, '', date.valueOf() / 1000, 1, 'r/Old_Recipes'),
       ];
       const actual = heatmap(transcriptions);
 
