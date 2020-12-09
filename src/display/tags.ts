@@ -1,6 +1,5 @@
-import { getCountTag, getModTag, getSpecialTags } from '../analizer';
-import { isToRMod } from '../reddit-api';
-import { countTags, specialTags, Tag } from '../tags';
+import { getCountTag, getModTag, getSpecialTags } from '../stats/tags';
+import { countTags, Tag } from '../tags';
 import Transcription from '../transcription';
 
 export function getTagElement(tag: Tag): HTMLDivElement {
