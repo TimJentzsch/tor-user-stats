@@ -168,7 +168,8 @@ h3 {
 }
 
 #user-header,
-#tag-container {
+#tag-container,
+#special-tag-container {
   display: flex;
   flex-flow: row wrap;
   justify-content: flex-start;

@@ -1,5 +1,5 @@
 import { getCountTag, getSpecialTags } from '../analizer';
-import { Tag } from '../tags';
+import { countTags, Tag } from '../tags';
 import Transcription from '../transcription';
 
 export function getTagElement(tag: Tag): HTMLDivElement {
@@ -10,18 +10,28 @@ export function getTagElement(tag: Tag): HTMLDivElement {
   return tagElement;
 }
 
+export function displayCountTag(transcriptions: Transcription[]): void {
+  const countTag = getCountTag(transcriptions);
+  const countTagElement = document.getElementById('count-tag') as HTMLDivElement;
+
+  countTags.forEach((tag) => {
+    countTagElement.classList.remove(tag.id);
+  });
+
+  countTagElement.classList.add(countTag.id);
+  countTagElement.innerText = countTag.toString();
+}
+
 export async function displayTags(
   userName: string,
   transcriptions: Transcription[],
 ): Promise<void> {
-  const countTag = getCountTag(transcriptions);
-  const countTagElement = getTagElement(countTag);
+  displayCountTag(transcriptions);
 
   const spTags = await getSpecialTags(userName, transcriptions);
   const spTagElements = spTags.map((tag) => getTagElement(tag));
 
-  const tagContainer = document.getElementById('tag-container') as HTMLElement;
+  const tagContainer = document.getElementById('special-tag-container') as HTMLElement;
   tagContainer.innerHTML = '';
-  tagContainer.appendChild(countTagElement);
   spTagElements.forEach((tag) => tagContainer.appendChild(tag));
 }
