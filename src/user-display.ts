@@ -1,7 +1,6 @@
 import { getAllUserComments } from './reddit-api';
-import { getCountTag, getSpecialTags, getTranscriptionAmount, isComment } from './analizer';
+import { getTranscriptionAmount, isComment } from './analizer';
 import Transcription from './transcription';
-import { Tag } from './tags';
 import {
   formatGammaDiagram,
   gammaHistoryDiagram,
@@ -19,7 +18,7 @@ import { gammaAvg, karmaAvg } from './stats/avg';
 import { displayHeatmap, initHeatmapTable } from './display/heatmap';
 import { updateElement } from './display/display-util';
 import { displayHallOfFame, displayRecent } from './display/hall-of-fame';
-import { displayCountTag, displayModTag, displayTags } from './display/tags';
+import { displayModTag, displayTags } from './display/tags';
 
 function searchUserHeader() {
   const input = document.getElementById('header-user-input') as HTMLInputElement;
