@@ -38,31 +38,42 @@ export function getCountTag(transcriptions: Transcription[]): CountTag {
 }
 
 /**
- * Returns all special tags for the given user.
+ * Returns the mod tag if the user is a mod or null otherwise.
+ * @param userName The username to get the mod tag for.
+ */
+export async function getModTag(userName: string): Promise<Tag | null> {
+  const isMod = await isToRMod(userName);
+
+  if (isMod) {
+    return specialTags.mod;
+  }
+
+  return null;
+}
+
+/**
+ * Returns the 100/24h tag if the user has completed it, else null.
+ * @param transcriptions The transcriptions to analyze.
+ */
+export function getTwentyFourTag(transcriptions: Transcription[]): Tag | null {
+  const dayPeak = gammaPeak(transcriptions, 24 * 60 * 60); // 24h
+
+  if (dayPeak.peak >= 100) {
+    return specialTags.twentyFour;
+  }
+
+  return null;
+}
+
+/**
+ * Returns all special tags (except the mod tag) for the given user.
  * @param userName The user to check the special tags for.
  * @param transcriptions The transcriptions of the user.
  */
-export async function getSpecialTags(
-  userName: string,
-  transcriptions: Transcription[],
-): Promise<Tag[]> {
-  const spTags: Tag[] = [];
+export function getSpecialTags(userName: string, transcriptions: Transcription[]): Tag[] {
+  const twentyFourTag = getTwentyFourTag(transcriptions);
 
-  const isMod = await isToRMod(userName);
-
-  // Mod tag
-  if (isMod) {
-    spTags.push(specialTags.mod);
-  }
-
-  const dayPeak = gammaPeak(transcriptions, 24 * 60 * 60); // 24h
-
-  // 100/24h tag
-  if (dayPeak.peak >= 100) {
-    spTags.push(specialTags.twentyFour);
-  }
-
-  return spTags;
+  return [twentyFourTag].filter((tag) => tag !== null) as Tag[];
 }
 
 type TranscriptionAmount = {
@@ -265,7 +276,8 @@ export default async function analizeUser(userName: string): Promise<void> {
   const countTag = getCountTag(transcriptions);
   const countText = `${countTag.name} (${countTag.lowerBound}-${countTag.upperBound})`;
 
-  const spTags = await getSpecialTags(userName, transcriptions);
+  const modTag = [await getModTag(userName)].filter((tag) => tag !== null) as Tag[];
+  const spTags = getSpecialTags(userName, transcriptions).concat(modTag);
   const spText = spTags.map((tag) => tag.name);
 
   const tagText = [countText].concat(spText).join(' | ');
