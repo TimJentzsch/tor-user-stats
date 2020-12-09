@@ -10,7 +10,7 @@
     "build": "yarn init-config && yarn tsc --project ./tsconfig-cli.json",
     "start": "yarn build && node dist/src/main.js",
     "bundle": "yarn init-config && cross-env NODE_ENV=production parcel build templates/* --out-dir dist-web --public-url .",
-    "serve": "yarn init-config && parcel serve templates/*.html",
+    "serve": "yarn init-config && parcel serve --out-dir dist-web templates/*.html",
     "deploy": "rm -r dist-web && yarn bundle && gh-pages -d dist-web",
     "lint": "yarn init-config && eslint \"src/**/*\"",
     "format": "yarn init-config && eslint \"src/**/*\" --fix",
