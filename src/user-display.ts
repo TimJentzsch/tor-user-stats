@@ -19,6 +19,7 @@ import { gammaAvg, karmaAvg } from './stats/avg';
 import { displayHeatmap, initHeatmapTable } from './display/heatmap';
 import { updateElement } from './display/display-util';
 import { displayHallOfFame, displayRecent } from './display/hall-of-fame';
+import { displayTags } from './display/tags';
 
 function searchUserHeader() {
   const input = document.getElementById('header-user-input') as HTMLInputElement;
@@ -96,27 +97,6 @@ function displayGamma(transcriptions: Transcription[]) {
 
   const gammaElement = document.getElementById('scribe-count') as HTMLElement;
   gammaElement.innerHTML = `(${gamma} &#x393;)`;
-}
-
-function getTagElement(tag: Tag): HTMLDivElement {
-  const tagElement = document.createElement('div');
-  tagElement.innerText = tag.toString();
-  tagElement.classList.add('tag', tag.id);
-
-  return tagElement;
-}
-
-async function displayTags(userName: string, transcriptions: Transcription[]) {
-  const countTag = getCountTag(transcriptions);
-  const countTagElement = getTagElement(countTag);
-
-  const spTags = await getSpecialTags(userName, transcriptions);
-  const spTagElements = spTags.map((tag) => getTagElement(tag));
-
-  const tagContainer = document.getElementById('tag-container') as HTMLElement;
-  tagContainer.innerHTML = '';
-  tagContainer.appendChild(countTagElement);
-  spTagElements.forEach((tag) => tagContainer.appendChild(tag));
 }
 
 function updatePeaks(transcriptions: Transcription[]) {
