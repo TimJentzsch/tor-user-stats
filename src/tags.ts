@@ -82,12 +82,37 @@ const topaz = new CountTag('Topaz', 5000, 9999);
 const jade = new CountTag('Jade', 10000, Infinity);
 
 /** Tags for the transcription count. */
-export const countTags = [visitor, initiate, green, teal, purple, gold, diamond, ruby, topaz, jade];
+export const countTags = {
+  visitor,
+  initiate,
+  green,
+  teal,
+  purple,
+  gold,
+  diamond,
+  ruby,
+  topaz,
+  jade,
+};
+
+/** Tags for the transcription count. */
+export const countTagList = [
+  visitor,
+  initiate,
+  green,
+  teal,
+  purple,
+  gold,
+  diamond,
+  ruby,
+  topaz,
+  jade,
+];
 
 /** All available tags. */
 const tags = {
   specialTags,
-  countTags,
+  countTags: countTagList,
 };
 
 export default tags;

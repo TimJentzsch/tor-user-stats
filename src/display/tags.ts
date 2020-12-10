@@ -1,5 +1,5 @@
 import { getCountTag, getModTag, getSpecialTags } from '../stats/tags';
-import { countTags, Tag } from '../tags';
+import { countTagList, Tag } from '../tags';
 import Transcription from '../transcription';
 
 export function getTagElement(tag: Tag): HTMLDivElement {
@@ -14,7 +14,7 @@ export function displayCountTag(transcriptions: Transcription[]): void {
   const countTag = getCountTag(transcriptions);
   const countTagElement = document.getElementById('count-tag') as HTMLDivElement;
 
-  countTags.forEach((tag) => {
+  countTagList.forEach((tag) => {
     countTagElement.classList.remove(tag.id);
   });
 

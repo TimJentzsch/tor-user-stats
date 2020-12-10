@@ -6,7 +6,7 @@ import { gammaPeak, karmaPeak } from './stats/peak';
 import { subredditGamma, subredditKarma } from './stats/subreddits';
 import { getCountTag, getModTag, getSpecialTags } from './stats/tags';
 import { formatGamma, typeGamma, formatKarma, typeKarma } from './stats/type';
-import { CountTag, specialTags, countTags, Tag } from './tags';
+import { CountTag, specialTags, countTagList, Tag } from './tags';
 import Transcription from './transcription';
 import { limitEnd } from './util';
 
