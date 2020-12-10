@@ -41,6 +41,17 @@ type TranscriptionAmount = {
  * @param transcriptions The transcriptions to analize.
  */
 export function getTranscriptionAmount(transcriptions: Transcription[]): TranscriptionAmount {
+  if (transcriptions.length === 0) {
+    return {
+      charTotal: 0,
+      charAvg: 0,
+      charPeak: 0,
+      wordTotal: 0,
+      wordAvg: 0,
+      wordPeak: 0,
+    };
+  }
+
   const count = transcriptions.length;
 
   let charTotal = 0;
