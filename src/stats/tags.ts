@@ -53,6 +53,10 @@ export function getTwentyFourTag(transcriptions: Transcription[]): Tag | null {
  * @param transcriptions The transcriptions to analyze.
  */
 export function getBetaTesterTag(transcriptions: Transcription[]): Tag | null {
+  if (transcriptions.length === 0) {
+    return null;
+  }
+
   // The end of the beta
   const betaDate = new Date('2021-12-31T00:00:00').valueOf() / 1000;
   // The time of the first transcription

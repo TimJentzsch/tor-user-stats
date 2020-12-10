@@ -2,6 +2,7 @@
 /* eslint-disable jest/expect-expect */
 import { getBetaTesterTag, getCountTag, getTwentyFourTag } from '../../src/stats/tags';
 import { countTags, specialTags, Tag } from '../../src/tags';
+import Transcription from '../../src/transcription';
 import TranscriptionGenerator from '../transcription-generator';
 
 /** Asserts that the given tag is assigned for the given count. */
@@ -87,6 +88,14 @@ describe('Tag Stats', () => {
         .addTranscriptions(1, 0)
         .generate();
       const expected = specialTags.betaTester;
+      const actual = getBetaTesterTag(transcriptions);
+
+      expect(actual).toEqual(expected);
+    });
+
+    test('should return null for no transcriptions', () => {
+      const transcriptions: Transcription[] = [];
+      const expected = null;
       const actual = getBetaTesterTag(transcriptions);
 
       expect(actual).toEqual(expected);
