@@ -49,6 +49,23 @@ export function getTwentyFourTag(transcriptions: Transcription[]): Tag | null {
 }
 
 /**
+ * Returns the beta tester tag if the user has completed it, else null.
+ * @param transcriptions The transcriptions to analyze.
+ */
+export function getBetaTesterTag(transcriptions: Transcription[]): Tag | null {
+  // The end of the beta
+  const betaDate = new Date('2021-12-31T00:00:00').valueOf() / 1000;
+  // The time of the first transcription
+  const firstDate = transcriptions[transcriptions.length - 1].createdUTC;
+
+  if (firstDate <= betaDate) {
+    return specialTags.betaTester;
+  }
+
+  return null;
+}
+
+/**
  * Returns all special tags (except the mod tag) for the given user.
  * @param userName The user to check the special tags for.
  * @param transcriptions The transcriptions of the user.
