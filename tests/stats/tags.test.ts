@@ -1,7 +1,7 @@
 // Eslint does not recognize the assertions in the help function
 /* eslint-disable jest/expect-expect */
-import { getCountTag } from '../../src/stats/tags';
-import { countTags, Tag } from '../../src/tags';
+import { getCountTag, getTwentyFourTag } from '../../src/stats/tags';
+import { countTags, specialTags, Tag } from '../../src/tags';
 import TranscriptionGenerator from '../transcription-generator';
 
 /** Asserts that the given tag is assigned for the given count. */
@@ -46,6 +46,38 @@ describe('Tag Stats', () => {
     });
     test('should return Jade for 10000', () => {
       testCountTag(10000, countTags.jade);
+    });
+  });
+  // 100/24h tag
+  describe('getTwentyFourTag', () => {
+    test('should return tag for 100 transcriptions in 24h', () => {
+      const transcriptions = new TranscriptionGenerator(new Date('2020-11-01'))
+        .addTranscriptions(100, 24 * 60 * 60)
+        .generate();
+      const expected = specialTags.twentyFour;
+      const actual = getTwentyFourTag(transcriptions);
+
+      expect(actual).toEqual(expected);
+    });
+
+    test('should return null for 50 transcriptions in 24h', () => {
+      const transcriptions = new TranscriptionGenerator(new Date('2020-11-01'))
+        .addTranscriptions(50, 24 * 60 * 60)
+        .generate();
+      const expected = null;
+      const actual = getTwentyFourTag(transcriptions);
+
+      expect(actual).toEqual(expected);
+    });
+
+    test('should return null for 100 transcriptions in 48h', () => {
+      const transcriptions = new TranscriptionGenerator(new Date('2020-11-01'))
+        .addTranscriptions(100, 48 * 60 * 60)
+        .generate();
+      const expected = null;
+      const actual = getTwentyFourTag(transcriptions);
+
+      expect(actual).toEqual(expected);
     });
   });
 });
