@@ -1,6 +1,6 @@
 // Eslint does not recognize the assertions in the help function
 /* eslint-disable jest/expect-expect */
-import { getCountTag, getTwentyFourTag } from '../../src/stats/tags';
+import { getBetaTesterTag, getCountTag, getTwentyFourTag } from '../../src/stats/tags';
 import { countTags, specialTags, Tag } from '../../src/tags';
 import TranscriptionGenerator from '../transcription-generator';
 
@@ -76,6 +76,38 @@ describe('Tag Stats', () => {
         .generate();
       const expected = null;
       const actual = getTwentyFourTag(transcriptions);
+
+      expect(actual).toEqual(expected);
+    });
+  });
+  // Beta tester tag
+  describe('getBetaTesterTag', () => {
+    test('should return tag for transcription on 2020-10-01', () => {
+      const transcriptions = new TranscriptionGenerator(new Date('2020-10-01'))
+        .addTranscriptions(1, 0)
+        .generate();
+      const expected = specialTags.betaTester;
+      const actual = getBetaTesterTag(transcriptions);
+
+      expect(actual).toEqual(expected);
+    });
+
+    test('should return null for transcription on 2022-01-01', () => {
+      const transcriptions = new TranscriptionGenerator(new Date('2022-01-01'))
+        .addTranscriptions(1, 0)
+        .generate();
+      const expected = null;
+      const actual = getBetaTesterTag(transcriptions);
+
+      expect(actual).toEqual(expected);
+    });
+
+    test('should return tag for transcriptions before and after beta end', () => {
+      const transcriptions = new TranscriptionGenerator(new Date('2020-10-01'))
+        .addTranscriptions(1, 2 * 365 * 24 * 60 * 60) // 2 years
+        .generate();
+      const expected = specialTags.betaTester;
+      const actual = getBetaTesterTag(transcriptions);
 
       expect(actual).toEqual(expected);
     });
