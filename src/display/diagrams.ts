@@ -4,7 +4,7 @@ import { gammaPeak } from '../stats/peak';
 import { gammaRate, karmaRate } from '../stats/rate';
 import { subredditGamma, subredditKarma } from '../stats/subreddits';
 import { formatGamma, formatKarma, typeGamma, typeKarma } from '../stats/type';
-import { countTags } from '../tags';
+import { countTagList } from '../tags';
 import Transcription from '../transcription';
 import { limitReduceEnd, repeat, repeatEndWith } from '../util';
 import Colors from './colors';
@@ -248,7 +248,7 @@ export function gammaHistoryDiagram(transcriptions: Transcription[]): void {
     const max = history[history.length - 1].count;
 
     // Add milestone lines
-    countTags.forEach((tag) => {
+    countTagList.forEach((tag) => {
       if (tag.lowerBound <= max * 1.2) {
         data.push({
           y: [tag.lowerBound, tag.lowerBound],

@@ -1,5 +1,5 @@
 import { isToRMod } from '../reddit-api';
-import { CountTag, countTags, specialTags, Tag } from '../tags';
+import { CountTag, countTagList, specialTags, Tag } from '../tags';
 import Transcription from '../transcription';
 import { gammaPeak } from './peak';
 
@@ -11,9 +11,9 @@ export function getCountTag(transcriptions: Transcription[]): CountTag {
   const count = transcriptions.length;
 
   // From the highest tag downwards, search for the first match
-  for (let i = countTags.length - 1; i >= 0; i -= 1) {
-    if (count >= countTags[i].lowerBound) {
-      return countTags[i];
+  for (let i = countTagList.length - 1; i >= 0; i -= 1) {
+    if (count >= countTagList[i].lowerBound) {
+      return countTagList[i];
     }
   }
 
