@@ -41,11 +41,15 @@ export class CountTag extends Tag {
 /** 100 transcriptions in 24h. */
 const twentyFour = new Tag('twentyFour', '100/24h Club');
 
+/** A beta tester. */
+const betaTester = new Tag('beta-tester', 'Beta Tester');
+
 /** Mod on r/TranscribersOfReddit. */
 const mod = new Tag('mod', 'Mod');
 
 export const specialTags = {
   twentyFour,
+  betaTester,
   mod,
 };
 
