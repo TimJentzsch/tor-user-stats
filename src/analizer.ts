@@ -1,12 +1,13 @@
 import { Comment } from 'snoowrap';
 import Logger from './logger';
-import { getAllUserComments, isToRMod } from './reddit-api';
+import { getAllUserComments } from './reddit-api';
 import { gammaAvg, karmaAvg } from './stats/avg';
+import { getTranscriptionLength } from './stats/length';
 import { gammaPeak, karmaPeak } from './stats/peak';
 import { subredditGamma, subredditKarma } from './stats/subreddits';
 import { getCountTag, getModTag, getSpecialTags } from './stats/tags';
 import { formatGamma, typeGamma, formatKarma, typeKarma } from './stats/type';
-import { CountTag, specialTags, countTagList, Tag } from './tags';
+import { Tag } from './tags';
 import Transcription from './transcription';
 import { limitEnd } from './util';
 
@@ -19,66 +20,6 @@ export function isComment(comment: Comment): boolean {
     // Has one of the bot keywords
     /\b(done|(un)?claim(ing)?)\b/.test(comment.body)
   );
-}
-
-type TranscriptionAmount = {
-  /** The total number of characters. */
-  charTotal: number;
-  /** The average number of characters. */
-  charAvg: number;
-  /** The maximum amount of characters. */
-  charPeak: number;
-  /** The total number of words. */
-  wordTotal: number;
-  /** The average number of words. */
-  wordAvg: number;
-  /** The maximum amount of words. */
-  wordPeak: number;
-};
-
-/**
- * Analyzes the character and word count of the transcriptions.
- * @param transcriptions The transcriptions to analize.
- */
-export function getTranscriptionAmount(transcriptions: Transcription[]): TranscriptionAmount {
-  if (transcriptions.length === 0) {
-    return {
-      charTotal: 0,
-      charAvg: 0,
-      charPeak: 0,
-      wordTotal: 0,
-      wordAvg: 0,
-      wordPeak: 0,
-    };
-  }
-
-  const count = transcriptions.length;
-
-  let charTotal = 0;
-  let charPeak = 0;
-  let wordTotal = 0;
-  let wordPeak = 0;
-
-  transcriptions.forEach((transcrition) => {
-    // Determine character and word count of this transcriptions
-    const charCount = transcrition.contentMD.length;
-    const wordCount = transcrition.contentMD.split(/\s+/).length;
-
-    charTotal += charCount;
-    charPeak = Math.max(charPeak, charCount);
-
-    wordTotal += wordCount;
-    wordPeak = Math.max(wordPeak, wordCount);
-  });
-
-  return {
-    charTotal,
-    charAvg: charTotal / count,
-    charPeak,
-    wordTotal,
-    wordAvg: wordTotal / count,
-    wordPeak,
-  };
 }
 
 export function logStats(label: string, stats: string): void {
@@ -174,7 +115,7 @@ export default async function analizeUser(userName: string): Promise<void> {
   );
 
   // Amounts
-  const amounts = getTranscriptionAmount(transcriptions);
+  const amounts = getTranscriptionLength(transcriptions);
 
   logStats(
     'Chars',

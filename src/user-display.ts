@@ -1,5 +1,5 @@
 import { getAllUserComments } from './reddit-api';
-import { getTranscriptionAmount, isComment } from './analizer';
+import { isComment } from './analizer';
 import Transcription from './transcription';
 import {
   formatGammaDiagram,
@@ -19,6 +19,7 @@ import { displayHeatmap, initHeatmapTable } from './display/heatmap';
 import { updateElement } from './display/display-util';
 import { displayHallOfFame, displayRecent } from './display/hall-of-fame';
 import { displayModTag, displayTags } from './display/tags';
+import { getTranscriptionLength } from './stats/length';
 
 function searchUserHeader() {
   const input = document.getElementById('header-user-input') as HTMLInputElement;
@@ -145,7 +146,7 @@ function updateAvgs(transcriptions: Transcription[]) {
 }
 
 function updateCharWords(transcriptions: Transcription[]) {
-  const amounts = getTranscriptionAmount(transcriptions);
+  const amounts = getTranscriptionLength(transcriptions);
 
   updateElement('char-total', amounts.charTotal);
   updateElement('char-peak', amounts.charPeak);
