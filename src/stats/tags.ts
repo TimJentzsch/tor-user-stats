@@ -72,6 +72,7 @@ export function getBetaTesterTag(transcriptions: Transcription[]): Tag | null {
  */
 export function getSpecialTags(userName: string, transcriptions: Transcription[]): Tag[] {
   const twentyFourTag = getTwentyFourTag(transcriptions);
+  const betaTesterTag = getBetaTesterTag(transcriptions);
 
-  return [twentyFourTag].filter((tag) => tag !== null) as Tag[];
+  return [twentyFourTag, betaTesterTag].filter((tag) => tag !== null) as Tag[];
 }

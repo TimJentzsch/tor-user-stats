@@ -39,7 +39,7 @@ export class CountTag extends Tag {
 // - SPECIAL TAGS -----------------------------------------
 
 /** 100 transcriptions in 24h. */
-const twentyFour = new Tag('twentyFour', '100/24h Club');
+const twentyFour = new Tag('twenty-four', '100/24h Club');
 
 /** A beta tester. */
 const betaTester = new Tag('beta-tester', 'Beta Tester');

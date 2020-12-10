@@ -42,7 +42,8 @@
   --topaz: #ff6200;
   --jade: #307250;
 
-  --twentyFour: #fcec3c;
+  --twenty-four: #fcec3c;
+  --beta-tester: #88bcfc;
   --mod: #fc3c46;
 }
 
@@ -424,10 +425,14 @@ td {
   background-color: var(--jade);
 }
 
+.twenty-four {
+  background-color: var(--twentyFour);
+}
+.beta-tester {
+  background-color: var(--beta-tester);
+}
 .mod {
   background-color: var(--mod);
 }
 
-.twentyFour {
-  background-color: var(--twentyFour);
-}
+
