@@ -113,8 +113,17 @@ header {
   text-decoration-color: var(--primary);
 }
 
+#header-icon {
+  height: 25px;
+  margin-right: 10px;
+}
+
 #header-link {
   text-decoration-color: var(--primary);
+  display: flex;
+  flex-flow: row wrap;
+  justify-items: center;
+  align-items: baseline;
 }
 
 footer {
