@@ -3,10 +3,10 @@
    <style>
       #icon {
          fill: #80cbc4;
-         font-size: 230px;
+         font-size: 270px;
          font-weight: bold;
          font-family: 'Liberation Sans', sans-serif;
       }
    </style>
-   <text id="icon" x="10.661621" y="179.1748">Θ</text>
+   <text id="icon" text-anchor="middle" x="100" y="200">Θ</text>
 </svg>
