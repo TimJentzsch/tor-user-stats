@@ -186,7 +186,7 @@ export function displaySubGammaDiagram(transcriptions: Transcription[]): void {
   const layout = fromTemplate(layoutTemplate, {
     title: 'Top 5 Subreddits (Gamma)',
     yaxis: {
-      title: 'Transcription Count',
+      title: 'Gamma',
       gridcolor: Colors.grid(),
     },
     xaxis: {
@@ -226,7 +226,7 @@ export function displaySubKarmaDiagram(transcriptions: Transcription[]): void {
   const layout = fromTemplate(layoutTemplate, {
     title: 'Top 5 Subreddits (Karma)',
     yaxis: {
-      title: 'Transcription Karma',
+      title: 'Karma',
       gridcolor: Colors.grid(),
     },
     xaxis: {
