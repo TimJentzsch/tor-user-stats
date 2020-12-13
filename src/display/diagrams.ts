@@ -305,7 +305,7 @@ export function gammaRateDiagram(transcriptions: Transcription[]): void {
         x: [start, end],
         type: 'scatter',
         marker: {
-          color: getVariable('twentyFour'),
+          color: getVariable('twenty-four'),
         },
         mode: 'lines',
       });
