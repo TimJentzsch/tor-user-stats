@@ -34,12 +34,12 @@ describe('Transcription length', () => {
         ),
       ];
       const expected: TranscriptionLength = {
-        charAvg: 359,
-        charPeak: 359,
-        charTotal: 359,
-        wordAvg: 61,
-        wordPeak: 61,
-        wordTotal: 61,
+        charAvg: 352,
+        charPeak: 352,
+        charTotal: 352,
+        wordAvg: 59,
+        wordPeak: 59,
+        wordTotal: 59,
       };
 
       const actual = getTranscriptionLength(transcriptions);
