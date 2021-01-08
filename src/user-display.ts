@@ -20,6 +20,7 @@ import { updateElement } from './display/display-util';
 import { displayHallOfFame, displayRecent } from './display/hall-of-fame';
 import { displayModTag, displayTags } from './display/tags';
 import { getTranscriptionLength } from './stats/length';
+import { recentGamma, recentKarma } from './stats/recent';
 
 function searchUserHeader() {
   const input = document.getElementById('header-user-input') as HTMLInputElement;
@@ -99,6 +100,18 @@ function displayGamma(transcriptions: Transcription[]) {
   gammaElement.innerHTML = `(${gamma} &#x393;)`;
 }
 
+function updateRecents(transcriptions: Transcription[]) {
+  updateElement('recent-gamma-1h', recentGamma(transcriptions, 60 * 60).score);
+  updateElement('recent-gamma-24h', recentGamma(transcriptions, 24 * 60 * 60).score);
+  updateElement('recent-gamma-7d', recentGamma(transcriptions, 7 * 24 * 60 * 60).score);
+  updateElement('recent-gamma-365d', recentGamma(transcriptions, 365 * 24 * 60 * 60).score);
+
+  updateElement('recent-karma-1h', recentKarma(transcriptions, 60 * 60).score);
+  updateElement('recent-karma-24h', recentKarma(transcriptions, 24 * 60 * 60).score);
+  updateElement('recent-karma-7d', recentKarma(transcriptions, 7 * 24 * 60 * 60).score);
+  updateElement('recent-karma-365d', recentKarma(transcriptions, 365 * 24 * 60 * 60).score);
+}
+
 function updatePeaks(transcriptions: Transcription[]) {
   const gammaHourPeak = gammaPeak(transcriptions, 60 * 60); // 1h
   const gammaDayPeak = gammaPeak(transcriptions, 24 * 60 * 60); // 24h
@@ -159,6 +172,7 @@ function updateCharWords(transcriptions: Transcription[]) {
 function updateTables(transcriptions: Transcription[]) {
   updatePeaks(transcriptions);
   updateAvgs(transcriptions);
+  updateRecents(transcriptions);
   updateCharWords(transcriptions);
 }
 

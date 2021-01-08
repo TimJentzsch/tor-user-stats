@@ -1,6 +1,5 @@
-import { RecentStats, recentGamma, recentKarma } from '../../src/stats/recent';
+import { RecentStats, recentGamma } from '../../src/stats/recent';
 import Transcription from '../../src/transcription';
-import TranscriptionGenerator from '../transcription-generator';
 import { imageMD } from '../transcription-templates';
 
 describe('Transcription Recent Stats', () => {
@@ -22,7 +21,7 @@ describe('Transcription Recent Stats', () => {
         '',
         imageMD,
         '',
-        Date.now(),
+        Date.now() / 1000,
         12,
         'r/Old_Recipes',
       );
@@ -40,8 +39,16 @@ describe('Transcription Recent Stats', () => {
     test('should include other transcription in timeframe', () => {
       const duration = 24 * 60 * 60; // 24h
       const transcriptions: Transcription[] = [
-        new Transcription('a', '', imageMD, '', Date.now(), 12, 'r/Old_Recipes'),
-        new Transcription('b', '', imageMD, '', Date.now() - duration / 2, 12, 'r/Old_Recipes'),
+        new Transcription('a', '', imageMD, '', Date.now() / 1000, 12, 'r/Old_Recipes'),
+        new Transcription(
+          'b',
+          '',
+          imageMD,
+          '',
+          Date.now() / 1000 - duration / 2,
+          12,
+          'r/Old_Recipes',
+        ),
       ];
       const actual = recentGamma(transcriptions, duration).score;
 
@@ -50,8 +57,16 @@ describe('Transcription Recent Stats', () => {
     test('should exclude other transcription outside the timeframe', () => {
       const duration = 24 * 60 * 60; // 24h
       const transcriptions: Transcription[] = [
-        new Transcription('a', '', imageMD, '', Date.now(), 12, 'r/Old_Recipes'),
-        new Transcription('b', '', imageMD, '', Date.now() - 2 * duration, 12, 'r/Old_Recipes'),
+        new Transcription('a', '', imageMD, '', Date.now() / 1000, 12, 'r/Old_Recipes'),
+        new Transcription(
+          'b',
+          '',
+          imageMD,
+          '',
+          Date.now() / 1000 - 2 * duration,
+          12,
+          'r/Old_Recipes',
+        ),
       ];
       const actual = recentGamma(transcriptions, duration).score;
 
