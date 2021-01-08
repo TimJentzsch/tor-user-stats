@@ -1,16 +1,65 @@
+import { Comment } from 'snoowrap';
 import { updateElement } from './display/display-util';
+import { getAllUserComments } from './reddit-api';
 
 function setUserName(userName: string): void {
   updateElement('overlay-reddit-name', userName);
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+function setTime(sessionStart: number): void {
+  const elapsed = Date.now() - sessionStart;
+
+  // Format the time
+  const secNum = Math.floor(elapsed / 1000);
+  const hours = Math.floor(secNum / 3600);
+  const minutes = Math.floor((secNum - hours * 3600) / 60);
+  const seconds = secNum - hours * 3600 - minutes * 60;
+
+  const hourStr = `${hours}`.padStart(2, '0');
+  const minutesStr = `${minutes}`.padStart(2, '0');
+  const secondsStr = `${seconds}`.padStart(2, '0');
+  const time = `${hourStr}:${minutesStr}:${secondsStr}`;
+
+  updateElement('overlay-time', time);
+}
+
+function isRefComment(comment: Comment): boolean {
+  return comment.subreddit_name_prefixed === 'r/TranscribersOfReddit';
+}
+
+function getGamma(refComment: Comment): number {
+  const flair = refComment.author_flair_text ?? '';
+  const match = /(\d+)\s*Γ/.exec(flair);
+  const gamma = match ? match[1] : '0';
+
+  return Number(gamma);
+}
+
+function setGamma(gamma: number) {
+  updateElement('overlay-gamma-total', gamma);
+}
+
+document.addEventListener('DOMContentLoaded', async () => {
+  const sessionStart = Date.now();
   const urlParams = new URLSearchParams(window.location.search);
   const userName = urlParams.get('user');
+
+  // Update the time
+  setInterval(setTime, 1000, sessionStart);
 
   if (!userName) {
     return;
   }
 
   setUserName(userName);
+  let comments: Comment[] = [];
+
+  await getAllUserComments(userName, (newComments) => {
+    comments = comments.concat(newComments);
+  });
+
+  const torComments = comments.filter(isRefComment);
+  const refComment = torComments[0];
+  const gamma = getGamma(refComment);
+  setGamma(gamma);
 });
