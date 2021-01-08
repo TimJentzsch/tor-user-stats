@@ -1,0 +1,19 @@
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  display: flex;
+}
+
+#overlay-container {
+  flex-grow: 1;
+  text-align: right;
+}
+
+#overlay-user-name {
+  font-size: 25px;
+  padding: 0;
+  margin: 0;
+}
+
+#overlay-gamma-container {
+  font-size: 20px;
+}
