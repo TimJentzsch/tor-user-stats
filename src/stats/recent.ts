@@ -17,7 +17,7 @@ export function recentScoreBy(
 ): RecentStats {
   let score = 0;
   let curIndex = 0;
-  const start = Date.now();
+  const start = Date.now() / 1000;
 
   while (
     // While there are still transcriptions...
