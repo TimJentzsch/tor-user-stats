@@ -4,6 +4,7 @@ import { getAllUserComments } from './reddit-api';
 import { gammaAvg, karmaAvg } from './stats/avg';
 import { getTranscriptionLength } from './stats/length';
 import { gammaPeak, karmaPeak } from './stats/peak';
+import { recentGamma, recentKarma } from './stats/recent';
 import { subredditGamma, subredditKarma } from './stats/subreddits';
 import { getCountTag, getModTag, getSpecialTags } from './stats/tags';
 import { formatGamma, typeGamma, formatKarma, typeKarma } from './stats/type';
@@ -68,6 +69,27 @@ export default async function analizeUser(userName: string): Promise<void> {
   logStats(
     'Counts',
     `All: ${allCount}, Comments: ${commentCount}, Transcriptions: ${transcriptionCount}`,
+  );
+
+  // Recents
+  const recentHourGamma = recentGamma(transcriptions, 60 * 60).score; // 1h
+  const recentDayGamma = recentGamma(transcriptions, 24 * 60 * 60).score; // 24h
+  const recentWeekGamma = recentGamma(transcriptions, 7 * 24 * 60 * 60).score; // 7d
+  const recentYearGamma = recentGamma(transcriptions, 365 * 24 * 60 * 60).score; // 365d
+
+  logStats(
+    'Recent (gamma)',
+    `1h: ${recentHourGamma} | 24h: ${recentDayGamma} | 7d: ${recentWeekGamma} | 365d: ${recentYearGamma}`,
+  );
+
+  const recentHourKarma = recentKarma(transcriptions, 60 * 60).score; // 1h
+  const recentDayKarma = recentKarma(transcriptions, 24 * 60 * 60).score; // 24h
+  const recentWeekKarma = recentKarma(transcriptions, 7 * 24 * 60 * 60).score; // 7d
+  const recentYearKarma = recentKarma(transcriptions, 365 * 24 * 60 * 60).score; // 365d
+
+  logStats(
+    'Recent (karma)',
+    `1h: ${recentHourKarma} | 24h: ${recentDayKarma} | 7d: ${recentWeekKarma} | 365d: ${recentYearKarma}`,
   );
 
   const accuracy = 2;
