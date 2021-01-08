@@ -113,49 +113,29 @@ function updateRecents(transcriptions: Transcription[]) {
 }
 
 function updatePeaks(transcriptions: Transcription[]) {
-  const gammaHourPeak = gammaPeak(transcriptions, 60 * 60); // 1h
-  const gammaDayPeak = gammaPeak(transcriptions, 24 * 60 * 60); // 24h
-  const gammaWeekPeak = gammaPeak(transcriptions, 7 * 24 * 60 * 60); // 7d
-  const gammaYearPeak = gammaPeak(transcriptions, 365 * 24 * 60 * 60); // 365d
+  updateElement('gamma-peak-1h', gammaPeak(transcriptions, 60 * 60).peak);
+  updateElement('gamma-peak-24h', gammaPeak(transcriptions, 24 * 60 * 60).peak);
+  updateElement('gamma-peak-7d', gammaPeak(transcriptions, 7 * 24 * 60 * 60).peak);
+  updateElement('gamma-peak-365d', gammaPeak(transcriptions, 365 * 24 * 60 * 60).peak);
 
-  updateElement('gamma-peak-1h', gammaHourPeak.peak);
-  updateElement('gamma-peak-24h', gammaDayPeak.peak);
-  updateElement('gamma-peak-7d', gammaWeekPeak.peak);
-  updateElement('gamma-peak-365d', gammaYearPeak.peak);
-
-  const karmaHourPeak = karmaPeak(transcriptions, 60 * 60); // 1h
-  const karmaDayPeak = karmaPeak(transcriptions, 24 * 60 * 60); // 24h
-  const karmaWeekPeak = karmaPeak(transcriptions, 7 * 24 * 60 * 60); // 7d
-  const karmaYearPeak = karmaPeak(transcriptions, 365 * 24 * 60 * 60); // 365d
-
-  updateElement('karma-peak-1h', karmaHourPeak.peak);
-  updateElement('karma-peak-24h', karmaDayPeak.peak);
-  updateElement('karma-peak-7d', karmaWeekPeak.peak);
-  updateElement('karma-peak-365d', karmaYearPeak.peak);
+  updateElement('karma-peak-1h', karmaPeak(transcriptions, 60 * 60).peak);
+  updateElement('karma-peak-24h', karmaPeak(transcriptions, 24 * 60 * 60).peak);
+  updateElement('karma-peak-7d', karmaPeak(transcriptions, 7 * 24 * 60 * 60).peak);
+  updateElement('karma-peak-365d', karmaPeak(transcriptions, 365 * 24 * 60 * 60).peak);
 }
 
 function updateAvgs(transcriptions: Transcription[]) {
   const accuracy = 2;
 
-  const gammaHourAvg = gammaAvg(transcriptions, 60 * 60).toFixed(accuracy); // 1h
-  const gammaDayAvg = gammaAvg(transcriptions, 24 * 60 * 60).toFixed(accuracy); // 24h
-  const gammaWeekAvg = gammaAvg(transcriptions, 7 * 24 * 60 * 60).toFixed(accuracy); // 7d
-  const gammaYearAvg = gammaAvg(transcriptions, 365 * 24 * 60 * 60).toFixed(accuracy); // 365d
+  updateElement('gamma-avg-1h', gammaAvg(transcriptions, 60 * 60).toFixed(accuracy));
+  updateElement('gamma-avg-24h', gammaAvg(transcriptions, 24 * 60 * 60).toFixed(accuracy));
+  updateElement('gamma-avg-7d', gammaAvg(transcriptions, 7 * 24 * 60 * 60).toFixed(accuracy));
+  updateElement('gamma-avg-365d', gammaAvg(transcriptions, 365 * 24 * 60 * 60).toFixed(accuracy));
 
-  updateElement('gamma-avg-1h', gammaHourAvg);
-  updateElement('gamma-avg-24h', gammaDayAvg);
-  updateElement('gamma-avg-7d', gammaWeekAvg);
-  updateElement('gamma-avg-365d', gammaYearAvg);
-
-  const karmaHourAvg = karmaAvg(transcriptions, 60 * 60).toFixed(accuracy); // 1h
-  const karmaDayAvg = karmaAvg(transcriptions, 24 * 60 * 60).toFixed(accuracy); // 24h
-  const karmaWeekAvg = karmaAvg(transcriptions, 7 * 24 * 60 * 60).toFixed(accuracy); // 7d
-  const karmaYearAvg = karmaAvg(transcriptions, 365 * 24 * 60 * 60).toFixed(accuracy); // 365d
-
-  updateElement('karma-avg-1h', karmaHourAvg);
-  updateElement('karma-avg-24h', karmaDayAvg);
-  updateElement('karma-avg-7d', karmaWeekAvg);
-  updateElement('karma-avg-365d', karmaYearAvg);
+  updateElement('karma-avg-1h', karmaAvg(transcriptions, 60 * 60).toFixed(accuracy));
+  updateElement('karma-avg-24h', karmaAvg(transcriptions, 24 * 60 * 60).toFixed(accuracy));
+  updateElement('karma-avg-7d', karmaAvg(transcriptions, 7 * 24 * 60 * 60).toFixed(accuracy));
+  updateElement('karma-avg-365d', karmaAvg(transcriptions, 365 * 24 * 60 * 60).toFixed(accuracy));
 }
 
 function updateCharWords(transcriptions: Transcription[]) {
