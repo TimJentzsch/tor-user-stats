@@ -1,6 +1,6 @@
 import { Comment } from 'snoowrap';
 import { updateElement } from './display/display-util';
-import { getAllUserComments } from './reddit-api';
+import { getUserComments } from './reddit-api';
 import { getCountTag } from './stats/tags';
 import { countTagList } from './tags';
 
@@ -65,10 +65,10 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   setUserName(userName);
-  let comments: Comment[] = [];
 
-  await getAllUserComments(userName, (newComments) => {
-    comments = comments.concat(newComments);
+  const comments = await getUserComments(userName, {
+    sort: 'new',
+    limit: 100,
   });
 
   const torComments = comments.filter(isRefComment);
