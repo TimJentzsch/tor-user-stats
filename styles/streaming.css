@@ -1,5 +1,6 @@
 #overlay-settings-form {
   margin-top: 10px;
+  margin-bottom: 10px;
   padding: 10px;
   background-color: var(--surface);
   border-radius: 5px;
@@ -21,4 +22,8 @@
 
 #overlay-halign-container {
   margin-right: 10px;
+}
+
+#overlay-instructions {
+  margin-left: 20px;
 }
