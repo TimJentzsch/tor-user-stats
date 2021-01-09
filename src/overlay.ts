@@ -1,8 +1,9 @@
-import { Comment, Listing } from 'snoowrap';
+import { Comment } from 'snoowrap';
 import { updateElement } from './display/display-util';
 import { getUserComments } from './reddit-api';
 import { getCountTag } from './stats/tags';
 import { countTagList } from './tags';
+import Transcription from './transcription';
 
 function updateNameStyle(gamma: number): void {
   const countTag = getCountTag(gamma);
@@ -48,17 +49,53 @@ function getGamma(refComment: Comment): number {
   return Number(gamma);
 }
 
-function setGamma(gamma: number) {
+function updateGamma(gamma: number) {
   updateElement('overlay-gamma-total', gamma);
 }
 
-function updateOverlay(userName: string, comments: Listing<Comment>, refComment: Comment) {
+function updateGammaIncrease(comments: Comment[], sessionStart: number) {
+  const newTranscriptions = comments
+    // Filter out transcriptions
+    .filter((comment) => {
+      return Transcription.isTranscription(comment);
+    })
+    // Filter out new transcriptions
+    .filter((transcription) => {
+      return transcription.created_utc * 1000 >= sessionStart;
+    });
+
+  const gammaIncrease = newTranscriptions.length;
+
+  updateElement('overlay-gamma-increase', gammaIncrease);
+}
+
+async function updateOverlay(
+  userName: string,
+  comments: Comment[],
+  refComment: Comment,
+  sessionStart: number,
+): Promise<Comment[]> {
   // Update the current gamma
   refComment.refresh().then((ref) => {
     const gamma = getGamma(ref);
-    setGamma(gamma);
+    updateGamma(gamma);
     updateNameStyle(gamma);
   });
+
+  const commentFetch = await getUserComments(userName, {
+    sort: 'new',
+    limit: 100,
+  });
+
+  const newComments = commentFetch.filter((comment) => {
+    return comment.created_utc > comments[0].created_utc;
+  });
+
+  const allComments = newComments.concat(comments);
+
+  updateGammaIncrease(allComments, sessionStart);
+
+  return allComments;
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -76,7 +113,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   setUserName(userName);
 
   // Find ref comment
-  const comments = await getUserComments(userName, {
+  let comments: Comment[] = await getUserComments(userName, {
     sort: 'new',
     limit: 100,
   });
@@ -84,8 +121,10 @@ document.addEventListener('DOMContentLoaded', async () => {
   const torComments = comments.filter(isRefComment);
   const refComment = torComments[0];
   const gamma = getGamma(refComment);
-  setGamma(gamma);
+  updateGamma(gamma);
   updateNameStyle(gamma);
 
-  setInterval(updateOverlay, 2000, userName, comments, refComment);
+  setInterval(async () => {
+    comments = await updateOverlay(userName, comments, refComment, sessionStart);
+  }, 2000);
 });
