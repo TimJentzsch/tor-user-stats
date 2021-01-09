@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>tor-user-stats</title>
+
+    <meta name="author" content="Tim Jentzsch" />
+    <meta
+      name="description"
+      content="An unofficial tool to display user statistics for /r/TranscribersOfReddit."
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Open Graph (Facebook) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="tor-user-stats" />
+    <meta
+      property="og:description"
+      content="An unofficial tool to display user statistics for /r/TranscribersOfReddit."
+    />
+
+    <meta property="og:image" content="https://i.imgur.com/ZCQ8tJH.png" />
+    <meta property="og:image:width" content="500" />
+    <meta property="og:image:height" content="500" />
+    <meta property="og:image" content="https://i.imgur.com/1Hm1Qr7.png" />
+    <meta property="og:image:width" content="1285" />
+    <meta property="og:image:height" content="639" />
+
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:url" content="https://timjentzsch.github.io/tor-user-stats/" />
+
+    <!-- Twitter cards -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="tor-user-stats" />
+    <meta
+      name="twitter:description"
+      content="An unofficial tool to display user statistics for /r/TranscribersOfReddit."
+    />
+    <meta name="twitter:image" content="https://i.imgur.com/ZCQ8tJH.png" />
+
+    <link rel="shortcut icon" type="image/svg+xml" href="../images/favicon.svg" />
+    <link rel="icon" type="image/svg+xml" href="../images/favicon.svg" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="../styles/colors.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="../styles/main.css" />
+  </head>
+  <body>
+    <header>
+      <div id="header-content">
+        <a id="header-link" href="index.html">
+          <img id="header-icon" src="../images/favicon.svg" alt="tor-user-stats icon" />
+          <h1>tor-user-stats</h1>
+        </a>
+        <a
+          href="https://github.com/TimJentzsch/tor-user-stats"
+          title="Check out the project on GitHub"
+        >
+          <img width="35px" height="35px" src="../images/github-icon.png" alt="GitHub icon" />
+        </a>
+      </div>
+    </header>
+    <div id="body-container">
+      <h2>Stream Overlay Generator</h2>
+      This tool allows you to create overlays for your transcribing streams. They can easily be
+      integrated into your OBS setup.
+
+      <form id="overlay-settings-form">
+        <div id="overlay-user-name-container">
+          <label for="overlay-user-name"
+            ><b>Username:</b> /u/
+            <input id="overlay-user-name" type="text" placeholder="username" required
+          /></label>
+        </div>
+        <div id="overlay-session-start-container">
+          <label for="overlay-session-start"
+            ><b>Session Start:</b>
+            <input id="overlay-session-start" type="datetime" placeholder="YYYY-MM-DD"
+          /></label>
+        </div>
+        <div id="overlay-halign-container">
+          <b>Horizontal Alignment:</b>
+          <div id="overlay-halign-left-container">
+            <label for="overlay-halign-left"
+              ><input type="radio" id="overlay-halign-left" name="halign" value="left" />
+              Left</label
+            >
+          </div>
+          <div id="overlay-halign-right-container">
+            <label for="overlay-halign-right"
+              ><input type="radio" id="overlay-halign-right" name="halign" value="right" checked />
+              Right</label
+            >
+          </div>
+        </div>
+        <div id="overlay-valign-container">
+          <b>Vertical Alignment:</b>
+          <div id="overlay-valign-left-container">
+            <label for="overlay-valign-top"
+              ><input type="radio" id="overlay-valign-top" name="valign" value="top" checked />
+              Top</label
+            >
+          </div>
+          <div id="overlay-valign-bottom-container">
+            <label for="overlay-valign-bottom"
+              ><input type="radio" id="overlay-valign-bottom" name="valign" value="bottom" />
+              Bottom</label
+            >
+          </div>
+        </div>
+        <div id="overlay-link-container">
+          <label for="overlay-link"
+            ><b>Session Start:</b>
+            <input
+              id="overlay-link"
+              type="url"
+              value="https://timjentzsch.github.io/tor-user-stats/overlay.html"
+              disabled
+          /></label>
+        </div>
+      </form>
+    </div>
+    <footer>
+      <div id="footer-content">
+        <p id="footer-disclaimer" class="footer-text">
+          <strong>Disclaimer:</strong> This is a community-maintained project and is not officially
+          endorsed by
+          <a href="https://www.reddit.com/r/TranscribersOfReddit/wiki/index"
+            >/r/TranscribersOfReddit</a
+          >
+          nor <a href="https://www.grafeas.org/about">Grafeas Group</a>; they are in no way involved
+          with this tool and are not liable for any matters relating to it.
+        </p>
+        <p id="footer-copyright" class="footer-text">
+          <strong>tor-user-stats</strong>, &#xa9; 2020 Tim Jentzsch<br />
+          This project is available open source on
+          <a href="https://github.com/TimJentzsch/tor-user-stats">GitHub</a>
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>
