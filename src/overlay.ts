@@ -125,9 +125,29 @@ async function updateOverlay(
   });
 }
 
+function alignOverlay(hAlign: string | null, vAlign: string | null) {
+  const overlayContainer = document.getElementById('overlay-container') as HTMLDivElement;
+  const body = document.getElementsByTagName('body')[0];
+
+  if (hAlign === 'left') {
+    overlayContainer.style.textAlign = 'left';
+    body.style.justifyContent = 'start';
+  } else {
+    overlayContainer.style.textAlign = 'right';
+    body.style.justifyContent = 'end';
+  }
+
+  if (vAlign === 'bottom') {
+    overlayContainer.style.alignSelf = 'flex-end';
+  } else {
+    overlayContainer.style.alignSelf = 'flex-start';
+  }
+}
+
 document.addEventListener('DOMContentLoaded', async () => {
   const sessionStart = Date.now();
   const urlParams = new URLSearchParams(window.location.search);
+  alignOverlay(urlParams.get('hAlign'), urlParams.get('vAlign'));
   const userName = urlParams.get('user');
 
   // Update the time
