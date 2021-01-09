@@ -1,4 +1,4 @@
-import { Comment } from 'snoowrap';
+import { Comment, Listing } from 'snoowrap';
 import { updateElement } from './display/display-util';
 import { getUserComments } from './reddit-api';
 import { getCountTag } from './stats/tags';
@@ -52,6 +52,15 @@ function setGamma(gamma: number) {
   updateElement('overlay-gamma-total', gamma);
 }
 
+function updateOverlay(userName: string, comments: Listing<Comment>, refComment: Comment) {
+  // Update the current gamma
+  refComment.refresh().then((ref) => {
+    const gamma = getGamma(ref);
+    setGamma(gamma);
+    updateNameStyle(gamma);
+  });
+}
+
 document.addEventListener('DOMContentLoaded', async () => {
   const sessionStart = Date.now();
   const urlParams = new URLSearchParams(window.location.search);
@@ -66,6 +75,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   setUserName(userName);
 
+  // Find ref comment
   const comments = await getUserComments(userName, {
     sort: 'new',
     limit: 100,
@@ -76,4 +86,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   const gamma = getGamma(refComment);
   setGamma(gamma);
   updateNameStyle(gamma);
+
+  setInterval(updateOverlay, 2000, userName, comments, refComment);
 });
