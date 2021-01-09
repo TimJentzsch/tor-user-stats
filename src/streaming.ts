@@ -10,8 +10,18 @@ function getQueryString(params: Record<string, string>) {
   return ret.join('&');
 }
 
+function getBaseUrl(): string {
+  // Remove query parameters
+  const url = window.location.href.split('?')[0];
+  // Move up one
+  const paths = url.split('/');
+  const baseURL = paths.slice(0, paths.length - 1).join('/');
+
+  return `${baseURL}/overlay.html`;
+}
+
 function updateOverlayLink(userName: string, sessionStart: string, hAlign: string, vAlign: string) {
-  const baseURL = 'http://localhost:1234/overlay.html';
+  const baseURL = getBaseUrl();
   const overlayLinkInput = document.getElementById('overlay-link') as HTMLInputElement;
 
   const params = getQueryString({
