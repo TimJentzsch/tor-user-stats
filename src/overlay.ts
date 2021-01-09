@@ -1,6 +1,19 @@
 import { Comment } from 'snoowrap';
 import { updateElement } from './display/display-util';
 import { getAllUserComments } from './reddit-api';
+import { getCountTag } from './stats/tags';
+import { countTagList } from './tags';
+
+function updateNameStyle(gamma: number): void {
+  const countTag = getCountTag(gamma);
+  const nameElement = document.getElementById('overlay-user-name') as HTMLSpanElement;
+
+  countTagList.forEach((tag) => {
+    nameElement.classList.remove(tag.id);
+  });
+
+  nameElement.classList.add(countTag.id);
+}
 
 function setUserName(userName: string): void {
   updateElement('overlay-reddit-name', userName);
@@ -62,4 +75,5 @@ document.addEventListener('DOMContentLoaded', async () => {
   const refComment = torComments[0];
   const gamma = getGamma(refComment);
   setGamma(gamma);
+  updateNameStyle(gamma);
 });
