@@ -255,6 +255,12 @@ export function gammaHistoryDiagram(
     };
   });
 
+  // Add an up-to date last entry
+  history.push({
+    count: gamma,
+    date: new Date(),
+  });
+
   const data = [];
 
   if (transcriptions.length > 0) {
@@ -306,6 +312,27 @@ export function gammaHistoryDiagram(
 export function gammaRateDiagram(transcriptions: Transcription[]): void {
   const rate = gammaRate(transcriptions, 24 * 60 * 60); // 24h
 
+  // Add an up-to date last entry
+  if (rate.length > 0) {
+    const last = rate[rate.length - 1];
+    const lastDate = last.date.valueOf();
+    const nextDay = new Date(lastDate + 24 * 60 * 60 * 1000);
+    const today = new Date(lastDate + Math.floor((Date.now() - lastDate) / (24 * 60 * 60 * 1000)));
+
+    if (nextDay.valueOf() > lastDate) {
+      rate.push({
+        rate: 0,
+        date: nextDay,
+      });
+      if (today.valueOf() > nextDay.valueOf()) {
+        rate.push({
+          rate: 0,
+          date: today,
+        });
+      }
+    }
+  }
+
   const data = [];
 
   if (transcriptions.length > 0) {
@@ -354,6 +381,14 @@ export function gammaRateDiagram(transcriptions: Transcription[]): void {
 export function karmaHistoryDiagram(transcriptions: Transcription[]): void {
   const history = karmaHistory(transcriptions);
 
+  // Add an up-to date last entry
+  if (history.length > 0) {
+    history.push({
+      karma: history[history.length - 1].karma,
+      date: new Date(),
+    });
+  }
+
   const data = [
     {
       y: history.map((stats) => stats.karma),
@@ -382,6 +417,27 @@ export function karmaHistoryDiagram(transcriptions: Transcription[]): void {
 
 export function karmaRateDiagram(transcriptions: Transcription[]): void {
   const rate = karmaRate(transcriptions, 24 * 60 * 60); // 24h
+
+  // Add an up-to date last entry
+  if (rate.length > 0) {
+    const last = rate[rate.length - 1];
+    const lastDate = last.date.valueOf();
+    const nextDay = new Date(lastDate + 24 * 60 * 60 * 1000);
+    const today = new Date(lastDate + Math.floor((Date.now() - lastDate) / (24 * 60 * 60 * 1000)));
+
+    if (nextDay.valueOf() > lastDate) {
+      rate.push({
+        rate: 0,
+        date: nextDay,
+      });
+      if (today.valueOf() > nextDay.valueOf()) {
+        rate.push({
+          rate: 0,
+          date: today,
+        });
+      }
+    }
+  }
 
   const data = [
     {
