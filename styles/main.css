@@ -151,8 +151,8 @@ h3 {
   font-size: 20px;
 }
 
-.user-input,
-.search-button {
+input,
+button {
   padding: 5px 7px;
   border-radius: 3px;
 }
@@ -162,19 +162,19 @@ h3 {
   font-size: 20px;
 }
 
-.user-input {
+input {
   background-color: var(--surface);
   color: var(--on-surface);
   border: solid 1px var(--primary);
 }
 
-.search-button {
+button {
   background-color: var(--primary-variant);
   color: var(--on-primary);
   border: solid 1px var(--on-primary);
 }
 
-.search-button:hover {
+button:hover {
   background-color: var(--primary);
   cursor: pointer;
 }
