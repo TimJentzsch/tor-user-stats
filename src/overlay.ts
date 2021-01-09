@@ -54,15 +54,21 @@ function updateGamma(gamma: number) {
 }
 
 function updateGammaIncrease(comments: Comment[], sessionStart: number) {
-  const newTranscriptions = comments
-    // Filter out transcriptions
+  const rStart = Math.floor(sessionStart / 1000);
+  console.debug(`Session start: ${rStart}`);
+
+  const newComments = comments.filter((comment) => {
+    return comment.created_utc >= rStart;
+  });
+  const newTranscriptions = newComments
+    // Filter out new transcriptions
     .filter((comment) => {
       return Transcription.isTranscription(comment);
-    })
-    // Filter out new transcriptions
-    .filter((transcription) => {
-      return transcription.created_utc * 1000 >= sessionStart;
     });
+
+  console.debug(
+    `Comments: ${comments.length}, New Comments: ${newComments.length}, New Transcriptions: ${newTranscriptions.length}`,
+  );
 
   const gammaIncrease = newTranscriptions.length;
 
@@ -72,30 +78,51 @@ function updateGammaIncrease(comments: Comment[], sessionStart: number) {
 async function updateOverlay(
   userName: string,
   comments: Comment[],
+  gamma: number,
   refComment: Comment,
   sessionStart: number,
-): Promise<Comment[]> {
+): Promise<[number, Comment[]]> {
   // Update the current gamma
-  refComment.refresh().then((ref) => {
-    const gamma = getGamma(ref);
-    updateGamma(gamma);
-    updateNameStyle(gamma);
+  return refComment.refresh().then(async (ref) => {
+    const newGamma = getGamma(ref);
+    if (newGamma > gamma) {
+      console.debug(`Gamma updated from ${gamma} to ${newGamma}`);
+      const commentFetch = await getUserComments(userName, {
+        sort: 'new',
+        limit: 20,
+      });
+
+      console.debug(
+        `Comment fetch times: ${JSON.stringify(
+          commentFetch.map((comment) => comment.created_utc),
+        )}`,
+      );
+
+      console.debug(`Comment length: ${comments.length}`);
+
+      console.debug(
+        `Last comment time: ${comments[0].created_utc}, Cur time: ${Math.floor(Date.now() / 1000)}`,
+      );
+
+      const newComments = commentFetch.filter((comment) => {
+        return comment.created_utc > comments[0].created_utc;
+      });
+
+      console.debug(
+        `New comment times: ${JSON.stringify(newComments.map((comment) => comment.created_utc))}`,
+      );
+
+      const allComments = newComments.concat(comments);
+
+      updateGammaIncrease(allComments, sessionStart);
+      updateGamma(newGamma);
+      updateNameStyle(newGamma);
+
+      return [newGamma, allComments];
+    }
+
+    return [gamma, comments];
   });
-
-  const commentFetch = await getUserComments(userName, {
-    sort: 'new',
-    limit: 100,
-  });
-
-  const newComments = commentFetch.filter((comment) => {
-    return comment.created_utc > comments[0].created_utc;
-  });
-
-  const allComments = newComments.concat(comments);
-
-  updateGammaIncrease(allComments, sessionStart);
-
-  return allComments;
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -120,11 +147,11 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   const torComments = comments.filter(isRefComment);
   const refComment = torComments[0];
-  const gamma = getGamma(refComment);
+  let gamma = getGamma(refComment);
   updateGamma(gamma);
   updateNameStyle(gamma);
 
   setInterval(async () => {
-    comments = await updateOverlay(userName, comments, refComment, sessionStart);
+    [gamma, comments] = await updateOverlay(userName, comments, gamma, refComment, sessionStart);
   }, 2000);
 });
