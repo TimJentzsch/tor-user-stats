@@ -162,6 +162,10 @@ button {
   font-size: 20px;
 }
 
+#analysis-ratio-container {
+  margin: 15px 0;
+}
+
 input {
   background-color: var(--surface);
   color: var(--on-surface);
