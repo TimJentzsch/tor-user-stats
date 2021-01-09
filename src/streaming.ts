@@ -10,33 +10,66 @@ function getQueryString(params: Record<string, string>) {
   return ret.join('&');
 }
 
-function updateOverlayLink(userName: string, sessionStart: string) {
+function updateOverlayLink(userName: string, sessionStart: string, hAlign: string, vAlign: string) {
   const baseURL = 'http://localhost:1234/overlay.html';
   const overlayLinkInput = document.getElementById('overlay-link') as HTMLInputElement;
 
   const params = getQueryString({
     user: userName,
     sessionStart,
+    hAlign,
+    vAlign,
   });
 
   const url = params ? `${baseURL}?${params}` : baseURL;
   overlayLinkInput.value = url;
 }
 
-document.addEventListener('DOMContentLoaded', async () => {
+document.addEventListener('DOMContentLoaded', () => {
   const userNameInput = document.getElementById('overlay-user-name') as HTMLInputElement;
   const sessionStartInput = document.getElementById('overlay-session-start') as HTMLInputElement;
+  const hAlignButtons = document.getElementsByName('halign') as NodeListOf<HTMLInputElement>;
+  const vAlignButtons = document.getElementsByName('valign') as NodeListOf<HTMLInputElement>;
 
-  let userName = '';
-  let sessionStart = '';
+  const overlayLinkInput = document.getElementById('overlay-link') as HTMLInputElement;
+  const copyButton = document.getElementById('overlay-link-copy-button') as HTMLButtonElement;
+
+  let userName = userNameInput.value;
+  let sessionStart = sessionStartInput.value;
+  let hAlign = '';
+  let vAlign = '';
+
+  updateOverlayLink(userName, sessionStart, hAlign, vAlign);
 
   userNameInput.oninput = () => {
     userName = userNameInput.value;
-    updateOverlayLink(userName, sessionStart);
+    updateOverlayLink(userName, sessionStart, hAlign, vAlign);
   };
 
   sessionStartInput.oninput = () => {
     sessionStart = sessionStartInput.value;
-    updateOverlayLink(userName, sessionStart);
+    updateOverlayLink(userName, sessionStart, hAlign, vAlign);
+  };
+
+  hAlignButtons.forEach((button) => {
+    button.oninput = () => {
+      if (button.checked) {
+        hAlign = button.value;
+        updateOverlayLink(userName, sessionStart, hAlign, vAlign);
+      }
+    };
+  });
+
+  vAlignButtons.forEach((button) => {
+    button.oninput = () => {
+      if (button.checked) {
+        vAlign = button.value;
+        updateOverlayLink(userName, sessionStart, hAlign, vAlign);
+      }
+    };
+  });
+
+  copyButton.onclick = () => {
+    navigator.clipboard.writeText(overlayLinkInput.value);
   };
 });
