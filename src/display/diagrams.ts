@@ -1,4 +1,5 @@
 import Plotly from 'plotly.js-dist';
+import { Comment } from 'snoowrap';
 import { gammaHistory, karmaHistory } from '../stats/history';
 import { gammaPeak } from '../stats/peak';
 import { gammaRate, karmaRate } from '../stats/rate';
@@ -8,7 +9,7 @@ import { countTagList } from '../tags';
 import Transcription from '../transcription';
 import { limitReduceEnd, repeat, repeatEndWith } from '../util';
 import Colors from './colors';
-import { fromTemplate, getVariable } from './display-util';
+import { fromTemplate, getGamma, getVariable } from './display-util';
 import { layoutTemplate } from './templates';
 
 export function formatGammaDiagram(transcriptions: Transcription[]): void {
@@ -237,8 +238,22 @@ export function displaySubKarmaDiagram(transcriptions: Transcription[]): void {
   Plotly.newPlot('sub-karma-diagram', data, layout);
 }
 
-export function gammaHistoryDiagram(transcriptions: Transcription[]): void {
-  const history = gammaHistory(transcriptions);
+export function gammaHistoryDiagram(
+  transcriptions: Transcription[],
+  refComment: Comment | undefined,
+): void {
+  let history = gammaHistory(transcriptions);
+
+  const gamma = getGamma(transcriptions, refComment);
+  const gammaDif = gamma - transcriptions.length;
+
+  // Normalize gamma to get up-to-date values
+  history = history.map((hItem) => {
+    return {
+      count: hItem.count + gammaDif,
+      date: hItem.date,
+    };
+  });
 
   const data = [];
 

@@ -183,7 +183,7 @@ function updateDisplays(
   typeKarmaDiagram(transcriptions);
   displaySubGammaDiagram(transcriptions);
   displaySubKarmaDiagram(transcriptions);
-  gammaHistoryDiagram(transcriptions);
+  gammaHistoryDiagram(transcriptions, refComment);
   gammaRateDiagram(transcriptions);
   karmaHistoryDiagram(transcriptions);
   karmaRateDiagram(transcriptions);
