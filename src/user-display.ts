@@ -169,11 +169,25 @@ function updateTables(transcriptions: Transcription[]) {
   updateCharWords(transcriptions);
 }
 
+function updateAnalysis(
+  transcriptions: Transcription[],
+  refComment: Comment | undefined,
+  commentCount: number,
+) {
+  const gamma = getGamma(transcriptions, refComment);
+
+  updateElement('comment-count', commentCount);
+  updateElement('transcription-count', transcriptions.length);
+  updateElement('analysis-percent', ((transcriptions.length / gamma) * 100).toFixed(2));
+}
+
 function updateDisplays(
   userName: string,
   transcriptions: Transcription[],
   refComment: Comment | undefined,
+  commentCount: number,
 ) {
+  updateAnalysis(transcriptions, refComment, commentCount);
   displayGamma(transcriptions, refComment);
   displayTags(userName, transcriptions, refComment);
   updateTables(transcriptions);
@@ -204,7 +218,7 @@ async function displayUser() {
   displayModTag(userName);
 
   await getTranscriptions(userName, (transcriptions, allCount, refComment) => {
-    updateDisplays(userName, transcriptions, refComment);
+    updateDisplays(userName, transcriptions, refComment, allCount);
     setProgress(allCount / 1000);
   });
 
