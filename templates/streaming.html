@@ -65,7 +65,7 @@
     <div id="body-container">
       <h2>Stream Overlay Generator</h2>
       This tool allows you to create overlays for your transcribing streams. They can easily be
-      integrated into your OBS setup.
+      integrated into your OBS Studio setup.
 
       <form id="overlay-settings-form" onsubmit="return false">
         <div id="overlay-user-name-container" class="overlay-container">
@@ -130,6 +130,14 @@
           <button id="overlay-link-copy-button">Copy</button>
         </div>
       </form>
+      <h3>OBS Studio Instructions</h3>
+      <ol id="overlay-instructions">
+        <li>Configure your overlay and copy the link</li>
+        <li>Open OBS Studio and add a new Browser Source</li>
+        <li>Paste the link in the URL field</li>
+        <li>The width and height are not really important, but I recommend to reduce them to something like 300x100</li>
+        <li>Position the overlay in the corner that you configured</li>
+      </ol>
     </div>
     <footer>
       <div id="footer-content">
