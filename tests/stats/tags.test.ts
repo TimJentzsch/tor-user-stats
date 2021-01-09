@@ -10,7 +10,7 @@ function testCountTag(count: number, expected: Tag) {
   const transcriptions = new TranscriptionGenerator(new Date('2020-11-10'))
     .addTranscriptions(count, 24 * 60 * 60)
     .generate();
-  const actual = getCountTag(transcriptions);
+  const actual = getCountTag(transcriptions.length);
 
   expect(actual).toEqual(expected);
 }
