@@ -1,0 +1,24 @@
+#overlay-settings-form {
+  margin-top: 10px;
+  padding: 10px;
+  background-color: var(--surface);
+  border-radius: 5px;
+}
+
+#overlay-link {
+  min-width: 500px;
+  opacity: 0.7;
+}
+
+#overlay-align-container {
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.overlay-container {
+  padding: 5px;
+}
+
+#overlay-halign-container {
+  margin-right: 10px;
+}

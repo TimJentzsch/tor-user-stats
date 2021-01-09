@@ -43,6 +43,7 @@
 
     <link rel="stylesheet" type="text/css" media="screen" href="../styles/colors.css" />
     <link rel="stylesheet" type="text/css" media="screen" href="../styles/main.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="../styles/streaming.css" />
   </head>
   <body>
     <header>
@@ -65,57 +66,66 @@
       integrated into your OBS setup.
 
       <form id="overlay-settings-form">
-        <div id="overlay-user-name-container">
+        <div id="overlay-user-name-container" class="overlay-container">
           <label for="overlay-user-name"
             ><b>Username:</b> /u/
             <input id="overlay-user-name" type="text" placeholder="username" required
           /></label>
         </div>
-        <div id="overlay-session-start-container">
+        <div id="overlay-session-start-container" class="overlay-container">
           <label for="overlay-session-start"
             ><b>Session Start:</b>
             <input id="overlay-session-start" type="datetime" placeholder="YYYY-MM-DD"
           /></label>
         </div>
-        <div id="overlay-halign-container">
-          <b>Horizontal Alignment:</b>
-          <div id="overlay-halign-left-container">
-            <label for="overlay-halign-left"
-              ><input type="radio" id="overlay-halign-left" name="halign" value="left" />
-              Left</label
-            >
+        <div id="overlay-align-container">
+          <div id="overlay-halign-container" class="overlay-container">
+            <b>Horizontal Alignment:</b>
+            <div id="overlay-halign-left-container">
+              <label for="overlay-halign-left"
+                ><input type="radio" id="overlay-halign-left" name="halign" value="left" />
+                Left</label
+              >
+            </div>
+            <div id="overlay-halign-right-container">
+              <label for="overlay-halign-right"
+                ><input
+                  type="radio"
+                  id="overlay-halign-right"
+                  name="halign"
+                  value="right"
+                  checked
+                />
+                Right</label
+              >
+            </div>
           </div>
-          <div id="overlay-halign-right-container">
-            <label for="overlay-halign-right"
-              ><input type="radio" id="overlay-halign-right" name="halign" value="right" checked />
-              Right</label
-            >
-          </div>
-        </div>
-        <div id="overlay-valign-container">
-          <b>Vertical Alignment:</b>
-          <div id="overlay-valign-left-container">
-            <label for="overlay-valign-top"
-              ><input type="radio" id="overlay-valign-top" name="valign" value="top" checked />
-              Top</label
-            >
-          </div>
-          <div id="overlay-valign-bottom-container">
-            <label for="overlay-valign-bottom"
-              ><input type="radio" id="overlay-valign-bottom" name="valign" value="bottom" />
-              Bottom</label
-            >
+          <div id="overlay-valign-container" class="overlay-container">
+            <b>Vertical Alignment:</b>
+            <div id="overlay-valign-left-container">
+              <label for="overlay-valign-top"
+                ><input type="radio" id="overlay-valign-top" name="valign" value="top" checked />
+                Top</label
+              >
+            </div>
+            <div id="overlay-valign-bottom-container">
+              <label for="overlay-valign-bottom"
+                ><input type="radio" id="overlay-valign-bottom" name="valign" value="bottom" />
+                Bottom</label
+              >
+            </div>
           </div>
         </div>
         <div id="overlay-link-container">
           <label for="overlay-link"
-            ><b>Session Start:</b>
+            ><b>Overlay Link:</b>
             <input
               id="overlay-link"
               type="url"
               value="https://timjentzsch.github.io/tor-user-stats/overlay.html"
               disabled
           /></label>
+          <button id="overlay-link-copy-button">Copy</button>
         </div>
       </form>
     </div>
