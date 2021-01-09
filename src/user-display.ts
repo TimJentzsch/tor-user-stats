@@ -1,3 +1,4 @@
+import { Comment } from 'snoowrap';
 import { getAllUserComments } from './reddit-api';
 import { isComment } from './analizer';
 import Transcription from './transcription';
@@ -52,13 +53,18 @@ function setProgress(progress: number) {
 
 async function getTranscriptions(
   userName: string,
-  callback: (transcriptions: Transcription[], allCount: number) => void,
+  callback: (
+    transcriptions: Transcription[],
+    allCount: number,
+    refComment: Comment | undefined,
+  ) => void,
 ): Promise<Transcription[]> {
   console.debug(`Starting analysis for /u/${userName}:`);
 
   let allCount = 0;
   let commentCount = 0;
   let transcriptionCount = 0;
+  let refComment: Comment | undefined;
 
   let transcriptions: Transcription[] = [];
 
@@ -77,6 +83,13 @@ async function getTranscriptions(
     console.debug(`Fetched ${count} comments, from ${endDate} to ${startDate}`);
     allCount += newComments.length;
 
+    if (!refComment) {
+      // Find a reference comment to get the user flair
+      refComment = newComments.find((comment) => {
+        return comment.subreddit_name_prefixed === 'r/TranscribersOfReddit';
+      });
+    }
+
     const newValidComments = newComments.filter((comment) => isComment(comment));
     commentCount += newValidComments.length;
 
@@ -87,14 +100,21 @@ async function getTranscriptions(
 
     transcriptions = transcriptions.concat(newTranscriptions);
 
-    callback(transcriptions, allCount);
+    callback(transcriptions, allCount, refComment);
   });
 
   return transcriptions;
 }
 
-function displayGamma(transcriptions: Transcription[]) {
-  const gamma = transcriptions.length;
+function displayGamma(transcriptions: Transcription[], refComment: Comment | undefined) {
+  let gamma = transcriptions.length;
+
+  if (refComment) {
+    // Take the flair gamma if available
+    const flair = refComment.author_flair_text ?? '';
+    const match = /(\d+)\s*Γ/.exec(flair);
+    gamma = Number(match ? match[1] : `${gamma}`);
+  }
 
   const gammaElement = document.getElementById('scribe-count') as HTMLElement;
   gammaElement.innerHTML = `(${gamma} &#x393;)`;
@@ -156,8 +176,12 @@ function updateTables(transcriptions: Transcription[]) {
   updateCharWords(transcriptions);
 }
 
-function updateDisplays(userName: string, transcriptions: Transcription[]) {
-  displayGamma(transcriptions);
+function updateDisplays(
+  userName: string,
+  transcriptions: Transcription[],
+  refComment: Comment | undefined,
+) {
+  displayGamma(transcriptions, refComment);
   displayTags(userName, transcriptions);
   updateTables(transcriptions);
   formatGammaDiagram(transcriptions);
@@ -186,8 +210,8 @@ async function displayUser() {
   displayUserName(userName);
   displayModTag(userName);
 
-  await getTranscriptions(userName, (transcriptions, allCount) => {
-    updateDisplays(userName, transcriptions);
+  await getTranscriptions(userName, (transcriptions, allCount, refComment) => {
+    updateDisplays(userName, transcriptions, refComment);
     setProgress(allCount / 1000);
   });
 
