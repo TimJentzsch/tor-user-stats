@@ -1,6 +1,8 @@
+import { Comment } from 'snoowrap';
 import { getCountTag, getModTag, getSpecialTags } from '../stats/tags';
 import { countTagList, Tag } from '../tags';
 import Transcription from '../transcription';
+import { getGamma } from './display-util';
 
 export function getTagElement(tag: Tag): HTMLDivElement {
   const tagElement = document.createElement('div');
@@ -10,8 +12,13 @@ export function getTagElement(tag: Tag): HTMLDivElement {
   return tagElement;
 }
 
-export function displayCountTag(transcriptions: Transcription[]): void {
-  const countTag = getCountTag(transcriptions.length);
+export function displayCountTag(
+  transcriptions: Transcription[],
+  refComment: Comment | undefined,
+): void {
+  const gamma = getGamma(transcriptions, refComment);
+
+  const countTag = getCountTag(gamma);
   const countTagElement = document.getElementById('count-tag') as HTMLDivElement;
 
   countTagList.forEach((tag) => {
@@ -35,8 +42,12 @@ export async function displayModTag(userName: string): Promise<void> {
   modTagElement.innerText = modTag.toString();
 }
 
-export function displayTags(userName: string, transcriptions: Transcription[]): void {
-  displayCountTag(transcriptions);
+export function displayTags(
+  userName: string,
+  transcriptions: Transcription[],
+  refComment: Comment | undefined,
+): void {
+  displayCountTag(transcriptions, refComment);
 
   const spTags = getSpecialTags(userName, transcriptions);
   const spTagElements = spTags.map((tag) => getTagElement(tag));

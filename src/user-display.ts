@@ -17,7 +17,7 @@ import {
 import { gammaPeak, karmaPeak } from './stats/peak';
 import { gammaAvg, karmaAvg } from './stats/avg';
 import { displayHeatmap, initHeatmapTable } from './display/heatmap';
-import { updateElement } from './display/display-util';
+import { getGamma, updateElement } from './display/display-util';
 import { displayHallOfFame, displayRecent } from './display/hall-of-fame';
 import { displayModTag, displayTags } from './display/tags';
 import { getTranscriptionLength } from './stats/length';
@@ -107,14 +107,7 @@ async function getTranscriptions(
 }
 
 function displayGamma(transcriptions: Transcription[], refComment: Comment | undefined) {
-  let gamma = transcriptions.length;
-
-  if (refComment) {
-    // Take the flair gamma if available
-    const flair = refComment.author_flair_text ?? '';
-    const match = /(\d+)\s*Γ/.exec(flair);
-    gamma = Number(match ? match[1] : `${gamma}`);
-  }
+  const gamma = getGamma(transcriptions, refComment);
 
   const gammaElement = document.getElementById('scribe-count') as HTMLElement;
   gammaElement.innerHTML = `(${gamma} &#x393;)`;
@@ -182,7 +175,7 @@ function updateDisplays(
   refComment: Comment | undefined,
 ) {
   displayGamma(transcriptions, refComment);
-  displayTags(userName, transcriptions);
+  displayTags(userName, transcriptions, refComment);
   updateTables(transcriptions);
   formatGammaDiagram(transcriptions);
   typeGammaDiagram(transcriptions);

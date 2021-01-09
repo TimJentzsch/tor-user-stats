@@ -1,3 +1,6 @@
+import { Comment } from 'snoowrap';
+import Transcription from '../transcription';
+
 export function updateElement(id: string, text: string | number): void {
   const element = document.getElementById(id) as HTMLElement;
   element.innerText = text.toString();
@@ -45,4 +48,17 @@ export function getVariable(varName: string): string {
 export function clearChildren(element: HTMLElement): HTMLElement {
   element.innerHTML = '';
   return element;
+}
+
+export function getGamma(transcriptions: Transcription[], refComment: Comment | undefined): number {
+  let gamma = transcriptions.length;
+
+  if (refComment) {
+    // Take the flair gamma if available
+    const flair = refComment.author_flair_text ?? '';
+    const match = /(\d+)\s*Γ/.exec(flair);
+    gamma = Number(match ? match[1] : `${gamma}`);
+  }
+
+  return gamma;
 }
