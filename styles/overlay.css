@@ -17,3 +17,34 @@ body {
 #overlay-stats-container {
   font-size: 20px;
 }
+
+.visitor {
+  color: var(--visitor);
+}
+.initiate {
+  color: var(--initiate);
+}
+.green {
+  color: var(--green);
+}
+.teal {
+  color: var(--teal);
+}
+.purple {
+  color: var(--purple);
+}
+.gold {
+  color: var(--gold);
+}
+.diamond {
+  color: var(--diamond);
+}
+.ruby {
+  color: var(--ruby);
+}
+.topaz {
+  color: var(--topaz);
+}
+.jade {
+  color: var(--jade);
+}

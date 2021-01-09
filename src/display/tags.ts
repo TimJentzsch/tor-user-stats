@@ -11,7 +11,7 @@ export function getTagElement(tag: Tag): HTMLDivElement {
 }
 
 export function displayCountTag(transcriptions: Transcription[]): void {
-  const countTag = getCountTag(transcriptions);
+  const countTag = getCountTag(transcriptions.length);
   const countTagElement = document.getElementById('count-tag') as HTMLDivElement;
 
   countTagList.forEach((tag) => {

@@ -192,7 +192,7 @@ export default async function analizeUser(userName: string): Promise<void> {
   logStats('Top 5 subs (karma)', `${subKarma.join(' | ')}`);
 
   // Tags
-  const countTag = getCountTag(transcriptions);
+  const countTag = getCountTag(transcriptions.length);
   const countText = `${countTag.name} (${countTag.lowerBound}-${countTag.upperBound})`;
 
   const modTag = [await getModTag(userName)].filter((tag) => tag !== null) as Tag[];

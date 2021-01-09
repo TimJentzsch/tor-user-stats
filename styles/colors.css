@@ -1,0 +1,48 @@
+:root {
+  --primary: #80cbc4;
+  --primary-variant: #4c968f;
+  --on-primary: #000000;
+
+  --background: #121212;
+  --on-background: #ffffff;
+
+  --surface: rgba(255, 255, 255, 0.08);
+  --on-surface: #ffffff;
+
+  --error: #cf6679;
+  --on-error: #000000;
+
+  --on-disabled: #cccccc;
+  --on-tag: #222;
+
+  --on-footer: #999;
+
+  --grid: #555;
+
+  --disclaimer: #80cbc411;
+
+  /** Heatmap */
+  --heatmap-0: transparent;
+  --heatmap-1: #0d2220;
+  --heatmap-2: #143130;
+  --heatmap-3: #224b47;
+  --heatmap-4: #438078;
+  --heatmap-5: #62b4ac;
+  --heatmap-6: #80cbc4;
+
+  /** Tags */
+  --visitor: #aaaaaa;
+  --initiate: #eeeeee;
+  --green: #46d160;
+  --teal: #0aa18f;
+  --purple: #7f00ff;
+  --gold: #f5c234;
+  --diamond: #b9f2ff;
+  --ruby: #ff005d;
+  --topaz: #ff6200;
+  --jade: #307250;
+
+  --twenty-four: #fcec3c;
+  --beta-tester: #88bcfc;
+  --mod: #fc3c46;
+}

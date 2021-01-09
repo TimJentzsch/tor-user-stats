@@ -7,17 +7,15 @@ import { gammaPeak } from './peak';
  * Gets the matching count tag for the transcriptions.
  * @param transcriptions The transcriptions to analize.
  */
-export function getCountTag(transcriptions: Transcription[]): CountTag {
-  const count = transcriptions.length;
-
+export function getCountTag(gamma: number): CountTag {
   // From the highest tag downwards, search for the first match
   for (let i = countTagList.length - 1; i >= 0; i -= 1) {
-    if (count >= countTagList[i].lowerBound) {
+    if (gamma >= countTagList[i].lowerBound) {
       return countTagList[i];
     }
   }
 
-  throw new Error(`No count tag found for count ${count}`);
+  throw new Error(`No count tag found for count ${gamma}`);
 }
 
 /**
