@@ -126,21 +126,20 @@ async function updateOverlay(
 }
 
 function alignOverlay(hAlign: string | null, vAlign: string | null) {
-  const overlayContainer = document.getElementById('overlay-container') as HTMLDivElement;
-  const body = document.getElementsByTagName('body')[0];
+  const container = document.getElementById('overlay-container') as HTMLDivElement;
 
   if (hAlign === 'left') {
-    overlayContainer.style.textAlign = 'left';
-    body.style.justifyContent = 'start';
+    container.style.left = '0';
+    container.style.textAlign = 'left';
   } else {
-    overlayContainer.style.textAlign = 'right';
-    body.style.justifyContent = 'end';
+    container.style.right = '0';
+    container.style.textAlign = 'right';
   }
 
   if (vAlign === 'bottom') {
-    overlayContainer.style.alignSelf = 'flex-end';
+    container.style.bottom = '0';
   } else {
-    overlayContainer.style.alignSelf = 'flex-start';
+    container.style.top = '0';
   }
 }
 
