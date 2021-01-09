@@ -144,8 +144,9 @@ function alignOverlay(hAlign: string | null, vAlign: string | null) {
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
-  const sessionStart = Date.now();
   const urlParams = new URLSearchParams(window.location.search);
+  const date = urlParams.get('sessionStart');
+  const sessionStart = date ? new Date(date).valueOf() : Date.now();
   alignOverlay(urlParams.get('hAlign'), urlParams.get('vAlign'));
   const userName = urlParams.get('user');
 
@@ -169,6 +170,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   let gamma = getGamma(refComment);
   updateGamma(gamma);
   updateNameStyle(gamma);
+  updateGammaIncrease(comments, sessionStart);
 
   setInterval(async () => {
     [gamma, comments] = await updateOverlay(userName, comments, gamma, refComment, sessionStart);
