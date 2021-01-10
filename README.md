@@ -1,4 +1,4 @@
-# tor-user-stats ![CI Status](https://img.shields.io/github/workflow/status/TimJentzsch/tor-user-stats/ci?label=ci) ![Test Coverage](https://img.shields.io/codecov/c/github/TimJentzsch/tor-user-stats)
+# tor-user-stats ![Version](https://img.shields.io/github/v/tag/TimJentzsch/tor-user-stats?label=version) ![License](https://img.shields.io/github/license/TimJentzsch/tor-user-stats) ![CI Status](https://img.shields.io/github/workflow/status/TimJentzsch/tor-user-stats/ci?label=ci) ![Test Coverage](https://img.shields.io/codecov/c/github/TimJentzsch/tor-user-stats)
 
 > **DISCLAIMER**: This is a community-maintained project and is not officially endorsed by [/r/TranscribersOfReddit](https://www.reddit.com/r/TranscribersOfReddit/wiki/index) nor [Grafeas Group](https://www.grafeas.org/about); they are in no way involved with this tool and are not liable for any matters relating to it.
 
