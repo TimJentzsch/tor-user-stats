@@ -69,7 +69,7 @@ export function displayHallOfFame(transcriptions: Transcription[]): void {
 }
 
 export function displayRecent(transcriptions: Transcription[]): void {
-  const recent = limitEnd(transcriptions, 6);
+  const recent = limitEnd(transcriptions, 12);
 
   const container = document.getElementById('recent-container') as HTMLDivElement;
   clearChildren(container);
