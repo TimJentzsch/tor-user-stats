@@ -166,20 +166,15 @@ button {
   margin: 15px 0;
 }
 
-input {
+input, button {
   background-color: var(--surface);
   color: var(--on-surface);
   border: solid 1px var(--primary);
 }
 
-button {
-  background-color: var(--primary-variant);
-  color: var(--on-primary);
-  border: solid 1px var(--on-primary);
-}
-
-button:hover {
+button:hover, input[type="submit"]:hover {
   background-color: var(--primary);
+  color: var(--on-primary);
   cursor: pointer;
 }
 
