@@ -281,8 +281,22 @@ td {
 }
 
 .transcription-content pre {
-  max-width: 100%;
-  overflow-y: hidden;
+  overflow: auto;
+  background-color: var(--surface);
+  padding: 10px;
+  margin: 5px 0;
+  border: none;
+  word-break: normal !important;
+  word-wrap: normal !important;
+  white-space: pre !important;
+}
+
+.transcription-content code {
+  background-color: var(--surface);
+}
+
+.transcription-content pre > code {
+  background-color: transparent !important;
 }
 
 .transcription-content p {
