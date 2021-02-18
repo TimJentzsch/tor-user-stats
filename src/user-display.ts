@@ -23,6 +23,7 @@ import { displayModTag, displayTags } from './display/tags';
 import { getTranscriptionLength } from './stats/length';
 import { recentGamma, recentKarma } from './stats/recent';
 import { displayNextRankPredictions } from './display/rank-prediction';
+import Durations from './durations';
 
 function searchUserHeader() {
   const input = document.getElementById('header-user-input') as HTMLInputElement;
@@ -115,41 +116,41 @@ function displayGamma(transcriptions: Transcription[], refComment: Comment | und
 }
 
 function updateRecents(transcriptions: Transcription[]) {
-  updateElement('recent-gamma-1h', recentGamma(transcriptions, 60 * 60).score);
-  updateElement('recent-gamma-24h', recentGamma(transcriptions, 24 * 60 * 60).score);
-  updateElement('recent-gamma-7d', recentGamma(transcriptions, 7 * 24 * 60 * 60).score);
-  updateElement('recent-gamma-365d', recentGamma(transcriptions, 365 * 24 * 60 * 60).score);
+  updateElement('recent-gamma-1h', recentGamma(transcriptions, Durations.hour).score);
+  updateElement('recent-gamma-24h', recentGamma(transcriptions, Durations.day).score);
+  updateElement('recent-gamma-7d', recentGamma(transcriptions, Durations.week).score);
+  updateElement('recent-gamma-365d', recentGamma(transcriptions, Durations.year).score);
 
-  updateElement('recent-karma-1h', recentKarma(transcriptions, 60 * 60).score);
-  updateElement('recent-karma-24h', recentKarma(transcriptions, 24 * 60 * 60).score);
-  updateElement('recent-karma-7d', recentKarma(transcriptions, 7 * 24 * 60 * 60).score);
-  updateElement('recent-karma-365d', recentKarma(transcriptions, 365 * 24 * 60 * 60).score);
+  updateElement('recent-karma-1h', recentKarma(transcriptions, Durations.hour).score);
+  updateElement('recent-karma-24h', recentKarma(transcriptions, Durations.day).score);
+  updateElement('recent-karma-7d', recentKarma(transcriptions, Durations.week).score);
+  updateElement('recent-karma-365d', recentKarma(transcriptions, Durations.year).score);
 }
 
 function updatePeaks(transcriptions: Transcription[]) {
-  updateElement('gamma-peak-1h', gammaPeak(transcriptions, 60 * 60).peak);
-  updateElement('gamma-peak-24h', gammaPeak(transcriptions, 24 * 60 * 60).peak);
-  updateElement('gamma-peak-7d', gammaPeak(transcriptions, 7 * 24 * 60 * 60).peak);
-  updateElement('gamma-peak-365d', gammaPeak(transcriptions, 365 * 24 * 60 * 60).peak);
+  updateElement('gamma-peak-1h', gammaPeak(transcriptions, Durations.hour).peak);
+  updateElement('gamma-peak-24h', gammaPeak(transcriptions, Durations.day).peak);
+  updateElement('gamma-peak-7d', gammaPeak(transcriptions, Durations.week).peak);
+  updateElement('gamma-peak-365d', gammaPeak(transcriptions, Durations.year).peak);
 
-  updateElement('karma-peak-1h', karmaPeak(transcriptions, 60 * 60).peak);
-  updateElement('karma-peak-24h', karmaPeak(transcriptions, 24 * 60 * 60).peak);
-  updateElement('karma-peak-7d', karmaPeak(transcriptions, 7 * 24 * 60 * 60).peak);
-  updateElement('karma-peak-365d', karmaPeak(transcriptions, 365 * 24 * 60 * 60).peak);
+  updateElement('karma-peak-1h', karmaPeak(transcriptions, Durations.hour).peak);
+  updateElement('karma-peak-24h', karmaPeak(transcriptions, Durations.day).peak);
+  updateElement('karma-peak-7d', karmaPeak(transcriptions, Durations.week).peak);
+  updateElement('karma-peak-365d', karmaPeak(transcriptions, Durations.year).peak);
 }
 
 function updateAvgs(transcriptions: Transcription[]) {
   const accuracy = 2;
 
-  updateElement('gamma-avg-1h', gammaAvg(transcriptions, 60 * 60).toFixed(accuracy));
-  updateElement('gamma-avg-24h', gammaAvg(transcriptions, 24 * 60 * 60).toFixed(accuracy));
-  updateElement('gamma-avg-7d', gammaAvg(transcriptions, 7 * 24 * 60 * 60).toFixed(accuracy));
-  updateElement('gamma-avg-365d', gammaAvg(transcriptions, 365 * 24 * 60 * 60).toFixed(accuracy));
+  updateElement('gamma-avg-1h', gammaAvg(transcriptions, Durations.hour).toFixed(accuracy));
+  updateElement('gamma-avg-24h', gammaAvg(transcriptions, Durations.day).toFixed(accuracy));
+  updateElement('gamma-avg-7d', gammaAvg(transcriptions, Durations.week).toFixed(accuracy));
+  updateElement('gamma-avg-365d', gammaAvg(transcriptions, Durations.year).toFixed(accuracy));
 
-  updateElement('karma-avg-1h', karmaAvg(transcriptions, 60 * 60).toFixed(accuracy));
-  updateElement('karma-avg-24h', karmaAvg(transcriptions, 24 * 60 * 60).toFixed(accuracy));
-  updateElement('karma-avg-7d', karmaAvg(transcriptions, 7 * 24 * 60 * 60).toFixed(accuracy));
-  updateElement('karma-avg-365d', karmaAvg(transcriptions, 365 * 24 * 60 * 60).toFixed(accuracy));
+  updateElement('karma-avg-1h', karmaAvg(transcriptions, Durations.hour).toFixed(accuracy));
+  updateElement('karma-avg-24h', karmaAvg(transcriptions, Durations.day).toFixed(accuracy));
+  updateElement('karma-avg-7d', karmaAvg(transcriptions, Durations.week).toFixed(accuracy));
+  updateElement('karma-avg-365d', karmaAvg(transcriptions, Durations.year).toFixed(accuracy));
 }
 
 function updateCharWords(transcriptions: Transcription[]) {

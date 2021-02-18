@@ -1,4 +1,5 @@
 import { Comment } from 'snoowrap';
+import Durations from './durations';
 import Logger from './logger';
 import { getAllUserComments } from './reddit-api';
 import { gammaAvg, karmaAvg } from './stats/avg';
@@ -72,20 +73,20 @@ export default async function analizeUser(userName: string): Promise<void> {
   );
 
   // Recents
-  const recentHourGamma = recentGamma(transcriptions, 60 * 60).score; // 1h
-  const recentDayGamma = recentGamma(transcriptions, 24 * 60 * 60).score; // 24h
-  const recentWeekGamma = recentGamma(transcriptions, 7 * 24 * 60 * 60).score; // 7d
-  const recentYearGamma = recentGamma(transcriptions, 365 * 24 * 60 * 60).score; // 365d
+  const recentHourGamma = recentGamma(transcriptions, Durations.hour).score; // 1h
+  const recentDayGamma = recentGamma(transcriptions, Durations.day).score; // 24h
+  const recentWeekGamma = recentGamma(transcriptions, Durations.week).score; // 7d
+  const recentYearGamma = recentGamma(transcriptions, Durations.year).score; // 365d
 
   logStats(
     'Recent (gamma)',
     `1h: ${recentHourGamma} | 24h: ${recentDayGamma} | 7d: ${recentWeekGamma} | 365d: ${recentYearGamma}`,
   );
 
-  const recentHourKarma = recentKarma(transcriptions, 60 * 60).score; // 1h
-  const recentDayKarma = recentKarma(transcriptions, 24 * 60 * 60).score; // 24h
-  const recentWeekKarma = recentKarma(transcriptions, 7 * 24 * 60 * 60).score; // 7d
-  const recentYearKarma = recentKarma(transcriptions, 365 * 24 * 60 * 60).score; // 365d
+  const recentHourKarma = recentKarma(transcriptions, Durations.hour).score; // 1h
+  const recentDayKarma = recentKarma(transcriptions, Durations.day).score; // 24h
+  const recentWeekKarma = recentKarma(transcriptions, Durations.week).score; // 7d
+  const recentYearKarma = recentKarma(transcriptions, Durations.year).score; // 365d
 
   logStats(
     'Recent (karma)',
@@ -95,20 +96,20 @@ export default async function analizeUser(userName: string): Promise<void> {
   const accuracy = 2;
 
   // Peaks
-  const gammaHourPeak = gammaPeak(transcriptions, 60 * 60).peak; // 1h
-  const gammaDayPeak = gammaPeak(transcriptions, 24 * 60 * 60).peak; // 24h
-  const gammaWeekPeak = gammaPeak(transcriptions, 7 * 24 * 60 * 60).peak; // 7d
-  const gammaYearPeak = gammaPeak(transcriptions, 365 * 24 * 60 * 60).peak; // 365d
+  const gammaHourPeak = gammaPeak(transcriptions, Durations.hour).peak; // 1h
+  const gammaDayPeak = gammaPeak(transcriptions, Durations.day).peak; // 24h
+  const gammaWeekPeak = gammaPeak(transcriptions, Durations.week).peak; // 7d
+  const gammaYearPeak = gammaPeak(transcriptions, Durations.year).peak; // 365d
 
   logStats(
     'Peaks (gamma)',
     `1h: ${gammaHourPeak} | 24h: ${gammaDayPeak} | 7d: ${gammaWeekPeak} | 365d: ${gammaYearPeak}`,
   );
 
-  const karmaHourPeak = karmaPeak(transcriptions, 60 * 60).peak; // 1h
-  const karmaDayPeak = karmaPeak(transcriptions, 24 * 60 * 60).peak; // 24h
-  const karmaWeekPeak = karmaPeak(transcriptions, 7 * 24 * 60 * 60).peak; // 7d
-  const karmaYearPeak = karmaPeak(transcriptions, 365 * 24 * 60 * 60).peak; // 365d
+  const karmaHourPeak = karmaPeak(transcriptions, Durations.hour).peak; // 1h
+  const karmaDayPeak = karmaPeak(transcriptions, Durations.day).peak; // 24h
+  const karmaWeekPeak = karmaPeak(transcriptions, Durations.week).peak; // 7d
+  const karmaYearPeak = karmaPeak(transcriptions, Durations.year).peak; // 365d
 
   logStats(
     'Peaks (karma)',
@@ -116,20 +117,20 @@ export default async function analizeUser(userName: string): Promise<void> {
   );
 
   // Averages
-  const gammaHourAvg = gammaAvg(transcriptions, 60 * 60).toFixed(accuracy); // 1h
-  const gammaDayAvg = gammaAvg(transcriptions, 24 * 60 * 60).toFixed(accuracy); // 24h
-  const gammaWeekAvg = gammaAvg(transcriptions, 7 * 24 * 60 * 60).toFixed(accuracy); // 7d
-  const gammaYearAvg = gammaAvg(transcriptions, 365 * 24 * 60 * 60).toFixed(accuracy); // 365d
+  const gammaHourAvg = gammaAvg(transcriptions, Durations.hour).toFixed(accuracy); // 1h
+  const gammaDayAvg = gammaAvg(transcriptions, Durations.day).toFixed(accuracy); // 24h
+  const gammaWeekAvg = gammaAvg(transcriptions, Durations.week).toFixed(accuracy); // 7d
+  const gammaYearAvg = gammaAvg(transcriptions, Durations.year).toFixed(accuracy); // 365d
 
   logStats(
     'Avgs (gamma)',
     `1h: ${gammaHourAvg} | 24h: ${gammaDayAvg} | 7d: ${gammaWeekAvg} | 365d: ${gammaYearAvg}`,
   );
 
-  const karmaHourAvg = karmaAvg(transcriptions, 60 * 60).toFixed(accuracy); // 1h
-  const karmaDayAvg = karmaAvg(transcriptions, 24 * 60 * 60).toFixed(accuracy); // 24h
-  const karmaWeekAvg = karmaAvg(transcriptions, 7 * 24 * 60 * 60).toFixed(accuracy); // 7d
-  const karmaYearAvg = karmaAvg(transcriptions, 365 * 24 * 60 * 60).toFixed(accuracy); // 365d
+  const karmaHourAvg = karmaAvg(transcriptions, Durations.hour).toFixed(accuracy); // 1h
+  const karmaDayAvg = karmaAvg(transcriptions, Durations.day).toFixed(accuracy); // 24h
+  const karmaWeekAvg = karmaAvg(transcriptions, Durations.week).toFixed(accuracy); // 7d
+  const karmaYearAvg = karmaAvg(transcriptions, Durations.year).toFixed(accuracy); // 365d
 
   logStats(
     'Avgs (karma)',
