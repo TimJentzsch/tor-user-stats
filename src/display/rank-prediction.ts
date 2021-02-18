@@ -9,6 +9,45 @@ import Colors from './colors';
 import { fromTemplate, getGamma, getVariable } from './display-util';
 import { layoutTemplate } from './templates';
 
+function getFormattedDuration(duration: number): string {
+  const sec = Math.floor(duration);
+
+  // Calculate readable duration
+  const years = Math.floor(sec / Durations.year);
+  const days = Math.floor((sec - years * Durations.year) / Durations.day);
+  const hours = Math.floor((sec - years * Durations.year - days * Durations.day) / Durations.hour);
+  const minutes = Math.floor(
+    (sec - years * Durations.year - days * Durations.day - hours * Durations.hour) /
+      Durations.minute,
+  );
+  const seconds =
+    sec -
+    years * Durations.year -
+    days * Durations.day -
+    hours * Durations.hour -
+    minutes * Durations.minute;
+
+  const durations = [];
+
+  if (years) {
+    durations.push(`${years} years`);
+  }
+  if (days) {
+    durations.push(`${days} days`);
+  }
+  if (hours) {
+    durations.push(`${hours} hours`);
+  }
+  if (minutes) {
+    durations.push(`${minutes} minutes`);
+  }
+  if (seconds) {
+    durations.push(`${seconds} seconds`);
+  }
+
+  return durations.join(' ');
+}
+
 export function displayNextRankPrediction(
   transcriptions: Transcription[],
   duration: number,
@@ -27,47 +66,16 @@ export function displayNextRankPrediction(
   } else if (prediction.duration === Infinity) {
     descriptionElement.innerText = `At a rate of ${prediction.rate}/${durationStr}, ${prediction.rank.name} will never be reached!`;
   } else {
-    const sec = Math.floor(prediction.duration);
+    const formattedDuration = getFormattedDuration(prediction.duration);
 
-    // Calculate readable duration
-    const years = Math.floor(sec / Durations.year);
-    const days = Math.floor((sec - years * Durations.year) / Durations.day);
-    const hours = Math.floor(
-      (sec - years * Durations.year - days * Durations.day) / Durations.hour,
-    );
-    const minutes = Math.floor(
-      (sec - years * Durations.year - days * Durations.day - hours * Durations.hour) /
-        Durations.minute,
-    );
-    const seconds =
-      sec -
-      years * Durations.year -
-      days * Durations.day -
-      hours * Durations.hour -
-      minutes * Durations.minute;
-
-    const durations = [];
-
-    if (years) {
-      durations.push(`${years} years`);
-    }
-    if (days) {
-      durations.push(`${days} days`);
-    }
-    if (hours) {
-      durations.push(`${hours} hours`);
-    }
-    if (minutes) {
-      durations.push(`${minutes} minutes`);
-    }
-    if (seconds) {
-      durations.push(`${seconds} seconds`);
-    }
-
-    descriptionElement.innerText = `At a rate of ${prediction.rate}/${durationStr}, ${
-      prediction.rank.name
-    } will be reached in ${durations.join(' ')}`;
+    descriptionElement.innerText = `At a rate of ${prediction.rate}/${durationStr}, ${prediction.rank.name} will be reached in ${formattedDuration}.`;
   }
+
+  const predictionDate = new Date(
+    prediction && prediction.duration !== Infinity
+      ? Date.now() + prediction.duration * 1000
+      : Date.now(),
+  );
 
   let history = gammaHistory(transcriptions);
 
@@ -92,7 +100,7 @@ export function displayNextRankPrediction(
 
   if (transcriptions.length > 0) {
     const start = history[0].date.valueOf();
-    const end = history[history.length - 1].date.valueOf();
+    const end = predictionDate.valueOf();
     const max = history[history.length - 1].count;
 
     // Add milestone lines
@@ -121,8 +129,23 @@ export function displayNextRankPrediction(
     },
   });
 
+  if (prediction && prediction.duration !== Infinity) {
+    // Add prediction
+    data.push({
+      y: [totalGamma, prediction.rank.lowerBound],
+      x: [Date.now(), predictionDate.valueOf()],
+      type: 'scatter',
+      marker: {
+        color: Colors.primary(),
+      },
+      line: {
+        dash: 'dot',
+      },
+    });
+  }
+
   const layout = fromTemplate(layoutTemplate, {
-    title: 'History (Gamma)',
+    title: `Rank Prediction (${durationStr})`,
     yaxis: {
       title: 'Gamma',
       gridcolor: Colors.grid(),
