@@ -1,5 +1,6 @@
 // Eslint does not recognize the assertions in the help function
 /* eslint-disable jest/expect-expect */
+import Durations from '../../src/durations';
 import { getBetaTesterTag, getCountTag, getTwentyFourTag } from '../../src/stats/tags';
 import { countTags, specialTags, Tag } from '../../src/tags';
 import Transcription from '../../src/transcription';
@@ -8,7 +9,7 @@ import TranscriptionGenerator from '../transcription-generator';
 /** Asserts that the given tag is assigned for the given count. */
 function testCountTag(count: number, expected: Tag) {
   const transcriptions = new TranscriptionGenerator(new Date('2020-11-10'))
-    .addTranscriptions(count, 24 * 60 * 60)
+    .addTranscriptions(count, Durations.day)
     .generate();
   const actual = getCountTag(transcriptions.length);
 
@@ -53,7 +54,7 @@ describe('Tag Stats', () => {
   describe('getTwentyFourTag', () => {
     test('should return tag for 100 transcriptions in 24h', () => {
       const transcriptions = new TranscriptionGenerator(new Date('2020-11-01'))
-        .addTranscriptions(100, 24 * 60 * 60)
+        .addTranscriptions(100, Durations.day)
         .generate();
       const expected = specialTags.twentyFour;
       const actual = getTwentyFourTag(transcriptions);
@@ -63,7 +64,7 @@ describe('Tag Stats', () => {
 
     test('should return null for 50 transcriptions in 24h', () => {
       const transcriptions = new TranscriptionGenerator(new Date('2020-11-01'))
-        .addTranscriptions(50, 24 * 60 * 60)
+        .addTranscriptions(50, Durations.day)
         .generate();
       const expected = null;
       const actual = getTwentyFourTag(transcriptions);
@@ -73,7 +74,7 @@ describe('Tag Stats', () => {
 
     test('should return null for 100 transcriptions in 48h', () => {
       const transcriptions = new TranscriptionGenerator(new Date('2020-11-01'))
-        .addTranscriptions(100, 48 * 60 * 60)
+        .addTranscriptions(100, 48 * Durations.hour)
         .generate();
       const expected = null;
       const actual = getTwentyFourTag(transcriptions);
@@ -113,7 +114,7 @@ describe('Tag Stats', () => {
 
     test('should return tag for transcriptions before and after beta end', () => {
       const transcriptions = new TranscriptionGenerator(new Date('2020-10-01'))
-        .addTranscriptions(1, 2 * 365 * 24 * 60 * 60) // 2 years
+        .addTranscriptions(1, 2 * Durations.year) // 2 years
         .generate();
       const expected = specialTags.betaTester;
       const actual = getBetaTesterTag(transcriptions);

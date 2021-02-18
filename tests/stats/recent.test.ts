@@ -1,3 +1,4 @@
+import Durations from '../../src/durations';
 import { RecentStats, recentGamma } from '../../src/stats/recent';
 import Transcription from '../../src/transcription';
 import { imageMD } from '../transcription-templates';
@@ -7,7 +8,7 @@ describe('Transcription Recent Stats', () => {
   describe('recentGamma', () => {
     test('should return 0 for empty array', () => {
       const transcriptions: Transcription[] = [];
-      const duration = 24 * 60 * 60; // 24h
+      const duration = Durations.day; // 24h
       const actual = recentGamma(transcriptions, duration);
       const expected: RecentStats = {
         score: 0,
@@ -26,7 +27,7 @@ describe('Transcription Recent Stats', () => {
         'r/Old_Recipes',
       );
       const transcriptions: Transcription[] = [transcription];
-      const duration = 24 * 60 * 60; // 24h
+      const duration = Durations.day; // 24h
 
       const actual = recentGamma(transcriptions, duration);
 
@@ -37,7 +38,7 @@ describe('Transcription Recent Stats', () => {
       expect(actual).toEqual(expected);
     });
     test('should include other transcription in timeframe', () => {
-      const duration = 24 * 60 * 60; // 24h
+      const duration = Durations.day; // 24h
       const transcriptions: Transcription[] = [
         new Transcription('a', '', imageMD, '', Date.now() / 1000, 12, 'r/Old_Recipes'),
         new Transcription(
@@ -55,7 +56,7 @@ describe('Transcription Recent Stats', () => {
       expect(actual).toBe(2);
     });
     test('should exclude other transcription outside the timeframe', () => {
-      const duration = 24 * 60 * 60; // 24h
+      const duration = Durations.day; // 24h
       const transcriptions: Transcription[] = [
         new Transcription('a', '', imageMD, '', Date.now() / 1000, 12, 'r/Old_Recipes'),
         new Transcription(

@@ -1,3 +1,4 @@
+import Durations from '../durations';
 import { isToRMod } from '../reddit-api';
 import { CountTag, countTagList, specialTags, Tag } from '../tags';
 import Transcription from '../transcription';
@@ -37,7 +38,7 @@ export async function getModTag(userName: string): Promise<Tag | null> {
  * @param transcriptions The transcriptions to analyze.
  */
 export function getTwentyFourTag(transcriptions: Transcription[]): Tag | null {
-  const dayPeak = gammaPeak(transcriptions, 24 * 60 * 60); // 24h
+  const dayPeak = gammaPeak(transcriptions, Durations.day); // 24h
 
   if (dayPeak.peak >= 100) {
     return specialTags.twentyFour;

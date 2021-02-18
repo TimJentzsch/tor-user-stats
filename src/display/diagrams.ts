@@ -1,5 +1,6 @@
 import Plotly from 'plotly.js-dist';
 import { Comment } from 'snoowrap';
+import Durations from '../durations';
 import { gammaHistory, karmaHistory } from '../stats/history';
 import { gammaPeak } from '../stats/peak';
 import { gammaRate, karmaRate } from '../stats/rate';
@@ -310,14 +311,14 @@ export function gammaHistoryDiagram(
 }
 
 export function gammaRateDiagram(transcriptions: Transcription[]): void {
-  const rate = gammaRate(transcriptions, 24 * 60 * 60); // 24h
+  const rate = gammaRate(transcriptions, Durations.day); // 24h
 
   // Add an up-to date last entry
   if (rate.length > 0) {
     const last = rate[rate.length - 1];
     const lastDate = last.date.valueOf();
-    const nextDay = new Date(lastDate + 24 * 60 * 60 * 1000);
-    const today = new Date(lastDate + Math.floor((Date.now() - lastDate) / (24 * 60 * 60 * 1000)));
+    const nextDay = new Date(lastDate + Durations.day * 1000);
+    const today = new Date(lastDate + Math.floor((Date.now() - lastDate) / (Durations.day * 1000)));
 
     if (nextDay.valueOf() > lastDate) {
       rate.push({
@@ -338,7 +339,7 @@ export function gammaRateDiagram(transcriptions: Transcription[]): void {
   if (transcriptions.length > 0) {
     const start = rate[0].date.valueOf();
     const end = rate[rate.length - 1].date.valueOf();
-    const max = gammaPeak(transcriptions, 24 * 60 * 60).peak; // 24h
+    const max = gammaPeak(transcriptions, Durations.day).peak; // 24h
 
     // Display 100/24h line if close
     if (max >= 75) {
@@ -416,14 +417,14 @@ export function karmaHistoryDiagram(transcriptions: Transcription[]): void {
 }
 
 export function karmaRateDiagram(transcriptions: Transcription[]): void {
-  const rate = karmaRate(transcriptions, 24 * 60 * 60); // 24h
+  const rate = karmaRate(transcriptions, Durations.day); // 24h
 
   // Add an up-to date last entry
   if (rate.length > 0) {
     const last = rate[rate.length - 1];
     const lastDate = last.date.valueOf();
-    const nextDay = new Date(lastDate + 24 * 60 * 60 * 1000);
-    const today = new Date(lastDate + Math.floor((Date.now() - lastDate) / (24 * 60 * 60 * 1000)));
+    const nextDay = new Date(lastDate + Durations.day * 1000);
+    const today = new Date(lastDate + Math.floor((Date.now() - lastDate) / (Durations.day * 1000)));
 
     if (nextDay.valueOf() > lastDate) {
       rate.push({

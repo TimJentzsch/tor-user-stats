@@ -1,3 +1,4 @@
+import Durations from '../src/durations';
 import { gammaAvg } from '../src/stats/avg';
 import Transcription from '../src/transcription';
 import { imageMD } from './transcription-templates';
@@ -6,7 +7,7 @@ describe('Analizer', () => {
   // Transcription average
   describe('gammaAvg', () => {
     test('should return count for larger timeframe', () => {
-      const duration = 60 * 60; // 1h
+      const duration = Durations.hour; // 1h
       const transcriptions: Transcription[] = [
         new Transcription('a', '', imageMD, '', 1923019 + 20, 12, 'r/Old_Recipes'),
         new Transcription('b', '', imageMD, '', 1923019 + 10, 12, 'r/Old_Recipes'),
@@ -17,7 +18,7 @@ describe('Analizer', () => {
       expect(actual).toBe(3);
     });
     test('should return average for smaller timeframe', () => {
-      const duration = 60 * 60; // 1h
+      const duration = Durations.hour; // 1h
       const transcriptions: Transcription[] = [
         new Transcription('a', '', imageMD, '', 1923019 + duration * 3, 12, 'r/Old_Recipes'),
         new Transcription('b', '', imageMD, '', 1923019 + duration * 2, 12, 'r/Old_Recipes'),

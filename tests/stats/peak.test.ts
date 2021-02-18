@@ -1,3 +1,4 @@
+import Durations from '../../src/durations';
 import { gammaPeak, NullPeak, Peak } from '../../src/stats/peak';
 import Transcription from '../../src/transcription';
 import TranscriptionGenerator from '../transcription-generator';
@@ -8,7 +9,7 @@ describe('Transcription Peak', () => {
   describe('gammaPeak', () => {
     test('should return 0 for empty array', () => {
       const transcriptions: Transcription[] = [];
-      const duration = 24 * 60 * 60; // 24h
+      const duration = Durations.day; // 24h
       const actual = gammaPeak(transcriptions, duration);
       const expected: NullPeak = {
         peak: 0,
@@ -20,7 +21,7 @@ describe('Transcription Peak', () => {
       const date = new Date('2020-11-02').valueOf() / 1000;
       const transcription = new Transcription('a', '', imageMD, '', date, 12, 'r/Old_Recipes');
       const transcriptions: Transcription[] = [transcription];
-      const duration = 24 * 60 * 60; // 24h
+      const duration = Durations.day; // 24h
 
       const actual = gammaPeak(transcriptions, duration);
 
@@ -35,7 +36,7 @@ describe('Transcription Peak', () => {
       expect(actual).toEqual(expected);
     });
     test('should include other transcription in timeframe', () => {
-      const duration = 24 * 60 * 60; // 24h
+      const duration = Durations.day; // 24h
       const transcriptions: Transcription[] = [
         new Transcription('a', '', imageMD, '', 1923019 + duration, 12, 'r/Old_Recipes'),
         new Transcription('b', '', imageMD, '', 1923019, 12, 'r/Old_Recipes'),
@@ -45,7 +46,7 @@ describe('Transcription Peak', () => {
       expect(actual).toBe(2);
     });
     test('should exclude other transcription outside the timeframe', () => {
-      const duration = 24 * 60 * 60; // 24h
+      const duration = Durations.day; // 24h
       const transcriptions: Transcription[] = [
         new Transcription('a', '', imageMD, '', 1923019 + duration + 1, 12, 'r/Old_Recipes'),
         new Transcription('b', '', imageMD, '', 1923019, 12, 'r/Old_Recipes'),
@@ -55,7 +56,7 @@ describe('Transcription Peak', () => {
       expect(actual).toBe(1);
     });
     test('should work for longer timeframes with oldest peak', () => {
-      const duration = 24 * 60 * 60; // 24h
+      const duration = Durations.day; // 24h
       const transcriptions = new TranscriptionGenerator(new Date('2020-10-03'))
         // Peak
         .addTranscriptions(100, duration)
@@ -71,7 +72,7 @@ describe('Transcription Peak', () => {
     });
 
     test('should work for longer timeframes with middle peak', () => {
-      const duration = 24 * 60 * 60; // 24h
+      const duration = Durations.day; // 24h
       const transcriptions = new TranscriptionGenerator(new Date('2020-10-03'))
         .addTranscriptions(50, duration)
         .addPause(duration / 2)
@@ -87,7 +88,7 @@ describe('Transcription Peak', () => {
     });
 
     test('should work for longer timeframes with newest peak', () => {
-      const duration = 24 * 60 * 60; // 24h
+      const duration = Durations.day; // 24h
       const transcriptions = new TranscriptionGenerator(new Date('2020-10-03'))
         .addTranscriptions(50, duration)
         .addPause(duration / 2)
