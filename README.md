@@ -27,6 +27,7 @@ https://timjentzsch.github.io/tor-user-stats/user.html
   - Rate diagram by gamma/karma
   - Transcription Hall Of Fame (transcriptions with the most karma)
   - Recent transcription display
+  - Predictions when the next rank will be reached
 
 ### Overlay Generator
 
