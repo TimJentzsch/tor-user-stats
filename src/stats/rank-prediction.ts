@@ -1,6 +1,7 @@
 import { CountTag, countTagList } from '../tags';
 import Transcription from '../transcription';
 import { recentGamma } from './recent';
+import { getCountTag } from './tags';
 
 export type GammaPrediction = {
   /** The targeted gamma. */
@@ -18,14 +19,14 @@ export type GammaPrediction = {
  * @param target The targeted gamma.
  */
 export function predictUntilGamma(
+  totalGamma: number,
   transcriptions: Transcription[],
   duration: number,
   target: number,
 ): GammaPrediction {
-  const curGamma = transcriptions.length;
   const rate = recentGamma(transcriptions, duration).score;
 
-  const gammaToTarget = target - curGamma;
+  const gammaToTarget = target - totalGamma;
   const toTargetDuration = (gammaToTarget / rate) * duration;
 
   return {
@@ -51,11 +52,12 @@ export type RankPrediction = {
  * @param rank The targeted rank.
  */
 export function predictUntilRank(
+  totalGamma: number,
   transcriptions: Transcription[],
   duration: number,
   rank: CountTag,
 ): RankPrediction {
-  const prediction = predictUntilGamma(transcriptions, duration, rank.lowerBound);
+  const prediction = predictUntilGamma(totalGamma, transcriptions, duration, rank.lowerBound);
 
   if (!prediction) {
     return null;
@@ -74,13 +76,13 @@ export function predictUntilRank(
  * @param duration The duration to base the transcription rate on.
  */
 export function predictUntilNextRank(
+  totalGamma: number,
   transcriptions: Transcription[],
   duration: number,
 ): RankPrediction {
-  const curGamma = transcriptions.length;
-
+  const curRank = getCountTag(totalGamma);
   const curRankIndex = countTagList.findIndex((countTag) => {
-    return countTag.upperBound <= curGamma;
+    return countTag.id === curRank.id;
   });
 
   if (curRankIndex === countTagList.length - 1) {
@@ -90,5 +92,5 @@ export function predictUntilNextRank(
 
   const nextRank = countTagList[curRankIndex + 1];
 
-  return predictUntilRank(transcriptions, duration, nextRank);
+  return predictUntilRank(totalGamma, transcriptions, duration, nextRank);
 }
