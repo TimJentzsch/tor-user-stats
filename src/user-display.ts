@@ -22,6 +22,7 @@ import { displayHallOfFame, displayRecent } from './display/hall-of-fame';
 import { displayModTag, displayTags } from './display/tags';
 import { getTranscriptionLength } from './stats/length';
 import { recentGamma, recentKarma } from './stats/recent';
+import { displayNextRankPredictions } from './display/rank-prediction';
 
 function searchUserHeader() {
   const input = document.getElementById('header-user-input') as HTMLInputElement;
@@ -204,6 +205,7 @@ function updateDisplays(
   displayHeatmap(transcriptions);
   displayHallOfFame(transcriptions);
   displayRecent(transcriptions);
+  displayNextRankPredictions(transcriptions, refComment);
 }
 
 async function displayUser() {
