@@ -227,6 +227,11 @@ td {
   justify-content: space-around;
 }
 
+.prediction-description {
+  width: 100%;
+  text-align: center;
+}
+
 /** Transcriptions */
 
 .transcription {
