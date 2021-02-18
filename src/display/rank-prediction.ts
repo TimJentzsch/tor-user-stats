@@ -13,39 +13,26 @@ function getFormattedDuration(duration: number): string {
   const sec = Math.floor(duration);
 
   // Calculate readable duration
-  const years = Math.floor(sec / Durations.year);
-  const days = Math.floor((sec - years * Durations.year) / Durations.day);
-  const hours = Math.floor((sec - years * Durations.year - days * Durations.day) / Durations.hour);
-  const minutes = Math.floor(
-    (sec - years * Durations.year - days * Durations.day - hours * Durations.hour) /
-      Durations.minute,
-  );
-  const seconds =
-    sec -
-    years * Durations.year -
-    days * Durations.day -
-    hours * Durations.hour -
-    minutes * Durations.minute;
+  const years = sec / Durations.year;
+  const days = sec / Durations.day;
+  const hours = sec / Durations.hour;
+  const minutes = sec / Durations.minute;
+  const seconds = sec / Durations.minute;
 
-  const durations = [];
-
-  if (years) {
-    durations.push(`${years} years`);
+  if (Math.floor(years) > 0) {
+    return `${years.toFixed(1)} year(s)`;
   }
-  if (days) {
-    durations.push(`${days} days`);
+  if (Math.floor(days) > 0) {
+    return `${days.toFixed(1)} day(s)`;
   }
-  if (hours) {
-    durations.push(`${hours} hours`);
+  if (Math.floor(hours) > 0) {
+    return `${hours.toFixed(1)} hour(s)`;
   }
-  if (minutes) {
-    durations.push(`${minutes} minutes`);
-  }
-  if (seconds) {
-    durations.push(`${seconds} seconds`);
+  if (Math.floor(minutes) > 0) {
+    return `${minutes.toFixed(1)} minute(s)`;
   }
 
-  return durations.join(' ');
+  return `${seconds.toFixed(1)} second(s)`;
 }
 
 export function displayNextRankPrediction(
@@ -101,11 +88,11 @@ export function displayNextRankPrediction(
   if (transcriptions.length > 0) {
     const start = history[0].date.valueOf();
     const end = predictionDate.valueOf();
-    const max = history[history.length - 1].count;
+    const max = prediction?.rank.lowerBound ?? totalGamma * 1.2;
 
     // Add milestone lines
     countTagList.forEach((tag) => {
-      if (tag.lowerBound <= max * 1.2) {
+      if (tag.lowerBound <= max) {
         data.push({
           y: [tag.lowerBound, tag.lowerBound],
           x: [start, end],
