@@ -55,25 +55,6 @@ h3 {
   font-size: 24px;
 }
 
-#username {
-  color: var(--on-background);
-}
-
-#user-header,
-#tag-container,
-#special-tag-container {
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: flex-start;
-  align-items: baseline;
-  font-size: 14px;
-}
-
-#scribe-count {
-  margin-left: 10px;
-  font-size: 20px;
-}
-
 #search-container {
   margin: 50px 10px;
   display: flex;
@@ -294,55 +275,4 @@ td {
 .heatmap-6 {
   background-color: var(--heatmap-6);
   color: var(--on-primary);
-}
-
-/** Tags */
-
-.tag {
-  margin-left: 10px;
-  padding: 3px 5px;
-  border-radius: 6px;
-
-  color: var(--on-tag);
-}
-
-.visitor {
-  background-color: var(--visitor);
-}
-.initiate {
-  background-color: var(--initiate);
-}
-.green {
-  background-color: var(--green);
-}
-.teal {
-  background-color: var(--teal);
-}
-.purple {
-  background-color: var(--purple);
-}
-.gold {
-  background-color: var(--gold);
-}
-.diamond {
-  background-color: var(--diamond);
-}
-.ruby {
-  background-color: var(--ruby);
-}
-.topaz {
-  background-color: var(--topaz);
-}
-.jade {
-  background-color: var(--jade);
-}
-
-.twenty-four {
-  background-color: var(--twenty-four);
-}
-.beta-tester {
-  background-color: var(--beta-tester);
-}
-.mod {
-  background-color: var(--mod);
 }
