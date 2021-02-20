@@ -1,15 +1,15 @@
-import './Header.module.css';
+import styles from './Header.module.css';
 
 export default function Header() {
   return (
-    <header className="header">
-      <div id="header-content">
-        <a id="header-link" href="index.html">
-          <img id="header-icon" src="../images/favicon.svg" alt="tor-user-stats icon" />
+    <header className={styles.header}>
+      <div className={styles.content}>
+        <a className={styles.link} href="index.html">
+          <img className={styles.icon} src="/favicon.svg" alt="tor-user-stats icon" />
           <h1>tor-user-stats</h1>
         </a>
-        <div id="header-search-container" className="search-container">
-          <form id="header-search-form" className="search-form" onSubmit={() => false}>
+        <div className="search-container">
+          <form className="search-form" onSubmit={() => false}>
             <label htmlFor="header-user-input">/u/</label>
             <input
               id="header-user-input"
@@ -30,7 +30,7 @@ export default function Header() {
           href="https://github.com/TimJentzsch/tor-user-stats"
           title="Check out the project on GitHub"
         >
-          <img width="35px" height="35px" src="../images/github-icon.png" alt="GitHub icon" />
+          <img width="35px" height="35px" src="./github-icon.png" alt="GitHub icon" />
         </a>
       </div>
     </header>

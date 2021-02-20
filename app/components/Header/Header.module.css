@@ -1,4 +1,10 @@
-#header-content {
+.header {
+  background-color: var(--surface);
+  color: var(---primary);
+  text-decoration-color: var(--primary);
+}
+
+.content {
   display: flex;
   flex-flow: row wrap;
   justify-content: space-between;
@@ -6,18 +12,12 @@
   height: 50px;
 }
 
-header.header {
-  background-color: var(--surface);
-  color: var(---primary);
-  text-decoration-color: var(--primary);
-}
-
-#header-icon {
+.icon {
   height: 25px;
   margin-right: 10px;
 }
 
-#header-link {
+.link {
   text-decoration-color: var(--primary);
   display: flex;
   flex-flow: row wrap;
