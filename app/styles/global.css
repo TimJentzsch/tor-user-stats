@@ -1,0 +1,387 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  text-decoration: none;
+  color: var(--on-surface);
+}
+
+a:hover {
+  text-decoration: underline;
+  text-decoration-color: var(--on-surface);
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 14px;
+  background-color: var(--background);
+  color: var(--on-background);
+  display: flex;
+  flex-flow: column;
+}
+
+header,
+footer {
+  flex-grow: 0;
+}
+
+#body-container {
+  flex-grow: 1;
+  width: 100%;
+}
+
+::placeholder {
+  color: var(--on-surface);
+  opacity: 0.2;
+}
+
+#body-container,
+#header-content,
+#footer-content {
+  padding: 10px;
+  margin: auto;
+  max-width: 1100px;
+}
+
+footer {
+  color: var(--on-footer);
+}
+
+#footer-content {
+  display: flex;
+  flex-flow: row;
+  justify-content: space-between;
+}
+
+#footer-disclaimer {
+  flex-basis: 70%;
+  text-align: left;
+}
+
+#footer-copyright {
+  text-align: right;
+}
+
+#footer-content a {
+  color: var(--on-footer);
+  text-decoration: underline;
+}
+
+#footer-content a:hover {
+  color: var(--on-surface);
+  text-decoration: underline;
+}
+
+h1,
+h2,
+h3 {
+  color: var(--primary);
+}
+
+h1 {
+  font-size: 32px;
+}
+
+h2 {
+  font-size: 28px;
+}
+
+h3 {
+  font-size: 24px;
+}
+
+#username {
+  color: var(--on-background);
+}
+
+#user-header,
+#tag-container,
+#special-tag-container {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+  align-items: baseline;
+  font-size: 14px;
+}
+
+#scribe-count {
+  margin-left: 10px;
+  font-size: 20px;
+}
+
+#search-container {
+  margin: 50px 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+}
+
+input,
+button {
+  padding: 5px 7px;
+  border-radius: 3px;
+}
+
+#main-user-input,
+#main-search-button {
+  font-size: 20px;
+}
+
+#analysis-ratio-container {
+  margin: 15px 0;
+}
+
+input, button {
+  background-color: var(--surface);
+  color: var(--on-surface);
+  border: solid 1px var(--primary);
+}
+
+button:hover, input[type="submit"]:hover {
+  background-color: var(--primary);
+  color: var(--on-primary);
+  cursor: pointer;
+}
+
+#progress-bar {
+  width: 100%;
+  height: 4px;
+}
+
+progress {
+  background-color: var(--surface);
+  border: none;
+}
+
+progress::-webkit-progress-bar {
+  background-color: var(--surface);
+}
+
+progress::-moz-progress-bar {
+  background-color: var(--primary);
+}
+
+progress::-webkit-progress-value {
+  background-color: var(--primary);
+}
+
+#user-container {
+  margin: 20px 0px;
+  padding: 8px;
+  background-color: var(--surface);
+}
+
+table {
+  column-gap: 5px;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  text-align: center;
+  padding: 5px 7px;
+}
+
+.right-th {
+  text-align: right;
+}
+
+.stat-container {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+}
+
+.prediction-description {
+  width: 100%;
+  text-align: center;
+}
+
+/** Transcriptions */
+
+.transcription {
+  flex-basis: 40%;
+  flex-grow: 1;
+
+  margin: 5px;
+  border: solid 1px var(--primary);
+  border-radius: 10px;
+
+  max-width: 100%;
+}
+
+.transcription-header {
+  padding: 10px;
+  background-color: var(--surface);
+  height: 30px;
+
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.transcription-disclaimer {
+  text-align: center;
+  margin: 5px 10px;
+  padding: 10px;
+  border-left: solid 2px var(--primary);
+  background-color: var(--disclaimer);
+}
+
+.transcription-content blockquote {
+  margin: 5px;
+  padding: 2px;
+  padding-left: 10px;
+  border-left: solid 2px var(--primary);
+  background-color: var(--disclaimer);
+}
+
+.subreddit {
+  font-size: 20px;
+}
+
+.transcription-content {
+  padding: 10px;
+}
+
+.transcription-content pre {
+  overflow: auto;
+  background-color: var(--surface);
+  padding: 10px;
+  margin: 5px 0;
+  border: none;
+  word-break: normal !important;
+  word-wrap: normal !important;
+  white-space: pre !important;
+}
+
+.transcription-content code {
+  background-color: var(--surface);
+}
+
+.transcription-content pre > code {
+  background-color: transparent !important;
+}
+
+.transcription-content p {
+  margin: 10px 0px;
+}
+
+.transcription-content ol, .transcription-content ul {
+  margin-left: 15px;
+}
+
+.transcription-content h1,
+.transcription-content h2,
+.transcription-content h3 {
+  color: var(--on-surface);
+}
+
+.transcription-content h1 {
+  font-size: 25px;
+}
+.transcription-content h2 {
+  font-size: 22px;
+}
+.transcription-content h3 {
+  font-size: 20px;
+}
+
+.transcription a {
+  text-decoration: underline;
+}
+
+.transcription a:hover {
+  color: var(--primary);
+}
+
+/** Heatmap */
+
+.heatmap-0 {
+  background-color: var(--heatmap-0);
+  color: var(--on-surface);
+}
+.heatmap-1 {
+  background-color: var(--heatmap-1);
+  color: var(--on-surface);
+}
+.heatmap-2 {
+  background-color: var(--heatmap-2);
+  color: var(--on-surface);
+}
+.heatmap-3 {
+  background-color: var(--heatmap-3);
+  color: var(--on-surface);
+}
+.heatmap-4 {
+  background-color: var(--heatmap-4);
+  color: var(--on-surface);
+}
+.heatmap-5 {
+  background-color: var(--heatmap-5);
+  color: var(--on-primary);
+}
+.heatmap-6 {
+  background-color: var(--heatmap-6);
+  color: var(--on-primary);
+}
+
+/** Tags */
+
+.tag {
+  margin-left: 10px;
+  padding: 3px 5px;
+  border-radius: 6px;
+
+  color: var(--on-tag);
+}
+
+.visitor {
+  background-color: var(--visitor);
+}
+.initiate {
+  background-color: var(--initiate);
+}
+.green {
+  background-color: var(--green);
+}
+.teal {
+  background-color: var(--teal);
+}
+.purple {
+  background-color: var(--purple);
+}
+.gold {
+  background-color: var(--gold);
+}
+.diamond {
+  background-color: var(--diamond);
+}
+.ruby {
+  background-color: var(--ruby);
+}
+.topaz {
+  background-color: var(--topaz);
+}
+.jade {
+  background-color: var(--jade);
+}
+
+.twenty-four {
+  background-color: var(--twenty-four);
+}
+.beta-tester {
+  background-color: var(--beta-tester);
+}
+.mod {
+  background-color: var(--mod);
+}

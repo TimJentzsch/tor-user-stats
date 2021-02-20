@@ -30,7 +30,8 @@
       "ignorePackages",
       {
         "js": "never",
-        "ts": "never"
+        "ts": "never",
+        "tsx": "never"
       }
     ],
     // "@typescript-eslint/explicit-function-return-type": "off",
