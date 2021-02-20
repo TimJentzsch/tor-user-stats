@@ -1,0 +1,8 @@
+.content {
+  flex-grow: 1;
+  width: 100%;
+
+  padding: 10px;
+  margin: auto;
+  max-width: var(--content-width);
+}

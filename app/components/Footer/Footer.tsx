@@ -1,5 +1,6 @@
 import styles from './Footer.module.css';
 
+/** The footer of the app. Displays the third-party disclaimer and copyright information. */
 export default function Footer() {
   return (
     <footer className={styles.footer}>

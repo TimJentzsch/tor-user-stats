@@ -14,7 +14,9 @@ a:hover {
 }
 
 html,
-body {
+body,
+#__next,
+#body {
   height: 100%;
 }
 
@@ -23,39 +25,16 @@ body {
   font-size: 14px;
   background-color: var(--background);
   color: var(--on-background);
+}
+
+#body {
   display: flex;
   flex-flow: column;
-}
-
-header,
-footer {
-  flex-grow: 0;
-}
-
-#body-container {
-  flex-grow: 1;
-  width: 100%;
 }
 
 ::placeholder {
   color: var(--on-surface);
   opacity: 0.2;
-}
-
-#body-container {
-  padding: 10px;
-  margin: auto;
-  max-width: var(--content-width);
-}
-
-#footer-content a {
-  color: var(--on-footer);
-  text-decoration: underline;
-}
-
-#footer-content a:hover {
-  color: var(--on-surface);
-  text-decoration: underline;
 }
 
 h1,

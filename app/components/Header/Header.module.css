@@ -1,4 +1,6 @@
 .header {
+  flex-grow: 0;
+
   background-color: var(--surface);
   color: var(---primary);
   text-decoration-color: var(--primary);

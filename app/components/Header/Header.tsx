@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import styles from './Header.module.css';
 
+/** The header of the app. Displays the logo, a link to the repository and offers a quick search. */
 export default function Header() {
   return (
     <header className={styles.header}>

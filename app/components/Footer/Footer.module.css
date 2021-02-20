@@ -1,4 +1,5 @@
 .footer {
+  flex-grow: 0;
   color: var(--on-footer);
 }
 
