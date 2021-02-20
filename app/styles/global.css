@@ -42,30 +42,10 @@ footer {
   opacity: 0.2;
 }
 
-#body-container,
-#footer-content {
+#body-container {
   padding: 10px;
   margin: auto;
   max-width: var(--content-width);
-}
-
-footer {
-  color: var(--on-footer);
-}
-
-#footer-content {
-  display: flex;
-  flex-flow: row;
-  justify-content: space-between;
-}
-
-#footer-disclaimer {
-  flex-basis: 70%;
-  text-align: left;
-}
-
-#footer-copyright {
-  text-align: right;
 }
 
 #footer-content a {
@@ -138,13 +118,15 @@ button {
   margin: 15px 0;
 }
 
-input, button {
+input,
+button {
   background-color: var(--surface);
   color: var(--on-surface);
   border: solid 1px var(--primary);
 }
 
-button:hover, input[type="submit"]:hover {
+button:hover,
+input[type='submit']:hover {
   background-color: var(--primary);
   color: var(--on-primary);
   cursor: pointer;
@@ -275,7 +257,8 @@ td {
   margin: 10px 0px;
 }
 
-.transcription-content ol, .transcription-content ul {
+.transcription-content ol,
+.transcription-content ul {
   margin-left: 15px;
 }
 

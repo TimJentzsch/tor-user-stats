@@ -1,0 +1,32 @@
+.footer {
+  color: var(--on-footer);
+}
+
+.content {
+  display: flex;
+  flex-flow: row;
+  justify-content: space-between;
+
+  padding: 10px;
+  margin: auto;
+  max-width: var(--content-width);
+}
+
+.content a {
+  color: var(--on-footer);
+  text-decoration: underline;
+}
+
+.content a:hover {
+  color: var(--on-surface);
+  text-decoration: underline;
+}
+
+.disclaimer {
+  flex-basis: 70%;
+  text-align: left;
+}
+
+.copyright {
+  text-align: right;
+}
