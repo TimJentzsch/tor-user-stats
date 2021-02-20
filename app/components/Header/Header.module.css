@@ -5,11 +5,15 @@
 }
 
 .content {
+  max-width: var(--content-width);
+  margin: auto;
+  padding: 10px;
+
   display: flex;
   flex-flow: row wrap;
   justify-content: space-between;
   align-items: center;
-  height: 50px;
+  height: 40px;
 }
 
 .icon {

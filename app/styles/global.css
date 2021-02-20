@@ -43,11 +43,10 @@ footer {
 }
 
 #body-container,
-#header-content,
 #footer-content {
   padding: 10px;
   margin: auto;
-  max-width: 1100px;
+  max-width: var(--content-width);
 }
 
 footer {

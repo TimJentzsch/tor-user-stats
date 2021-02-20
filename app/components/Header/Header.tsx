@@ -1,15 +1,25 @@
+import Link from 'next/link';
 import styles from './Header.module.css';
 
 export default function Header() {
   return (
     <header className={styles.header}>
       <div className={styles.content}>
-        <a className={styles.link} href="index.html">
-          <img className={styles.icon} src="/favicon.svg" alt="tor-user-stats icon" />
-          <h1>tor-user-stats</h1>
-        </a>
+        <Link href="/">
+          <a className={styles.link}>
+            <img className={styles.icon} src="/favicon.svg" alt="tor-user-stats icon" />
+            <h1>tor-user-stats</h1>
+          </a>
+        </Link>
         <div className="search-container">
-          <form className="search-form" onSubmit={() => false}>
+          <form
+            className="search-form"
+            onSubmit={(e) => {
+              // Prevent page reloading
+              e.preventDefault();
+              return false;
+            }}
+          >
             <label htmlFor="header-user-input">/u/</label>
             <input
               id="header-user-input"
