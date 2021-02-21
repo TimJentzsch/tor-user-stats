@@ -3,7 +3,7 @@ import Content from '../app/components/Content/Content';
 import Footer from '../app/components/Footer/Footer';
 import Header from '../app/components/Header/Header';
 
-export default function Home() {
+export default function Home(): JSX.Element {
   return (
     <div id="body">
       <Head>

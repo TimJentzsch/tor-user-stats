@@ -5,7 +5,7 @@ interface UserHeaderProps {
 }
 
 /** Displays general info about the user, such as the username, the total gamma and the user tags. */
-export default function UserHeader(props: UserHeaderProps) {
+export default function UserHeader(props: UserHeaderProps): JSX.Element {
   return (
     <div className={styles.header}>
       <a href={`https://www.reddit.com/u/${props.username}`}>

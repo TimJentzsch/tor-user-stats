@@ -2,10 +2,9 @@ import Head from 'next/head';
 import Content from '../app/components/Content/Content';
 import Footer from '../app/components/Footer/Footer';
 import Header from '../app/components/Header/Header';
-import UserHeader from '../app/components/UserHeader/UserHeader';
 import UserStats from '../app/components/UserStats/UserStats';
 
-export default function User() {
+export default function User(): JSX.Element {
   return (
     <div id="body">
       <Head>
