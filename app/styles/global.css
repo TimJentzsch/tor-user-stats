@@ -114,12 +114,6 @@ progress::-webkit-progress-value {
   background-color: var(--primary);
 }
 
-#user-container {
-  margin: 20px 0px;
-  padding: 8px;
-  background-color: var(--surface);
-}
-
 table {
   column-gap: 5px;
   border-collapse: collapse;
