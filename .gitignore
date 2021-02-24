@@ -5,5 +5,9 @@ out
 coverage
 dist-web
 dist-cli
+
 config/*config.json
 !config/*.example.config.json
+
+public/config/*config.json
+!public/config/*.example.config.json
