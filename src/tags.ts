@@ -82,8 +82,11 @@ const ruby = new CountTag('Ruby', 2500, 4999);
 /** Topaz, 5000-9999. */
 const topaz = new CountTag('Topaz', 5000, 9999);
 
-/** Jade, 10000+. */
-const jade = new CountTag('Jade', 10000, Infinity);
+/** Jade, 10000-24999. */
+const jade = new CountTag('Jade', 10000, 24999);
+
+/** Sapphire, 25000+. Note: Inofficial, fake rank. */
+const sapphire = new CountTag('Sapphire', 25000, Infinity);
 
 /** Tags for the transcription count. */
 export const countTags = {
@@ -97,6 +100,7 @@ export const countTags = {
   ruby,
   topaz,
   jade,
+  sapphire,
 };
 
 /** Tags for the transcription count. */
@@ -111,6 +115,7 @@ export const countTagList = [
   ruby,
   topaz,
   jade,
+  sapphire,
 ];
 
 /** All available tags. */
