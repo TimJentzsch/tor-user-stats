@@ -108,7 +108,6 @@ export default class Transcription {
     // Has the transcription been posted to a test subreddit?
     const isTest = ['r/TranscribersOfReddit', 'r/kierra'].includes(comment.subreddit_name_prefixed);
     // Is the transcription formatted correctly?
-    console.debug(`---\n${comment.body}\n---`);
     const hasFormat = transcriptionRegex.test(comment.body);
 
     return !isTest && hasFormat;
