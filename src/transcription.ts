@@ -6,7 +6,7 @@ import RComment from './comment';
  * - format: The format of the transcription, e.g. 'Image' or 'Video'.
  * - type: The type of the transcription, e.g. 'Twitter Post'.
  */
-const headerRegex = /^\s*(\*?(.+?)\s+Transcription:?\*?\s*(.*?)\*?\s*(?:-\s*){3,})\s*/;
+const headerRegex = /^\s*(\*?(.+?)\s+Transcription:?\*?\s*(.*?)\*?\s*\n(?:-\s*){3,})\s*/;
 /**
  * Regular expression to recognize transcriptions. Groups:
  * - content: The transcription content.
@@ -17,7 +17,7 @@ const contentRegex = /(.*?)/;
  * - footer: The footer of the transcription.
  */
 // Note: There are two types of footers, one has an extra '&#32;'. Both have to be recognized.
-const footerRegex = /\s*(?:-\s*){3,}(\^?\^?I'm&#32;a&#32;human&#32;volunteer&#32;content&#32;transcriber&#32;for&#32;Reddit&#32;and&#32;you&#32;could&#32;be&#32;too!&#32;\[If&#32;(&#32;)?you'd&#32;like&#32;more&#32;information&#32;on&#32;what&#32;we&#32;do&#32;and&#32;why&#32;we&#32;do&#32;it,&#32;click&#32;here!\]\(https:\/\/www\.reddit\.com\/r\/TranscribersOfReddit\/wiki\/index\))\s*$/;
+const footerRegex = /\s*\n(?:-\s*){3,}(\^?\^?I'm&#32;a&#32;human&#32;volunteer&#32;content&#32;transcriber&#32;for&#32;Reddit&#32;and&#32;you&#32;could&#32;be&#32;too!&#32;\[If&#32;(&#32;)?you'd&#32;like&#32;more&#32;information&#32;on&#32;what&#32;we&#32;do&#32;and&#32;why&#32;we&#32;do&#32;it,&#32;click&#32;here!\]\(https:\/\/www\.reddit\.com\/r\/TranscribersOfReddit\/wiki\/index\))\s*$/;
 /**
  * Regular expression to recognize transcriptions. Groups:
  * - header: The header of the transcription.
@@ -108,6 +108,7 @@ export default class Transcription {
     // Has the transcription been posted to a test subreddit?
     const isTest = ['r/TranscribersOfReddit', 'r/kierra'].includes(comment.subreddit_name_prefixed);
     // Is the transcription formatted correctly?
+    console.debug(`---\n${comment.body}\n---`);
     const hasFormat = transcriptionRegex.test(comment.body);
 
     return !isTest && hasFormat;
