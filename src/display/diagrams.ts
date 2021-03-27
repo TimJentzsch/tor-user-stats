@@ -318,9 +318,12 @@ export function gammaRateDiagram(transcriptions: Transcription[]): void {
     const last = rate[rate.length - 1];
     const lastDate = last.date.valueOf();
     const nextDay = new Date(lastDate + Durations.day * 1000);
-    const today = new Date(lastDate + Math.floor((Date.now() - lastDate) / (Durations.day * 1000)));
+    const today = new Date(
+      lastDate +
+        Math.floor((Date.now() - lastDate) / (Durations.day * 1000)) * Durations.day * 1000,
+    );
 
-    if (nextDay.valueOf() > lastDate) {
+    if (nextDay.valueOf() < Date.now()) {
       rate.push({
         rate: 0,
         date: nextDay,
@@ -424,9 +427,12 @@ export function karmaRateDiagram(transcriptions: Transcription[]): void {
     const last = rate[rate.length - 1];
     const lastDate = last.date.valueOf();
     const nextDay = new Date(lastDate + Durations.day * 1000);
-    const today = new Date(lastDate + Math.floor((Date.now() - lastDate) / (Durations.day * 1000)));
+    const today = new Date(
+      lastDate +
+        Math.floor((Date.now() - lastDate) / (Durations.day * 1000)) * Durations.day * 1000,
+    );
 
-    if (nextDay.valueOf() > lastDate) {
+    if (nextDay.valueOf() < Date.now()) {
       rate.push({
         rate: 0,
         date: nextDay,
