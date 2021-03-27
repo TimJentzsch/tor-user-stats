@@ -34,7 +34,7 @@ export function formatGammaDiagram(transcriptions: Transcription[]): void {
       textposition: 'outside',
       automargin: true,
       marker: {
-        colors: repeat([Colors.primary(), Colors.primaryVariant()], formatStats.length),
+        colors: repeat(Colors.heatmap().reverse(), formatStats.length),
       },
     },
   ];
@@ -107,7 +107,7 @@ export function formatKarmaDiagram(transcriptions: Transcription[]): void {
       textposition: 'outside',
       automargin: true,
       marker: {
-        colors: repeat([Colors.primary(), Colors.primaryVariant()], formatStats.length),
+        colors: repeat(Colors.heatmap().reverse(), formatStats.length),
       },
     },
   ];

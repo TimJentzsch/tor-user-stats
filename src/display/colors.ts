@@ -50,4 +50,11 @@ export default class Colors {
   static grid(): string {
     return getVariable('grid');
   }
+
+  /** The colors for the heatmap. */
+  static heatmap(): string[] {
+    return [1, 2, 3, 4, 5, 6].map((num) => {
+      return getVariable(`heatmap-${num}`);
+    });
+  }
 }
