@@ -60,12 +60,7 @@ export function displayHeatmap(transcriptions: Transcription[]): void {
       const entries = data[d][h].entries !== 0 ? data[d][h].entries.toString() : '';
       const level = Math.ceil(data[d][h].heat * HEATMAP_LEVELS);
 
-      // Wrap the index around, so that Monday is 0 and Sunday is 6
-      let dID = d + 1;
-      if (dID >= 7) {
-        dID -= 7;
-      }
-      const id = `heatmap-d${dID}-h${h}`;
+      const id = `heatmap-d${d}-h${h}`;
       updateElement(id, entries);
 
       const td = document.getElementById(id);

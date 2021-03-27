@@ -31,7 +31,7 @@ describe('Heatmap', () => {
       expect(expected).toEqual(actual);
     });
 
-    test('should generate entry for single transcription', () => {
+    test('should generate entry for single transcription for Tue 13h', () => {
       // Tuesday, 13 h
       const date = new Date('2020-12-01T13:00:00Z');
       const transcriptions: Transcription[] = [
@@ -40,7 +40,22 @@ describe('Heatmap', () => {
       const actual = heatmap(transcriptions);
 
       const expected = fromTemplate(initHeatmap(), {
-        2: { 13: { entries: 1, heat: 1 } },
+        1: { 13: { entries: 1, heat: 1 } },
+      });
+
+      expect(actual).toEqual(expected);
+    });
+
+    test('should generate entry for single transcription for Fri 17h', () => {
+      // Friday, 17:30 h
+      const date = new Date('2021-03-26T17:30:00Z');
+      const transcriptions: Transcription[] = [
+        new Transcription('1', '', imageMD, '', date.valueOf() / 1000, 1, 'r/Old_Recipes'),
+      ];
+      const actual = heatmap(transcriptions);
+
+      const expected = fromTemplate(initHeatmap(), {
+        4: { 17: { entries: 1, heat: 1 } },
       });
 
       expect(actual).toEqual(expected);
