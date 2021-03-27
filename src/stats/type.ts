@@ -15,13 +15,7 @@ export function formatGamma(transcriptions: Transcription[]): FormatGammaStats[]
   const formatStats: FormatGammaStats[] = [];
 
   transcriptions.forEach((transcription) => {
-    let format = transcription.format;
-
-    if (format.includes('Image')) {
-      format = 'Image';
-    } else if (format.includes('Video')) {
-      format = 'Video';
-    }
+    const format = transcription.format;
 
     const stats = formatStats.find((stat) => {
       return stat.format === format;
@@ -58,22 +52,9 @@ export function typeGamma(transcriptions: Transcription[]): TypeGammaStats[] {
   const typeStats: TypeGammaStats[] = [];
 
   transcriptions.forEach((transcription) => {
-    let type = transcription.type;
+    const type = transcription.type;
 
     if (type) {
-      // Simplify some common types
-      if (type.includes('Twitter')) {
-        type = 'Twitter';
-      } else if (type.includes('Facebook')) {
-        type = 'Facebook';
-      } else if (type.includes('Tumblr')) {
-        type = 'Tumblr';
-      } else if (type.includes('Reddit')) {
-        type = 'Reddit';
-      } else if (type.includes('Text Message')) {
-        type = 'Chat';
-      }
-
       const stats = typeStats.find((stat) => {
         return stat.type === type;
       });
@@ -110,13 +91,7 @@ export function formatKarma(transcriptions: Transcription[]): FormatKarmaStats[]
   const formatStats: FormatKarmaStats[] = [];
 
   transcriptions.forEach((transcription) => {
-    let format = transcription.format;
-
-    if (format.includes('Image')) {
-      format = 'Image';
-    } else if (format.includes('Video')) {
-      format = 'Video';
-    }
+    const format = transcription.format;
 
     const stats = formatStats.find((stat) => {
       return stat.format === format;
@@ -153,22 +128,9 @@ export function typeKarma(transcriptions: Transcription[]): TypeKarmaStats[] {
   const typeStats: TypeKarmaStats[] = [];
 
   transcriptions.forEach((transcription) => {
-    let type = transcription.type;
+    const type = transcription.type;
 
     if (type) {
-      // Simplify some common types
-      if (type.includes('Twitter')) {
-        type = 'Twitter';
-      } else if (type.includes('Facebook')) {
-        type = 'Facebook';
-      } else if (type.includes('Tumblr')) {
-        type = 'Tumblr';
-      } else if (type.includes('Reddit')) {
-        type = 'Reddit';
-      } else if (type.includes('Text Message')) {
-        type = 'Chat';
-      }
-
       const stats = typeStats.find((stat) => {
         return stat.type === type;
       });
