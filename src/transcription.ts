@@ -18,6 +18,10 @@ const contentRegex = /(.*?)/;
  */
 // Note: There are three types of footers, one doesn't have the human part, the other has an extra '&#32;'. All have to be recognized.
 const footerRegex = /\s*\n(?:-\s*){3,}(\^?\^?I'm&#32;a&#32;(human&#32;)?volunteer&#32;content&#32;transcriber&#32;for&#32;Reddit&#32;and&#32;you&#32;could&#32;be&#32;too!&#32;\[If&#32;(&#32;)?you'd&#32;like&#32;more&#32;information&#32;on&#32;what&#32;we&#32;do&#32;and&#32;why&#32;we&#32;do&#32;it,&#32;click&#32;here!\]\(https:\/\/www\.reddit\.com\/r\/TranscribersOfReddit\/wiki\/index\))\s*$/;
+
+/** A more relaxed version of the footer for April 1st. */
+const apr1FooterRegex = /\s*\n(?:-\s*){3,}.*?https:\/\/www\.reddit\.com\/r\/TranscribersOfReddit\/wiki\/index.*?$/;
+
 /**
  * Regular expression to recognize transcriptions. Groups:
  * - header: The header of the transcription.
@@ -28,6 +32,13 @@ const footerRegex = /\s*\n(?:-\s*){3,}(\^?\^?I'm&#32;a&#32;(human&#32;)?voluntee
  */
 const transcriptionRegex = new RegExp(
   headerRegex.source + contentRegex.source + footerRegex.source,
+  // Multiline, allow '.' to match newline characters and be case-insensitive
+  'msi',
+);
+
+/** Relaxed version for April 1st. */
+const apr1TranscriptonRegex = new RegExp(
+  headerRegex.source + contentRegex.source + apr1FooterRegex.source,
   // Multiline, allow '.' to match newline characters and be case-insensitive
   'msi',
 );
@@ -107,9 +118,22 @@ export default class Transcription {
   static isTranscription(comment: RComment): boolean {
     // Has the transcription been posted to a test subreddit?
     const isTest = ['r/TranscribersOfReddit', 'r/kierra'].includes(comment.subreddit_name_prefixed);
-    // Is the transcription formatted correctly?
-    const hasFormat = transcriptionRegex.test(comment.body);
 
-    return !isTest && hasFormat;
+    if (isTest) {
+      return false;
+    }
+
+    const date = new Date(comment.created_utc * 1000);
+    const month = date.getUTCMonth() + 1; // This is zero-indexed
+    const day = date.getUTCDate(); // This is one-indexed
+
+    // Check for April 1st (with buffer of a day to account for timezones)
+    if ((month === 4 && day <= 2) || (month === 3 && day === 31)) {
+      // Is the transcription formatted correctly (relaxed version)?
+      return apr1TranscriptonRegex.test(comment.body);
+    }
+
+    // Is the transcription formatted correctly?
+    return transcriptionRegex.test(comment.body);
   }
 }
