@@ -89,10 +89,42 @@ export default class Transcription {
     }
 
     this.headerMD = match[1];
-    this.format = match[2];
-    this.type = match[3];
     this.contentMD = match[4];
     this.footerMD = match[5];
+
+    let format = match[2];
+    let type = match[3];
+
+    // Simplify format
+    if (/image/i.test(format)) {
+      format = 'Image';
+    } else if (/video/i.test(format)) {
+      format = 'Video';
+    } else if (/gif/i.test(format) || /gif/i.test(type)) {
+      format = 'GIF';
+    }
+
+    // Simplify some common types
+    if (/twitter/i.test(type)) {
+      type = 'Twitter';
+    } else if (/facebook/i.test(type)) {
+      type = 'Facebook';
+    } else if (/tumblr/i.test(type)) {
+      type = 'Tumblr';
+    } else if (/reddit/i.test(type)) {
+      type = 'Reddit';
+    } else if (/greentext|4chan/i.test(type)) {
+      type = 'Greentext';
+    } else if (/youtube/i.test(type)) {
+      type = 'YouTube';
+    } else if (/message|discord|chat/i.test(type)) {
+      type = 'Chat';
+    } else if (!type) {
+      type = format;
+    }
+
+    this.format = format;
+    this.type = type;
   }
 
   /**
