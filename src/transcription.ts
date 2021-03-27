@@ -16,8 +16,8 @@ const contentRegex = /(.*?)/;
  * Regular expression to recognize transcription footers. Groups:
  * - footer: The footer of the transcription.
  */
-// Note: There are two types of footers, one has an extra '&#32;'. Both have to be recognized.
-const footerRegex = /\s*\n(?:-\s*){3,}(\^?\^?I'm&#32;a&#32;human&#32;volunteer&#32;content&#32;transcriber&#32;for&#32;Reddit&#32;and&#32;you&#32;could&#32;be&#32;too!&#32;\[If&#32;(&#32;)?you'd&#32;like&#32;more&#32;information&#32;on&#32;what&#32;we&#32;do&#32;and&#32;why&#32;we&#32;do&#32;it,&#32;click&#32;here!\]\(https:\/\/www\.reddit\.com\/r\/TranscribersOfReddit\/wiki\/index\))\s*$/;
+// Note: There are three types of footers, one doesn't have the human part, the other has an extra '&#32;'. All have to be recognized.
+const footerRegex = /\s*\n(?:-\s*){3,}(\^?\^?I'm&#32;a&#32;(human&#32;)?volunteer&#32;content&#32;transcriber&#32;for&#32;Reddit&#32;and&#32;you&#32;could&#32;be&#32;too!&#32;\[If&#32;(&#32;)?you'd&#32;like&#32;more&#32;information&#32;on&#32;what&#32;we&#32;do&#32;and&#32;why&#32;we&#32;do&#32;it,&#32;click&#32;here!\]\(https:\/\/www\.reddit\.com\/r\/TranscribersOfReddit\/wiki\/index\))\s*$/;
 /**
  * Regular expression to recognize transcriptions. Groups:
  * - header: The header of the transcription.

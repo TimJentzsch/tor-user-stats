@@ -1,6 +1,6 @@
 import RComment from '../src/comment';
 import Transcription from '../src/transcription';
-import { imageMD } from './transcription-templates';
+import { imageMD, imageMDBugged, imageMDOld } from './transcription-templates';
 
 describe('Transcription', () => {
   describe('isTranscription', () => {
@@ -64,6 +64,51 @@ describe('Transcription', () => {
       const actual = Transcription.isTranscription(comment);
 
       expect(actual).toBe(false);
+    });
+    test('should accept post with standard footer', () => {
+      const comment: RComment = {
+        id: '1',
+        permalink: '',
+        body: imageMD,
+        body_html: '',
+        created_utc: new Date('2020-12-01').valueOf(),
+        score: 1,
+        subreddit_name_prefixed: 'r/CuratedTumblr',
+      };
+
+      const actual = Transcription.isTranscription(comment);
+
+      expect(actual).toBe(true);
+    });
+    test('should accept post with old footer', () => {
+      const comment: RComment = {
+        id: '1',
+        permalink: '',
+        body: imageMDOld,
+        body_html: '',
+        created_utc: new Date('2020-12-01').valueOf(),
+        score: 1,
+        subreddit_name_prefixed: 'r/CuratedTumblr',
+      };
+
+      const actual = Transcription.isTranscription(comment);
+
+      expect(actual).toBe(true);
+    });
+    test('should accept post with bugged footer', () => {
+      const comment: RComment = {
+        id: '1',
+        permalink: '',
+        body: imageMDBugged,
+        body_html: '',
+        created_utc: new Date('2020-12-01').valueOf(),
+        score: 1,
+        subreddit_name_prefixed: 'r/CuratedTumblr',
+      };
+
+      const actual = Transcription.isTranscription(comment);
+
+      expect(actual).toBe(true);
     });
   });
 });
