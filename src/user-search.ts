@@ -1,4 +1,5 @@
-function searchUserMain() {
+// eslint-disable-next-line import/prefer-default-export
+export function searchUserMain(): void {
   const input = document.getElementById('main-user-input') as HTMLInputElement;
   const userName = input.value;
 

@@ -3,6 +3,7 @@ import appData from './app-data';
 import Logger from './logger';
 import config from '../config/reddit.config.json';
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const logger = new Logger('Reddit');
 
 /** The config for the reddit API. */
