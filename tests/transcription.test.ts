@@ -1,6 +1,6 @@
 import RComment from '../src/comment';
 import Transcription from '../src/transcription';
-import { imageMD, imageMDBugged, imageMDOld } from './transcription-templates';
+import { imageMD, imageMDApr1, imageMDBugged, imageMDOld } from './transcription-templates';
 
 describe('Transcription', () => {
   describe('isTranscription', () => {
@@ -10,7 +10,7 @@ describe('Transcription', () => {
         permalink: '',
         body: imageMD,
         body_html: '',
-        created_utc: new Date('2020-12-01').valueOf(),
+        created_utc: new Date('2020-12-01').valueOf() / 1000,
         score: 1,
         subreddit_name_prefixed: 'r/TranscribersOfReddit',
       };
@@ -25,7 +25,7 @@ describe('Transcription', () => {
         permalink: '',
         body: imageMD,
         body_html: '',
-        created_utc: new Date('2020-12-01').valueOf(),
+        created_utc: new Date('2020-12-01').valueOf() / 1000,
         score: 1,
         subreddit_name_prefixed: 'r/kierra',
       };
@@ -56,7 +56,7 @@ describe('Transcription', () => {
         
         Cheers and welcome to the crew!`,
         body_html: '',
-        created_utc: new Date('2020-12-01').valueOf(),
+        created_utc: new Date('2020-12-01').valueOf() / 1000,
         score: 1,
         subreddit_name_prefixed: 'r/TranscribersOfReddit',
       };
@@ -71,7 +71,7 @@ describe('Transcription', () => {
         permalink: '',
         body: imageMD,
         body_html: '',
-        created_utc: new Date('2020-12-01').valueOf(),
+        created_utc: new Date('2020-12-01').valueOf() / 1000,
         score: 1,
         subreddit_name_prefixed: 'r/CuratedTumblr',
       };
@@ -86,7 +86,7 @@ describe('Transcription', () => {
         permalink: '',
         body: imageMDOld,
         body_html: '',
-        created_utc: new Date('2020-12-01').valueOf(),
+        created_utc: new Date('2020-12-01').valueOf() / 1000,
         score: 1,
         subreddit_name_prefixed: 'r/CuratedTumblr',
       };
@@ -101,7 +101,37 @@ describe('Transcription', () => {
         permalink: '',
         body: imageMDBugged,
         body_html: '',
-        created_utc: new Date('2020-12-01').valueOf(),
+        created_utc: new Date('2020-12-01').valueOf() / 1000,
+        score: 1,
+        subreddit_name_prefixed: 'r/CuratedTumblr',
+      };
+
+      const actual = Transcription.isTranscription(comment);
+
+      expect(actual).toBe(true);
+    });
+    test('should reject post with relaxed footer', () => {
+      const comment: RComment = {
+        id: '1',
+        permalink: '',
+        body: imageMDApr1,
+        body_html: '',
+        created_utc: new Date('2020-12-01').valueOf() / 1000,
+        score: 1,
+        subreddit_name_prefixed: 'r/CuratedTumblr',
+      };
+
+      const actual = Transcription.isTranscription(comment);
+
+      expect(actual).toBe(false);
+    });
+    test('should accept post with relaxed footer on April 1st', () => {
+      const comment: RComment = {
+        id: '1',
+        permalink: '',
+        body: imageMDApr1,
+        body_html: '',
+        created_utc: new Date('2020-04-01').valueOf() / 1000,
         score: 1,
         subreddit_name_prefixed: 'r/CuratedTumblr',
       };
