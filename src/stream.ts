@@ -1,4 +1,4 @@
-function getQueryString(params: Record<string, string>) {
+export function getQueryString(params: Record<string, string>): string {
   const ret = [];
 
   for (const key of Object.keys(params)) {
@@ -10,7 +10,7 @@ function getQueryString(params: Record<string, string>) {
   return ret.join('&');
 }
 
-function getBaseUrl(): string {
+export function getBaseUrl(): string {
   // Remove query parameters
   const url = window.location.href.split('?')[0];
   // Move up one
@@ -20,7 +20,12 @@ function getBaseUrl(): string {
   return `${baseURL}/overlay.html`;
 }
 
-function updateOverlayLink(userName: string, sessionStart: string, hAlign: string, vAlign: string) {
+export function updateOverlayLink(
+  userName: string,
+  sessionStart: string,
+  hAlign: string,
+  vAlign: string,
+): void {
   const baseURL = getBaseUrl();
   const overlayLinkInput = document.getElementById('overlay-link') as HTMLInputElement;
 

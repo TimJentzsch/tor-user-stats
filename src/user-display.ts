@@ -61,11 +61,12 @@ async function getTranscriptions(
     refComment: Comment | undefined,
   ) => void,
 ): Promise<Transcription[]> {
+  // eslint-disable-next-line no-console
   console.debug(`Starting analysis for /u/${userName}:`);
 
   let allCount = 0;
-  let commentCount = 0;
-  let transcriptionCount = 0;
+  // let commentCount = 0;
+  // let transcriptionCount = 0;
   let refComment: Comment | undefined;
 
   let transcriptions: Transcription[] = [];
@@ -82,6 +83,7 @@ async function getTranscriptions(
 
     const count = `${newComments.length}`.padStart(3);
 
+    // eslint-disable-next-line no-console
     console.debug(`Fetched ${count} comments, from ${endDate} to ${startDate}`);
     allCount += newComments.length;
 
@@ -93,12 +95,12 @@ async function getTranscriptions(
     }
 
     const newValidComments = newComments.filter((comment) => isComment(comment));
-    commentCount += newValidComments.length;
+    // commentCount += newValidComments.length;
 
     const newTranscriptions = newValidComments
       .filter((comment) => Transcription.isTranscription(comment))
       .map((comment) => Transcription.fromComment(comment));
-    transcriptionCount += newTranscriptions.length;
+    // transcriptionCount += newTranscriptions.length;
 
     transcriptions = transcriptions.concat(newTranscriptions);
 
