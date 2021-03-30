@@ -8,13 +8,16 @@ import UserHeader from '../UserHeader/UserHeader';
 import styles from './UserStats.module.css';
 
 async function getTranscriptions(
-  userName: string,
+  userName: string | undefined,
   callback: (
     transcriptions: Transcription[],
     allCount: number,
     refComment: Comment | undefined,
   ) => void,
 ): Promise<Transcription[]> {
+  if (userName === undefined) {
+    return [];
+  }
   console.debug(`Starting analysis for /u/${userName}:`);
 
   let allCount = 0;
@@ -66,7 +69,7 @@ async function getTranscriptions(
 interface UserStatsProps {}
 
 interface UserStatsState {
-  userName: string;
+  userName?: string;
   transcriptions: Transcription[];
 }
 
@@ -84,7 +87,7 @@ export default class UserStats extends React.Component<UserStatsProps, UserStats
   render(): JSX.Element {
     return (
       <div>
-        <UserHeader username={this.state.userName} />
+        <UserHeader username={this.state.userName as string} />
         <div className={styles.userStats}>
           <GammaTable />
         </div>
@@ -95,7 +98,7 @@ export default class UserStats extends React.Component<UserStatsProps, UserStats
   async componentDidMount(): Promise<void> {
     // Extract the username from the URL
     const queryParams = new URLSearchParams(window.location.search);
-    const userName = queryParams.get('user');
+    const userName = queryParams.get('user') ?? undefined;
 
     this.setState((state) => {
       return {

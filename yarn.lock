@@ -1359,6 +1359,14 @@
   resolved "https://registry.yarnpkg.com/@types/json5/-/json5-0.0.29.tgz#ee28707ae94e11d2b827bcbe5270bcea7f3e71ee"
   integrity sha1-7ihweulOEdK4J7y+UnC86n8+ce4=
 
+"@types/node-fetch@2.5.8":
+  version "2.5.8"
+  resolved "https://registry.yarnpkg.com/@types/node-fetch/-/node-fetch-2.5.8.tgz#e199c835d234c7eb0846f6618012e558544ee2fb"
+  integrity sha512-fbjI6ja0N5ZA8TV53RUqzsKNkl9fv8Oj3T7zxW7FGv1GSH7gwJaNF8dzCjrqKaxKeUpTz4yT1DaJFq/omNpGfw==
+  dependencies:
+    "@types/node" "*"
+    form-data "^3.0.0"
+
 "@types/node@*":
   version "14.14.10"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-14.14.10.tgz#5958a82e41863cfc71f2307b3748e3491ba03785"
@@ -1379,7 +1387,7 @@
   resolved "https://registry.yarnpkg.com/@types/parse-json/-/parse-json-4.0.0.tgz#2f8bb441434d163b35fb8ffdccd7138927ffb8c0"
   integrity sha512-//oorEZjL6sbPcKUaCdIGlIUeH26mgzimjBB77G6XRgnDl/L5wOnpyBGRe/Mmf5CVW3PwEBE1NjiMZ/ssFh4wA==
 
-"@types/plotly.js@^1.54.2":
+"@types/plotly.js@1.54.2":
   version "1.54.2"
   resolved "https://registry.yarnpkg.com/@types/plotly.js/-/plotly.js-1.54.2.tgz#8e5916c83bd07b01fed7f404c3e460ee8197968a"
   integrity sha512-p05hxJSlPLYEPsPW1NuQs1v+oM7pit3xMyo/L/iAr+xAH7bc035rTGFheCiYhx/d+kfCp1jrdJe52XPwei1m6g==
@@ -2627,7 +2635,7 @@ colorspace@1.1.x:
     color "3.0.x"
     text-hex "1.0.x"
 
-combined-stream@^1.0.6, combined-stream@~1.0.6:
+combined-stream@^1.0.6, combined-stream@^1.0.8, combined-stream@~1.0.6:
   version "1.0.8"
   resolved "https://registry.yarnpkg.com/combined-stream/-/combined-stream-1.0.8.tgz#c3d45a8b34fd730631a110a8a2520682b31d5a7f"
   integrity sha512-FQN4MRfuJeHf7cBbBMJFXhKSDq+2kAArBlmRBvcvFE5BB1HZKXtSFASDhdlz9zOYwxh8lDdnvmMOe/+5cdoEdg==
@@ -4068,6 +4076,15 @@ forever-agent@~0.6.1:
   version "0.6.1"
   resolved "https://registry.yarnpkg.com/forever-agent/-/forever-agent-0.6.1.tgz#fbc71f0c41adeb37f96c577ad1ed42d8fdacca91"
   integrity sha1-+8cfDEGt6zf5bFd60e1C2P2sypE=
+
+form-data@^3.0.0:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/form-data/-/form-data-3.0.1.tgz#ebd53791b78356a99af9a300d4282c4d5eb9755f"
+  integrity sha512-RHkBKtLWUVwd7SqRIvCZMEvAMoGUp0XU+seQiZejj0COz3RI3hWP4sCv3gZWWLjJTd7rGwcsF5eKZGii0r/hbg==
+  dependencies:
+    asynckit "^0.4.0"
+    combined-stream "^1.0.8"
+    mime-types "^2.1.12"
 
 form-data@~2.3.2:
   version "2.3.3"
@@ -6705,7 +6722,7 @@ please-upgrade-node@^3.2.0:
   dependencies:
     semver-compare "^1.0.0"
 
-plotly.js-dist@^1.57.1:
+plotly.js-dist@1.57.1:
   version "1.57.1"
   resolved "https://registry.yarnpkg.com/plotly.js-dist/-/plotly.js-dist-1.57.1.tgz#5d9fa751af6416255975b65af565344a1a3beac5"
   integrity sha512-tOOFxNc6PvdDkOUgWCSYc+CcxQULTpaGTROxrtmmF8NuZghcT3EInsToEzhPH3PcGM6bu61fKo73ZiFqxwYtlg==
@@ -7561,7 +7578,7 @@ request-promise-native@^1.0.5, request-promise-native@^1.0.8:
     stealthy-require "^1.1.1"
     tough-cookie "^2.3.3"
 
-request-promise@^4.2.2:
+request-promise@^4.2.6:
   version "4.2.6"
   resolved "https://registry.yarnpkg.com/request-promise/-/request-promise-4.2.6.tgz#7e7e5b9578630e6f598e3813c0f8eb342a27f0a2"
   integrity sha512-HCHI3DJJUakkOr8fNoCc73E5nU5bqITjOYFMDrKHYOXWXrgD/SBaC7LjwuPymUprRyuF06UK7hd/lMHkmUXglQ==
@@ -7571,7 +7588,7 @@ request-promise@^4.2.2:
     stealthy-require "^1.1.1"
     tough-cookie "^2.3.3"
 
-request@^2.87.0, request@^2.88.0, request@^2.88.2:
+request@^2.88.0, request@^2.88.2:
   version "2.88.2"
   resolved "https://registry.yarnpkg.com/request/-/request-2.88.2.tgz#d73c918731cb5a87da047e207234146f664d12b3"
   integrity sha512-MsvtOrfG9ZcrOwAW+Qi+F6HbD0CWXEh9ou77uOb7FM2WPhwT7smM833PzanhJLsgXjN89Ir6V2PczXNnMpwKhw==
@@ -8009,16 +8026,16 @@ snapdragon@^0.8.1:
     source-map-resolve "^0.5.0"
     use "^3.1.0"
 
-snoowrap@1.21.0:
-  version "1.21.0"
-  resolved "https://registry.yarnpkg.com/snoowrap/-/snoowrap-1.21.0.tgz#559d30a11152860d3a4322f113963308c62df969"
-  integrity sha512-vSQlfm0ikek6mezBhTGtYw0vk4hdpgIrtm2o4kZPDzg0HVs4b/Kw7COEfD8TujQP0zzp9EGSwa1rkHufBrwkEw==
+snoowrap@1.22.0:
+  version "1.22.0"
+  resolved "https://registry.yarnpkg.com/snoowrap/-/snoowrap-1.22.0.tgz#d89fe3876d238da8697cf95f73ad67c1949cf66c"
+  integrity sha512-eV1CnzWaAinucpOulyaz8ma/3sStPsxlE0sa0kjldKVrS4aQQc8rBJpwJk5cE67DcLSDMm6O1C6out4pPmrR6g==
   dependencies:
     bluebird "^3.5.5"
     lodash "^4.17.15"
     promise-chains "^0.3.11"
-    request "^2.87.0"
-    request-promise "^4.2.2"
+    request "^2.88.2"
+    request-promise "^4.2.6"
     ws "^3.3.1"
 
 sort-keys@^1.0.0:
