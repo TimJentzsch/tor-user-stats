@@ -20,7 +20,7 @@ const contentRegex = /(.*?)/;
 const footerRegex = /\s*\n(?:-\s*){3,}(\^?\^?I'm&#32;a&#32;(human&#32;)?volunteer&#32;content&#32;transcriber&#32;for&#32;Reddit&#32;and&#32;you&#32;could&#32;be&#32;too!&#32;\[If&#32;(&#32;)?you'd&#32;like&#32;more&#32;information&#32;on&#32;what&#32;we&#32;do&#32;and&#32;why&#32;we&#32;do&#32;it,&#32;click&#32;here!\]\(https:\/\/www\.reddit\.com\/r\/TranscribersOfReddit\/wiki\/index\))\s*$/;
 
 /** A more relaxed version of the footer for April 1st. */
-const apr1FooterRegex = /\s*\n(?:-\s*){3,}.*?https:\/\/www\.reddit\.com\/r\/TranscribersOfReddit\/wiki\/index.*?$/;
+const apr1FooterRegex = /\s*\n(?:-\s*){3,}(.*?https:\/\/www\.reddit\.com\/r\/TranscribersOfReddit\/wiki\/index.*?)$/;
 
 /**
  * Regular expression to recognize transcriptions. Groups:
@@ -72,14 +72,23 @@ export default class Transcription {
     public subredditNamePrefixed: string,
   ) {
     // Extract transcription-specific attributes
-    const match = transcriptionRegex.exec(bodyMD);
+    const match = Transcription.isApril1st(createdUTC)
+      ? apr1TranscriptonRegex.exec(bodyMD)
+      : transcriptionRegex.exec(bodyMD);
 
     if (match === null) {
-      if (!footerRegex.test(bodyMD)) {
+      if (Transcription.isApril1st(createdUTC)) {
+        if (!apr1FooterRegex.test(bodyMD)) {
+          throw new Error(
+            `Failed to convert comment to transcription, footer not found:\n<<<${bodyMD}>>>`,
+          );
+        }
+      } else if (!footerRegex.test(bodyMD)) {
         throw new Error(
           `Failed to convert comment to transcription, footer not found:\n<<<${bodyMD}>>>`,
         );
       }
+
       if (!headerRegex.test(bodyMD)) {
         throw new Error(
           `Failed to convert comment to transcription, header not found:\n<<<${bodyMD}>>>`,
@@ -143,6 +152,21 @@ export default class Transcription {
     );
   }
 
+  /** Check if the comment was made on April 1st. */
+  static isApril1st(created_utc: number): boolean {
+    const date = new Date(created_utc * 1000);
+    const month = date.getUTCMonth() + 1; // This is zero-indexed
+    const day = date.getUTCDate(); // This is one-indexed
+
+    // Check for April 1st (with buffer of a day to account for timezones)
+    if ((month === 4 && day <= 2) || (month === 3 && day === 31)) {
+      // Is the transcription formatted correctly (relaxed version)?
+      return true;
+    }
+
+    return false;
+  }
+
   /**
    * Checks if a comment is a transcription.
    * @param comment The comment to check.
@@ -155,17 +179,9 @@ export default class Transcription {
       return false;
     }
 
-    const date = new Date(comment.created_utc * 1000);
-    const month = date.getUTCMonth() + 1; // This is zero-indexed
-    const day = date.getUTCDate(); // This is one-indexed
-
-    // Check for April 1st (with buffer of a day to account for timezones)
-    if ((month === 4 && day <= 2) || (month === 3 && day === 31)) {
-      // Is the transcription formatted correctly (relaxed version)?
-      return apr1TranscriptonRegex.test(comment.body);
-    }
-
-    // Is the transcription formatted correctly?
-    return transcriptionRegex.test(comment.body);
+    // Check if the comment is a transcription
+    return Transcription.isApril1st(comment.created_utc)
+      ? apr1TranscriptonRegex.test(comment.body)
+      : transcriptionRegex.test(comment.body);
   }
 }

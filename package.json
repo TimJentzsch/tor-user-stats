@@ -14,7 +14,7 @@
     "deploy": "rm -r dist-web && yarn bundle && gh-pages -d dist-web",
     "lint": "yarn init-config && eslint \"src/**/*\"",
     "format": "yarn init-config && eslint \"src/**/*\" --fix",
-    "test": "yarn init-config && jest --config jest.config.json",
+    "test": "yarn init-config && jest --config jest.config.json --watch",
     "coverage": "yarn init-config && jest --config jest.config.json --coverage"
   },
   "engines": {

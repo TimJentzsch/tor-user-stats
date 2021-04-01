@@ -3,6 +3,55 @@ import Transcription from '../src/transcription';
 import { imageMD, imageMDApr1, imageMDBugged, imageMDOld } from './transcription-templates';
 
 describe('Transcription', () => {
+  describe('fromComment', () => {
+    test('should create transcription from normal transcription comment', () => {
+      const comment: RComment = {
+        id: '1',
+        permalink: '',
+        body: imageMD,
+        body_html: '',
+        created_utc: new Date('2020-12-01').valueOf() / 1000,
+        score: 1,
+        subreddit_name_prefixed: 'r/CuratedTumblr',
+      };
+
+      const actual = Transcription.fromComment(comment);
+
+      expect(actual.contentMD)
+        .toEqual(`[*Description of anything that you think may be worth describing about the image itself aside from what the text says. For example, an unusual text font, background images or color, etc.*]
+
+Text. 
+
+NOTE: if your post has text above an image, transcribe the text before describing the image. Templates show how to format things, not the order to follow.`);
+
+      expect(actual.format).toEqual('Image');
+      expect(actual.type).toEqual('Image');
+    });
+
+    test('should create transcription from April 1st comment', () => {
+      const comment: RComment = {
+        id: '1',
+        permalink: '',
+        body: imageMDApr1,
+        body_html: '',
+        created_utc: new Date('2020-04-01').valueOf() / 1000,
+        score: 1,
+        subreddit_name_prefixed: 'r/CuratedTumblr',
+      };
+
+      const actual = Transcription.fromComment(comment);
+
+      expect(actual.contentMD)
+        .toEqual(`[*Description of anything that you think may be worth describing about the image itself aside from what the text says. For example, an unusual text font, background images or color, etc.*]
+
+Text. 
+
+NOTE: if your post has text above an image, transcribe the text before describing the image. Templates show how to format things, not the order to follow.`);
+
+      expect(actual.format).toEqual('Image');
+      expect(actual.type).toEqual('Image');
+    });
+  });
   describe('isTranscription', () => {
     test('should reject r/TranscribersOfReddit posts', () => {
       const comment: RComment = {
