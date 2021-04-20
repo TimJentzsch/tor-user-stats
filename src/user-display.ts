@@ -1,5 +1,5 @@
 import { Comment } from 'snoowrap';
-import { getAllUserComments } from './reddit-api';
+import { getAllUserComments, getUserComments } from './reddit-api';
 import { isComment } from './analizer';
 import Transcription from './transcription';
 import {
@@ -110,11 +110,13 @@ async function getTranscriptions(
   return transcriptions;
 }
 
-function displayGamma(transcriptions: Transcription[], refComment: Comment | undefined) {
+function displayGamma(transcriptions: Transcription[], refComment: Comment | undefined): number {
   const gamma = getGamma(transcriptions, refComment);
 
   const gammaElement = document.getElementById('scribe-count') as HTMLElement;
   gammaElement.innerHTML = `(${gamma} &#x393;)`;
+
+  return gamma;
 }
 
 function updateRecents(transcriptions: Transcription[]) {
@@ -190,9 +192,9 @@ function updateDisplays(
   transcriptions: Transcription[],
   refComment: Comment | undefined,
   commentCount: number,
-) {
+): number {
+  const gamma = displayGamma(transcriptions, refComment);
   updateAnalysis(transcriptions, refComment, commentCount);
-  displayGamma(transcriptions, refComment);
   displayTags(userName, transcriptions, refComment);
   updateTables(transcriptions);
   formatGammaDiagram(transcriptions);
@@ -209,6 +211,58 @@ function updateDisplays(
   displayHallOfFame(transcriptions);
   displayRecent(transcriptions);
   displayNextRankPredictions(transcriptions, refComment);
+
+  return gamma;
+}
+
+async function updateTranscriptions(
+  userName: string,
+  transcriptions: Transcription[],
+  refComment: Comment | undefined,
+  gamma: number,
+  commentCount: number,
+): Promise<[number, number, Transcription[]]> {
+  let newGamma = gamma;
+  let newRef = refComment;
+  if (refComment) {
+    newGamma = await refComment.refresh().then((ref) => {
+      newRef = ref;
+      return getGamma(transcriptions, ref);
+    });
+
+    if (newGamma === gamma) {
+      // No new transcriptions
+      return [gamma, commentCount, transcriptions];
+    }
+  }
+
+  // eslint-disable-next-line no-console
+  console.debug(`Found ${newGamma - gamma} new transcription(s).`);
+
+  // Fetch the most recent comments
+  let recentComments = (await getUserComments(userName, {
+    sort: 'new',
+    limit: 25,
+  })) as Comment[];
+  if (transcriptions.length > 0) {
+    recentComments = recentComments.filter((comment) => {
+      return comment.created_utc > transcriptions[0].createdUTC;
+    });
+  }
+  const newCommentCount = commentCount + recentComments.length;
+
+  // Convert to transcriptions
+  const recentTranscriptions = recentComments
+    .filter((comment) => Transcription.isTranscription(comment))
+    .map((comment) => Transcription.fromComment(comment));
+
+  // Merge
+  const newTranscriptions = recentTranscriptions.concat(transcriptions);
+
+  // Update UI
+  updateDisplays(userName, newTranscriptions, newRef, newCommentCount);
+
+  return [newGamma, newCommentCount, newTranscriptions];
 }
 
 async function displayUser() {
@@ -222,12 +276,31 @@ async function displayUser() {
   displayUserName(userName);
   displayModTag(userName);
 
-  await getTranscriptions(userName, (transcriptions, allCount, refComment) => {
-    updateDisplays(userName, transcriptions, refComment, allCount);
-    setProgress(allCount / 1000);
+  let gamma = 0;
+  let commentCount = 0;
+  let transcriptions: Transcription[] = [];
+  let refComment: Comment | undefined;
+
+  await getTranscriptions(userName, (_transcriptions, _allCount, _refComment) => {
+    transcriptions = _transcriptions;
+    commentCount = _allCount;
+    refComment = _refComment;
+    gamma = updateDisplays(userName, _transcriptions, _refComment, _allCount);
+    setProgress(_allCount / 1000);
   });
 
   setProgress(1);
+
+  // Refresh every couple of seconds
+  setInterval(async () => {
+    [gamma, commentCount, transcriptions] = await updateTranscriptions(
+      userName,
+      transcriptions,
+      refComment,
+      gamma,
+      commentCount,
+    );
+  }, 5000);
 }
 
 document.addEventListener('DOMContentLoaded', () => {
