@@ -5,7 +5,7 @@ export default class TranscriptionGenerator {
   /** The currently generated transcriptions. */
   protected transcriptions: Transcription[];
   /** The current time, in seconds. */
-  protected curTime: number;
+  public curTime: number;
   /** The next transcription ID. */
   protected nextId = 0;
 
