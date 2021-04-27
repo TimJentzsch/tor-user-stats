@@ -8,7 +8,9 @@ describe('Transcription Rank Prediction Stats', () => {
       const duration = Durations.hour; // 1 hour
       const target = 10;
 
-      const transcriptions = new TranscriptionGenerator(new Date(Date.now() - duration))
+      const transcriptions = new TranscriptionGenerator(new Date(Date.now() - duration * 2000))
+        .addTranscriptions(5, duration)
+        // This will be the rate
         .addTranscriptions(2, duration)
         .generate();
 
@@ -18,6 +20,7 @@ describe('Transcription Rank Prediction Stats', () => {
         duration: 4 * Durations.hour, // 4 hours
         rate: 2,
         target,
+        extrapolated: null,
       };
 
       expect(actual).toEqual(expected);

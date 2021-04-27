@@ -9,7 +9,33 @@ import Colors from './colors';
 import { fromTemplate, getGamma, getVariable } from './display-util';
 import { layoutTemplate } from './templates';
 
-function getFormattedDuration(duration: number): string {
+function getShortDurationStr(duration: number): string {
+  const sec = Math.floor(duration);
+
+  // Calculate readable duration
+  const years = sec / Durations.year;
+  const days = sec / Durations.day;
+  const hours = sec / Durations.hour;
+  const minutes = sec / Durations.minute;
+  const seconds = sec / Durations.minute;
+
+  if (Math.floor(years) > 0) {
+    return `${years.toFixed(1)}y`;
+  }
+  if (Math.floor(days) > 0) {
+    return `${days.toFixed(1)}d`;
+  }
+  if (Math.floor(hours) > 0) {
+    return `${hours.toFixed(1)}h`;
+  }
+  if (Math.floor(minutes) > 0) {
+    return `${minutes.toFixed(1)}m`;
+  }
+
+  return `${seconds.toFixed(1)}s`;
+}
+
+function getLongDurationStr(duration: number): string {
   const sec = Math.floor(duration);
 
   // Calculate readable duration
@@ -53,9 +79,18 @@ export function displayNextRankPrediction(
   } else if (prediction.duration === Infinity) {
     descriptionElement.innerText = `At a rate of ${prediction.rate}/${durationStr}, ${prediction.rank.name} will never be reached!`;
   } else {
-    const formattedDuration = getFormattedDuration(prediction.duration);
+    const formattedDuration = getLongDurationStr(prediction.duration);
+    let rateStr = prediction.rate.toString();
+    let extraStr = '';
 
-    descriptionElement.innerText = `At a rate of ${prediction.rate}/${durationStr}, ${prediction.rank.name} will be reached in ${formattedDuration}.`;
+    if (prediction.extrapolated) {
+      const extraDuration = getShortDurationStr(prediction.extrapolated.duration);
+      const extraRate = prediction.extrapolated.rate;
+      rateStr = prediction.rate.toFixed(2);
+      extraStr = ` (from ${extraRate}/${extraDuration})`;
+    }
+
+    descriptionElement.innerText = `At a rate of ${rateStr}/${durationStr}${extraStr}, ${prediction.rank.name} will be reached in ${formattedDuration}.`;
   }
 
   const predictionDate = new Date(

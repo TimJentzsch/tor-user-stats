@@ -10,6 +10,11 @@ export type GammaPrediction = {
   rate: number;
   /** The duration until the next rank is reached. */
   duration: number;
+  /** Determines whether the rate had to be extrapolated. */
+  extrapolated: {
+    duration: number;
+    rate: number;
+  } | null;
 } | null;
 
 /**
@@ -24,7 +29,30 @@ export function predictUntilGamma(
   duration: number,
   target: number,
 ): GammaPrediction {
-  const rate = recentGamma(transcriptions, duration).score;
+  let extrapolated = null;
+
+  if (transcriptions.length >= 2) {
+    const end = Date.now() / 1000;
+    const start = transcriptions[transcriptions.length - 1].createdUTC;
+
+    const maxDuration = end - start;
+
+    if (duration > maxDuration) {
+      extrapolated = {
+        duration: maxDuration,
+        rate: 0,
+      };
+    }
+  }
+
+  // Calculate the rate and extrapolate if needed
+  const baseRate = recentGamma(transcriptions, duration).score;
+  let rate = baseRate;
+
+  if (extrapolated) {
+    extrapolated.rate = baseRate;
+    rate = baseRate * (duration / extrapolated.duration);
+  }
 
   const gammaToTarget = target - totalGamma;
   const toTargetDuration = (gammaToTarget / rate) * duration;
@@ -33,6 +61,7 @@ export function predictUntilGamma(
     target,
     rate,
     duration: toTargetDuration,
+    extrapolated,
   };
 }
 
@@ -43,6 +72,11 @@ export type RankPrediction = {
   rate: number;
   /** The duration until the next rank is reached. */
   duration: number;
+  /** Determines whether the rate had to be extrapolated. */
+  extrapolated: {
+    duration: number;
+    rate: number;
+  } | null;
 } | null;
 
 /**
@@ -67,6 +101,7 @@ export function predictUntilRank(
     rank,
     rate: prediction.rate,
     duration: prediction.duration,
+    extrapolated: prediction.extrapolated,
   };
 }
 
