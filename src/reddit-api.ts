@@ -77,6 +77,11 @@ export async function getAllUserComments(
  * @param userName The user to check.
  */
 export async function isToRMod(userName: string): Promise<boolean> {
+  // Hide mods in their probation period
+  if (config.probationMods.includes(userName)) {
+    return false;
+  }
+
   const req = await requester();
   const tor = req.getSubreddit('TranscribersOfReddit');
   // Note: This await IS needed
