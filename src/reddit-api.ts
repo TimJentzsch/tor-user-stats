@@ -78,7 +78,8 @@ export async function getAllUserComments(
  */
 export async function isToRMod(userName: string): Promise<boolean> {
   // Hide mods in their probation period
-  if (config.probationMods?.includes(userName)) {
+  const probationMods = config.probationMods as string[];
+  if (probationMods.includes(userName)) {
     return false;
   }
 
