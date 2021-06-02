@@ -42,6 +42,15 @@ export function getVariable(varName: string): string {
 }
 
 /**
+ * Sets the value of the given CSS variable.
+ * @param varName The name of the CSS variable.
+ * @param value The new value of the CSS variable.
+ */
+export function setVariable(varName: string, value: string): void {
+  document.documentElement.style.setProperty(`--${varName}`, value);
+}
+
+/**
  * Removes all child nodes of the given element.
  * @param element The elment to remove the children of.
  */

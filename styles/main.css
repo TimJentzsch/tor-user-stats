@@ -125,7 +125,10 @@ h3 {
 }
 
 #username {
-  color: var(--on-background);
+  background: linear-gradient(to right, hsl(0, 100%, 70%), hsl(39, 100%, 70%), hsl(60, 100%, 70%), hsl(120, 100%, 70%), hsl(240, 100%, 70%), hsl(300, 100%, 70%));
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 #user-header,
