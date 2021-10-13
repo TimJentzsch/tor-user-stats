@@ -58,8 +58,11 @@ export const specialTags = {
 /** Visitor, 0. */
 const visitor = new CountTag('Visitor', 0, 0);
 
-/** Initiate, 1-49. */
-const initiate = new CountTag('Initiate', 1, 49);
+/** Initiate, 1-24. */
+const initiate = new CountTag('Initiate', 1, 24);
+
+/** Pink, 25-49. */
+const pink = new CountTag('Pink', 25, 49);
 
 /** Green, 50-99. */
 const green = new CountTag('Green', 50, 99);
@@ -83,15 +86,16 @@ const ruby = new CountTag('Ruby', 2500, 4999);
 const topaz = new CountTag('Topaz', 5000, 9999);
 
 /** Jade, 10000-24999. */
-const jade = new CountTag('Jade', 10000, 24999);
+const jade = new CountTag('Jade', 10000, 19999);
 
 /** Sapphire, 25000+. Note: Inofficial, fake rank. */
-const sapphire = new CountTag('Sapphire', 25000, Infinity);
+const sapphire = new CountTag('Sapphire', 20000, Infinity);
 
 /** Tags for the transcription count. */
 export const countTags = {
   visitor,
   initiate,
+  pink,
   green,
   teal,
   purple,
@@ -107,6 +111,7 @@ export const countTags = {
 export const countTagList = [
   visitor,
   initiate,
+  pink,
   green,
   teal,
   purple,
