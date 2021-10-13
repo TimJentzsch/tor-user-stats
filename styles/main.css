@@ -381,6 +381,9 @@ td {
 .initiate {
   background-color: var(--initiate);
 }
+.pink {
+  background-color: var(--pink);
+}
 .green {
   background-color: var(--green);
 }
